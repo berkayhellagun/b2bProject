@@ -45,6 +45,20 @@ namespace Business.Concrete
                 : new ErrorDataResult<User>(Messages.Error);
         }
 
+        public async Task<IDataResult<User>> AsyncGetByMail(string email)
+        {
+            var result = await _userDal.AsyncGetDB(u => u.Email == email);
+            return result != null
+                ? new SuccessDataResult<User>(result)
+                : new ErrorDataResult<User>();
+        }
+
+        public async Task<List<OperationClaim>> AsyncGetClaim(User user)
+        {
+            var result = await _userDal.AsyncGetClaimsDB(user);
+            return result != null ? result : null;
+        }
+
         public async Task<IResult> AsyncRemove(User t)
         {
             var result = await _userDal.AsyncDeleteDB(t);
