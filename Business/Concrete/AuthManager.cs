@@ -18,9 +18,10 @@ namespace Business.Concrete
     {
         IUserService _userService;
         ITokenHelper _tokenHelper;
-        public AuthManager(IUserService userService)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
             _userService = userService;
+            _tokenHelper = tokenHelper;
         }
 
         public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
