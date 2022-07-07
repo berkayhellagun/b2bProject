@@ -14,7 +14,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
-        public bool AddDB(TEntity entity)
+        private bool AddDB(TEntity entity)
         {
             using (var db = new TContext())
             {
@@ -28,7 +28,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
             return Task.Run(() => { return AddDB(entity); });
         }
 
-        public bool DeleteDB(TEntity entity)
+        private bool DeleteDB(TEntity entity)
         {
             using (var db = new TContext())
             {
@@ -42,7 +42,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
             return Task.Run(() => { return DeleteDB(entity); });
         }
 
-        public TEntity GetDB(Expression<Func<TEntity, bool>> filter)
+        private TEntity GetDB(Expression<Func<TEntity, bool>> filter)
         {
             using (var db = new TContext())
             {
@@ -56,7 +56,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
             return Task.Run(() => { return GetDB(filter); });
         }
 
-        public List<TEntity> GetAllDB(Expression<Func<TEntity, bool>> filter = null)
+        private List<TEntity> GetAllDB(Expression<Func<TEntity, bool>> filter = null)
         {
             using (var db = new TContext())
             {
@@ -70,7 +70,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
             return Task.Run(() => { return GetAllDB(filter); });
         }
 
-        public bool UpdateDB(TEntity entity)
+        private bool UpdateDB(TEntity entity)
         {
             using (var db = new TContext())
             {
