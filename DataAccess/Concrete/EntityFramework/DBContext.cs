@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,12 @@ namespace DataAccess.Concrete.EntityFramework
         {
             optionsBuilder.UseSqlServer(@"Server=.;Database=b2bProject;Trusted_Connection=True");
         }
-        //entity db eşleşmesi yapılacak
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
