@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -28,7 +29,7 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<User>>> AsyncGetAll()
         {
             var result = await _userDal.AsyncGetAllDB();
@@ -36,7 +37,7 @@ namespace Business.Concrete
                 ? new SuccessDataResult<List<User>>(result)
                 : new ErrorDataResult<List<User>>(Messages.Error);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<User>> AsyncGetById(int id)
         {
             var result = await _userDal.AsyncGetDB(u => u.UserId == id);

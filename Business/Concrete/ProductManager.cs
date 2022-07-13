@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -28,7 +29,7 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<Product>>> AsyncGetAll()
         {
             var result = await _productDal.AsyncGetAllDB();
@@ -36,7 +37,7 @@ namespace Business.Concrete
                 ? new SuccessDataResult<List<Product>>(result)
                 : new ErrorDataResult<List<Product>>(Messages.Error);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<Product>> AsyncGetById(int id)
         {
             var result = await _productDal.AsyncGetDB(p => p.ProductId == id);

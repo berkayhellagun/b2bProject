@@ -1,5 +1,10 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Caching.MemoryCaching.Type;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -24,6 +29,9 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+        [LogAspect(typeof(FileLogger))]
+        [ValidationAspect(typeof(Category))]
+        [SecuredOperation("admin, ")]
         public async Task<IResult> AsyncAdd(Category t)
         {
             var result = await _categoryDal.AsyncAddDB(t);
@@ -31,7 +39,7 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<Category>>> AsyncGetAll()
         {
             var result = await _categoryDal.AsyncGetAllDB();
@@ -39,7 +47,7 @@ namespace Business.Concrete
                 ? new SuccessDataResult<List<Category>>(result)
                 : new ErrorDataResult<List<Category>>(Messages.Error);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<Category>> AsyncGetById(int id)
         {
             var result = await _categoryDal.AsyncGetDB(c => c.Id == id);
