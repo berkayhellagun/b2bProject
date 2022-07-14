@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Logging.NLog.Types
 {
-    public class File : LoggerBase
+    public class FileLogger : LoggerBase
     {
-        public File():base("File")
+        public FileLogger() : base("File")
         {
 
         }

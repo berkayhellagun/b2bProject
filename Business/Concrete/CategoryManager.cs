@@ -5,7 +5,7 @@ using Business.Validation.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Caching.MemoryCaching.Type;
+using Core.CrossCuttingConcerns.Logging.NLog.Types;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
