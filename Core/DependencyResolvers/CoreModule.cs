@@ -17,7 +17,6 @@ namespace Core.DependencyResolvers
         {
             services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheManager>();
-
         }
     }
 }

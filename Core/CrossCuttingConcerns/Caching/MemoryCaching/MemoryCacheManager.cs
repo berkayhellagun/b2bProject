@@ -13,7 +13,7 @@ namespace Core.CrossCuttingConcerns.Caching.MemoryCaching
     public class MemoryCacheManager : ICacheService
     {
         private readonly IMemoryCache _memoryCache;
-        public MemoryCacheManager(string type)
+        public MemoryCacheManager()
         {
             // we need low coupling so use inversion of control design principles
             _memoryCache = ServiceTool.ServiceProvider.GetService<IMemoryCache>();

@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspect;
 using Business.Constants;
+using Business.Validation.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
@@ -30,7 +31,7 @@ namespace Business.Concrete
         }
 
         [LogAspect(typeof(FileLogger))]
-        [ValidationAspect(typeof(Category))]
+        [ValidationAspect(typeof(CategoryValidator))]
         [SecuredOperation("admin, ")]
         public async Task<IResult> AsyncAdd(Category t)
         {
