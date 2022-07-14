@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Core.Utilities.Security.Hashing;
@@ -35,8 +36,8 @@ namespace Business.Concrete
 
         public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
-            var result = await VerifyPassword(userForLoginDto);
-            return result
+            var process = BusinessRules.Process(VerifyPassword(userForLoginDto).Result);
+            return process.Success
                 ? new SuccessDataResult<User>("login")
                 : new ErrorDataResult<User>("pls try again.");
         }
@@ -62,7 +63,7 @@ namespace Business.Concrete
         private async Task<User> RegisterModule(UserForRegisterDto userDto, string password)
         {
             var conclusion = await CheckEmail(userDto.Email);
-            if (conclusion)
+            if (conclusion.Data != null)
             {
                 // user exist
                 return null;
@@ -84,31 +85,31 @@ namespace Business.Concrete
             return user;
         }
 
-        private async Task<bool> CheckEmail(string email)
+        private async Task<IDataResult<User>> CheckEmail(string email)
         {
             var user = await _userService.AsyncGetByMail(email);
-            return user != null
-                ? false
-                : true;
+            return user.Data == null
+                ? new ErrorDataResult<User>()
+                : new SuccessDataResult<User>(user.Data);
         }
 
-        private async Task<bool> VerifyPassword(UserForLoginDto userForLoginDto)
+        private async Task<IResult> VerifyPassword(UserForLoginDto userForLoginDto)
         {
-            var userCheck = await _userService.AsyncGetByMail(userForLoginDto.Email);
-            if (!userCheck.Success)
+            var userCheck = await CheckEmail(userForLoginDto.Email);
+            if (userCheck.Data == null)
             {
                 // user not exist
-                return false;
+                return null;
             }
             if (!userCheck.Data.Status)
             {
                 // user status false
-                return false;
+                return null;
             }
             var result = HashHelper.VerifyPassword(userForLoginDto.Password,
                 userCheck.Data.PasswordHash, userCheck.Data.PasswordSalt);
 
-            return result;
+            return new SuccessResult();
         }
     }
 }
