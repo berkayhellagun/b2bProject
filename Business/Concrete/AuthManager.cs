@@ -100,6 +100,11 @@ namespace Business.Concrete
                 // user not exist
                 return false;
             }
+            if (!userCheck.Data.Status)
+            {
+                // user status false
+                return false;
+            }
             var result = HashHelper.VerifyPassword(userForLoginDto.Password,
                 userCheck.Data.PasswordHash, userCheck.Data.PasswordSalt);
 
