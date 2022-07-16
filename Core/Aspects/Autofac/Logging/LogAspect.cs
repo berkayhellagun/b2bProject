@@ -24,7 +24,8 @@ namespace Core.Aspects.Autofac.Logging
         }
         protected override void OnBefore(IInvocation invocation)
         {
-            _loggerBase.Info(GetLogDetail(invocation));
+            var logDetail = GetLogDetail(invocation);
+            _loggerBase.Info(logDetail);
         }
 
         private LogDetail GetLogDetail(IInvocation invocation)
@@ -34,8 +35,8 @@ namespace Core.Aspects.Autofac.Logging
             {
                 logParameter.Add(new LogParameter
                 {
-                    Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
-                    Value = (string)invocation.Arguments[i],
+                    Name = invocation.Method.GetParameters()[i].Name,
+                    Value = invocation.Arguments[i],
                     Type = invocation.Arguments[i].GetType().Name
                 });
             }

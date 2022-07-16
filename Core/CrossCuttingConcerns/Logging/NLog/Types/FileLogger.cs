@@ -8,7 +8,7 @@ namespace Core.CrossCuttingConcerns.Logging.NLog.Types
 {
     public class FileLogger : LoggerBase
     {
-        public FileLogger() : base("File")
+        public FileLogger() : base("FileLogger")
         {
 
         }

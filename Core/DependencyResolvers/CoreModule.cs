@@ -21,6 +21,8 @@ namespace Core.DependencyResolvers
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            
+
         }
     }
 }

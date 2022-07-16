@@ -30,9 +30,9 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+        //[SecuredOperation("category.add,admin")]
         [LogAspect(typeof(FileLogger))]
         [ValidationAspect(typeof(CategoryValidator))]
-        [SecuredOperation("admin, ")]
         public async Task<IResult> AsyncAdd(Category t)
         {
             var result = await _categoryDal.AsyncAddDB(t);
@@ -41,6 +41,7 @@ namespace Business.Concrete
                 : new ErrorResult(Messages.NotAdded);
         }
         [CacheAspect]
+        [LogAspect(typeof(FileLogger))]
         public async Task<IDataResult<List<Category>>> AsyncGetAll()
         {
             var result = await _categoryDal.AsyncGetAllDB();

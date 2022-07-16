@@ -38,7 +38,7 @@ namespace Business.Concrete
         {
             var process = BusinessRules.Process(VerifyPassword(userForLoginDto).Result);
             return process.Success
-                ? new SuccessDataResult<User>("login")
+                ? new SuccessDataResult<User>("success")
                 : new ErrorDataResult<User>("pls try again.");
         }
 
@@ -50,7 +50,7 @@ namespace Business.Concrete
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             var user = RegisterModule(userForRegisterDto, password);
-            if (user == null)
+            if (user.Result == null)
             {
                 new ErrorDataResult<User>();
             }
