@@ -23,12 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
                              select new OperationClaim { OperationId= operationClaim.OperationId,
                                                         OperationName = operationClaim.OperationName };
                 return result.ToList();
-
             }
-        }
-        public Task<List<OperationClaim>> AsyncGetClaimsDB(User user)
-        {
-            return Task.FromResult(GetClaims(user));
         }
     }
 }

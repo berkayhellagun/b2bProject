@@ -44,7 +44,7 @@ namespace Core.Utilities.Security.JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenName = tokenHandler.WriteToken(jwt);
             // return access token 
-            return new AccessToken { Name = tokenName, ExpirationTime = _expirationTime };
+            return new AccessToken { Token = tokenName, ExpirationTime = _expirationTime };
         }
         private JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user, SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {

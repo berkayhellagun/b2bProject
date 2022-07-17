@@ -12,6 +12,6 @@ namespace Business.Abstract
     public interface IUserService : IGenericService<User>
     {
         Task<IDataResult<User>> AsyncGetByMail(string email);
-        Task<List<OperationClaim>> AsyncGetClaim(User user);
+        IDataResult<List<OperationClaim>> GetClaim(User user);
     }
 }

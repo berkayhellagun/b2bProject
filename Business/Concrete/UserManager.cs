@@ -54,10 +54,10 @@ namespace Business.Concrete
                 : new ErrorDataResult<User>();
         }
 
-        public async Task<List<OperationClaim>> AsyncGetClaim(User user)
+        public IDataResult<List<OperationClaim>> GetClaim(User user)
         {
-            var result = await _userDal.AsyncGetClaimsDB(user);
-            return result != null ? result : null;
+            var result = _userDal.GetClaims(user);
+            return new SuccessDataResult<List<OperationClaim>>(result);
         }
 
         public async Task<IResult> AsyncRemove(User t)

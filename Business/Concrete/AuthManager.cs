@@ -27,19 +27,19 @@ namespace Business.Concrete
 
         public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
-            var operationList = await _userService.AsyncGetClaim(user);
-            var result = await _tokenHelper.AsyncCreateToken(user, operationList);
+            var operationList = _userService.GetClaim(user);
+            var result = await _tokenHelper.AsyncCreateToken(user, operationList.Data);
             return result != null
                 ? new SuccessDataResult<AccessToken>(result)
                 : new ErrorDataResult<AccessToken>("Not created.");
         }
 
-        public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
+        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var process = BusinessRules.Process(VerifyPassword(userForLoginDto).Result);
-            return process.Success
-                ? new SuccessDataResult<User>("success")
-                : new ErrorDataResult<User>("pls try again.");
+            var result = VerifyPassword(userForLoginDto);
+            return result.Success
+                ? new SuccessDataResult<User>(result.Data)
+                : new ErrorDataResult<User>("Check your password!");
         }
 
         public Task<bool> Logout()
@@ -50,19 +50,19 @@ namespace Business.Concrete
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             var user = RegisterModule(userForRegisterDto, password);
-            if (user.Result == null)
+            if (user == null)
             {
                 new ErrorDataResult<User>();
             }
-            var result = await _userService.AsyncAdd(user.Result);
+            var result = await _userService.AsyncAdd(user);
             return result.Success
-                ? new SuccessDataResult<User>(user.Result)
+                ? new SuccessDataResult<User>(user)
                 : new ErrorDataResult<User>();
         }
 
-        private async Task<User> RegisterModule(UserForRegisterDto userDto, string password)
+        private User RegisterModule(UserForRegisterDto userDto, string password)
         {
-            var conclusion = await CheckEmail(userDto.Email);
+            var conclusion = CheckEmail(userDto.Email);
             if (conclusion.Data != null)
             {
                 // user exist
@@ -85,31 +85,33 @@ namespace Business.Concrete
             return user;
         }
 
-        private async Task<IDataResult<User>> CheckEmail(string email)
+        private IDataResult<User> CheckEmail(string email)
         {
-            var user = await _userService.AsyncGetByMail(email);
-            return user.Data == null
+            var user = _userService.AsyncGetByMail(email);
+            return user == null
                 ? new ErrorDataResult<User>()
-                : new SuccessDataResult<User>(user.Data);
+                : new SuccessDataResult<User>(user.Result.Data);
         }
 
-        private async Task<IResult> VerifyPassword(UserForLoginDto userForLoginDto)
+        private IDataResult<User> VerifyPassword(UserForLoginDto userForLoginDto)
         {
-            var userCheck = await CheckEmail(userForLoginDto.Email);
+            var userCheck = CheckEmail(userForLoginDto.Email);
             if (userCheck.Data == null)
             {
                 // user not exist
-                return null;
+                return new ErrorDataResult<User>("E-mail not found!");
             }
             if (!userCheck.Data.Status)
             {
                 // user status false
-                return null;
+                return new ErrorDataResult<User>("This user status is inactive!");
             }
             var result = HashHelper.VerifyPassword(userForLoginDto.Password,
                 userCheck.Data.PasswordHash, userCheck.Data.PasswordSalt);
 
-            return new SuccessResult();
+            return result
+                ? new SuccessDataResult<User>(userCheck.Data)
+                : new ErrorDataResult<User>();
         }
     }
 }
