@@ -18,17 +18,17 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("login")]
-        public IActionResult Login(UserForLoginDto userForLoginDto)
+        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var userLoginStat = _authService.Login(userForLoginDto);
             if (userLoginStat.Data == null)
             {
                 return BadRequest(userLoginStat.Message);
             }
-            var token = _authService.CreateAccessToken(userLoginStat.Data);
-            return token.Result.Success
-                ? Ok(token.Result.Data)
-                : BadRequest(token.Result.Message);
+            var token = await _authService.CreateAccessToken(userLoginStat.Data);
+            return token.Success
+                ? Ok(token.Data)
+                : BadRequest(token.Message);
         }
 
         [HttpPost("register")]
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers.Concrete
             var registerStat = await _authService.Register(userForRegisterDto, password);
             if (!registerStat.Success)
             {
-                return BadRequest(registerStat.Success);
+                return BadRequest(registerStat.Message);
             }
             var token = await _authService.CreateAccessToken(registerStat.Data);
             return token.Success

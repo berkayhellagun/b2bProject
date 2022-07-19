@@ -30,7 +30,7 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
-        [SecuredOperation("category.add,admin")]
+        [SecuredOperation("admin,")]
         [LogAspect(typeof(FileLogger))]
         [ValidationAspect(typeof(CategoryValidator))]
         public async Task<IResult> AsyncAdd(Category t)

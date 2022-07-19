@@ -10,17 +10,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.IoC;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.MemoryCaching;
+using System.IdentityModel.Tokens.Jwt;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 //services
 IServiceCollection service = builder.Services;
+ConfigurationManager configuration = builder.Configuration;
+
 
 // Add services to the container.
 
 //use service for extending. this addDependecyResolver is extension.
+
+service.AddHttpContextAccessor();
 service.AddDependencyResolvers( new ICoreModule[]
 {
     new CoreModule(),
@@ -31,7 +36,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 //Autofac integretion for resolve of dependency
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>
@@ -39,14 +43,12 @@ builder.Host.ConfigureContainer<ContainerBuilder>
 
 //NLog integretion for resolve of dependency
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-logger.Debug("init main");
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
 
 //JWT configuration
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
 service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -72,8 +74,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
+app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

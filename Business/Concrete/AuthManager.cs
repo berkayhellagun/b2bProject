@@ -50,23 +50,23 @@ namespace Business.Concrete
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             var user = RegisterModule(userForRegisterDto, password);
-            if (user == null)
+            if (user.Data == null)
             {
-                new ErrorDataResult<User>();
+                return new ErrorDataResult<User>(user.Message);
             }
-            var result = await _userService.AsyncAdd(user);
+            var result = await _userService.AsyncAdd(user.Data);
             return result.Success
-                ? new SuccessDataResult<User>(user)
+                ? new SuccessDataResult<User>(user.Data)
                 : new ErrorDataResult<User>();
         }
 
-        private User RegisterModule(UserForRegisterDto userDto, string password)
+        private IDataResult<User> RegisterModule(UserForRegisterDto userDto, string password)
         {
             var conclusion = CheckEmail(userDto.Email);
             if (conclusion.Data != null)
             {
                 // user exist
-                return null;
+                return new ErrorDataResult<User>("This email cannot be used!");
             }
 
             byte[] passwordHash, passwordSalt;
@@ -82,7 +82,7 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            return user;
+            return new SuccessDataResult<User>(user);
         }
 
         private IDataResult<User> CheckEmail(string email)
