@@ -11,8 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.IoC;
 using System.IdentityModel.Tokens.Jwt;
-
-
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,16 +25,16 @@ ConfigurationManager configuration = builder.Configuration;
 
 //use service for extending. this addDependecyResolver is extension.
 
-service.AddHttpContextAccessor();
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 service.AddDependencyResolvers( new ICoreModule[]
 {
     new CoreModule(),
 });
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 //Autofac integretion for resolve of dependency
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -48,17 +48,14 @@ builder.Host.UseNLog();
 
 
 //JWT configuration
-var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+var tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
 service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidIssuer = tokenOptions.Issuer,
-            ValidAudience = tokenOptions.Audience,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
@@ -67,6 +64,7 @@ service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //app
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -74,14 +72,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+//app.ConfigureCustomExceptionMiddleware();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
+
 
 app.MapControllers();
 

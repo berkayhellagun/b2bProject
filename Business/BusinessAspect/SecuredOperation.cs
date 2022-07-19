@@ -21,8 +21,10 @@ namespace Business.BusinessAspect
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var deneme = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role);
-            var roleClaims = _httpContextAccessor.HttpContext?.User?.ClaimRoles(); // we get user claims 
+            var isAuth = _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated;
+            var roleClaims = _httpContextAccessor.HttpContext?.User?.ClaimRoles();// we get user claims 
+
+            
             foreach (var role in _roles)
             {
                 if (roleClaims.Contains(role)) //does exist role claims in role array

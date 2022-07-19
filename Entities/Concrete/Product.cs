@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
     public class Product : IEntity
     {
-        [Key]
+        [Key, JsonIgnore]
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int ProductSupplierId { get; set; }
