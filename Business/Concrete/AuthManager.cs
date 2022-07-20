@@ -47,9 +47,9 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
+        public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto)
         {
-            var user = RegisterModule(userForRegisterDto, password);
+            var user = RegisterModule(userForRegisterDto);
             if (user.Data == null)
             {
                 return new ErrorDataResult<User>(user.Message);
@@ -60,7 +60,7 @@ namespace Business.Concrete
                 : new ErrorDataResult<User>();
         }
 
-        private IDataResult<User> RegisterModule(UserForRegisterDto userDto, string password)
+        private IDataResult<User> RegisterModule(UserForRegisterDto userDto)
         {
             var conclusion = CheckEmail(userDto.Email);
             if (conclusion.Data != null)
@@ -71,7 +71,7 @@ namespace Business.Concrete
 
             byte[] passwordHash, passwordSalt;
             //create hash and salt
-            HashHelper.CreateHash(password, out passwordHash, out passwordSalt);
+            HashHelper.CreateHash(userDto.Password, out passwordHash, out passwordSalt);
 
             var user = new User
             {

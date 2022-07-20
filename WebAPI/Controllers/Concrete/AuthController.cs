@@ -32,9 +32,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto, string password)
+        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var registerStat = await _authService.Register(userForRegisterDto, password);
+            var registerStat = await _authService.Register(userForRegisterDto);
             if (!registerStat.Success)
             {
                 return BadRequest(registerStat.Message);
