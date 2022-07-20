@@ -7,13 +7,14 @@ namespace WebMVC.API
     {
         #region Fields
         private readonly IConfiguration _configuration;
-
+        string baseUrl;
         #endregion
 
         #region Ctor
         public Request(IConfiguration configuration)
         {
             _configuration = configuration;
+            baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>().Value;
         }
         #endregion
 
@@ -22,8 +23,6 @@ namespace WebMVC.API
         {
             try
             {
-                var baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>();
-                var configuration = new ConfigurationBuilder();
                 string apiResponse = "Response Is Null";
                 using (var httpClient = new HttpClient())
                 {
@@ -46,7 +45,6 @@ namespace WebMVC.API
         {
             try
             {
-                var baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>();
                 string apiResponse = "Response Is Null";
                 using (var httpClient = new HttpClient())
                 {
@@ -71,9 +69,6 @@ namespace WebMVC.API
         {
             try
             {
-                var baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>().Value;
-                
-
                 string apiResponse = "Response Is Null";
                 using (var httpClient = new HttpClient())
                 {
@@ -95,7 +90,6 @@ namespace WebMVC.API
         {
             try
             {
-                var baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>();
                 string apiResponse = "Response Is Null";
                 using (var httpClient = new HttpClient())
                 {
@@ -118,7 +112,6 @@ namespace WebMVC.API
         {
             try
             {
-                var baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>();
                 string apiResponse = "Response Is Null";
                 using (var httpClient = new HttpClient())
                 {
