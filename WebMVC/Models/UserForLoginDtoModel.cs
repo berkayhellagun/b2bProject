@@ -1,6 +1,6 @@
 ﻿namespace WebMVC.Models
 {
-    public class UserForLoginDto
+    public class UserForLoginDtoModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

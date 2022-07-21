@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Authentication;
 using WebMVC.API;
 using WebMVC.Models;
+using WebMVC.Models.Response;
 
 namespace WebMVC.Controllers
 {
@@ -18,9 +20,16 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var ApiObject = _request.Get("api/Users/getall");
-            var ApiResult = JsonConvert.DeserializeObject<List<User>>(ApiObject);
-            return View(ApiResult);
+            try
+            {
+                var ApiObject = _request.Get("api/Users/getall");
+                var ApiResult = JsonConvert.DeserializeObject<List<UserModel>>(ApiObject);
+                return View(ApiResult);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidCredentialException(e.Message);
+            }
         }
     }
 }

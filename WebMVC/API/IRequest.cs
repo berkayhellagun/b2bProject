@@ -1,4 +1,6 @@
-﻿namespace WebMVC.API
+﻿using WebMVC.Models.Response;
+
+namespace WebMVC.API
 {
     public interface IRequest
     {

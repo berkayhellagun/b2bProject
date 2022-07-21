@@ -1,3 +1,4 @@
+using Flurl.Http.Configuration;
 using WebMVC.API;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddControllersWithViews();
 IServiceCollection service = builder.Services;
 
 service.AddSingleton<IRequest, Request>();
+service.AddHttpContextAccessor();
+service.AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();
 
 
 var app = builder.Build();

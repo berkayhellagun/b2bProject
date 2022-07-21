@@ -1,23 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WebMVC.API;
+using WebMVC.Models;
 
 namespace WebMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        IRequest _request;
+        public HomeController(IRequest request)
         {
-            _logger = logger;
+            _request = request;
         }
 
+        //[HttpGet]
         public IActionResult Index()
-        {
-            return View();
-        }
+        {   
+            /*var apiObject = _request.GetAsync("api/Products/getall");
+            var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject.Result);
+            return View(jsonObject);*/
 
-        public IActionResult Privacy()
-        {
             return View();
         }
     }
