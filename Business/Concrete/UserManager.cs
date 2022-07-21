@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect;
 using Business.Constants;
 using Business.Validation.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -31,6 +32,7 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
+        [SecuredOperation("admin,")]
         [CacheAspect]
         public async Task<IDataResult<List<User>>> AsyncGetAll()
         {

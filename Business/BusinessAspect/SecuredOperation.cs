@@ -21,6 +21,7 @@ namespace Business.BusinessAspect
 
         protected override void OnBefore(IInvocation invocation)
         {
+            var header = _httpContextAccessor.HttpContext.Request.Headers;
             var isAuth = _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated;
             var roleClaims = _httpContextAccessor.HttpContext?.User?.ClaimRoles();// we get user claims 
 
