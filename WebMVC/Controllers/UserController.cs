@@ -18,9 +18,14 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var ApiObject = _request.Get("api/Users/getall");
+            var ApiObject = await _request.GetAsync("api/Users/getall");
+            if (ApiObject == Constants.Exception )
+            {
+                //exception
+                return View();
+            }
             var ApiResult = JsonConvert.DeserializeObject<List<UserModel>>(ApiObject);
             return View(ApiResult);
         }

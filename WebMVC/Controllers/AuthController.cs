@@ -17,8 +17,12 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult Login(UserForLoginDtoModel userForLoginDto)
         {
-            // burada data da kayıp olabilir result her türlü gelebilir
-                var result = _request.Post("api/Auth/login", userForLoginDto);
+            var result = _request.Post("api/Auth/login", userForLoginDto);
+            if (result == Constants.Exception)
+            {
+                // exception
+                return View();
+            }
             try
             {
                 var apiResultJson = JsonConvert.DeserializeObject<TokenModel>(result);
@@ -36,7 +40,7 @@ namespace WebMVC.Controllers
             }
             catch (Exception)
             {
-                return View(result);
+                return View();
             }
             return View();
         }
@@ -51,12 +55,17 @@ namespace WebMVC.Controllers
         public IActionResult Register(UserForRegisterDtoModel userForRegisterDtoModel)
         {
             var result = _request.Post("api/Auth/register", userForRegisterDtoModel);
-            //token tutulacak ve işleme sokulacak
+            if (result == Constants.Exception || result == null)
+            {
+                //exception
+                return View();
+            }
             if (result != null)
             {
+                //success
                 return RedirectToAction("Index", "Home");
             }
-            return View(result);
+            return View();
         }
         [HttpGet]
         public IActionResult Register()

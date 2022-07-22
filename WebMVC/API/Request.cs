@@ -22,16 +22,8 @@ namespace WebMVC.API
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>().Value;
-            //null geliyor ilk loginden sonra
         }
         #endregion
-
-        private string Value()
-        {
-            this.token = _httpContextAccessor?.HttpContext?.Request.Cookies[Constants.XAccessToken];
-            var authValue = "Bearer " + token;
-            return authValue;
-        }
 
         #region CallApiAsync
         public async Task<string> GetAsync(string Url)
@@ -39,20 +31,20 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
-                var authValue = Value();
+                var authValue = AuthValue();
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
                     using (var response = await httpClient.GetAsync(string.Format(baseUrl + Url)))
                     {
-                        apiResponse = await response.Content.ReadAsStringAsync();
+                        apiResponse = response.Content.ReadAsStringAsync().Result;
                     }
                 }
                 return apiResponse;
             }
             catch (Exception)
             {
-                return baseUrl;
+                return Constants.Exception;
             }
         }
 
@@ -61,7 +53,7 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
-                var authValue = Value();
+                var authValue = AuthValue();
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
@@ -75,10 +67,60 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-                return baseUrl;
+                return Constants.Exception;
             }
-
         }
+
+        public async Task<string> PutAsync(string Url, object RequestItem)
+        {
+            try
+            {
+                string apiResponse = "Response Is Null";
+                var authValue = AuthValue();
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(RequestItem),
+                        Encoding.UTF8, "application/json");
+                    using (var response = await httpClient.PutAsync(String.Format(baseUrl + Url), content))
+                    {
+                        apiResponse = response.Content.ReadAsStringAsync().Result;
+                    }
+                }
+                return apiResponse;
+            }
+            catch (Exception)
+            {
+
+                return Constants.Exception;
+            }
+        }
+
+        public async Task<string> DeleteAsync(string Url)
+        {
+            try
+            {
+                var apiResponse = "Response Is Null";
+                var authValue = AuthValue();
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                    using (var response = await httpClient.DeleteAsync(Url))
+                    {
+                        apiResponse = response.Content.ReadAsStringAsync().Result;
+                    }
+                }
+                return apiResponse;
+            }
+            catch (Exception)
+            {
+
+                return Constants.Exception;
+            }
+            
+        }
+
+
         #endregion
         #region CallApi
         public string Get(string Url)
@@ -86,7 +128,7 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
-                var authValue = Value();
+                var authValue = AuthValue();
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
@@ -99,7 +141,7 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-                return baseUrl;
+                return Constants.Exception;
             }
 
         }
@@ -108,7 +150,7 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
-                var authValue = Value();
+                var authValue = AuthValue();
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
@@ -122,7 +164,7 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-                return baseUrl + Url;
+                return Constants.Exception;
             }
 
         }
@@ -131,7 +173,7 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
-                var authValue = Value();
+                var authValue = AuthValue();
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
@@ -144,9 +186,19 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-                return baseUrl;
+                return Constants.Exception;
             }
 
+        }
+        #endregion
+
+        #region AuthValue
+        private string AuthValue()
+        {
+            //change header(Authorization:Berarer <token>) each request
+            this.token = _httpContextAccessor?.HttpContext?.Request.Cookies[Constants.XAccessToken];
+            var authValue = "Bearer " + token;
+            return authValue;
         }
         #endregion
     }

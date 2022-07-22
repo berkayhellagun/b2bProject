@@ -29,7 +29,8 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-service.AddSwaggerGen(c => {
+service.AddSwaggerGen(c =>
+{
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "JWTToken_Auth_API",
@@ -56,7 +57,7 @@ service.AddSwaggerGen(c => {
         }
     });
 });
-service.AddDependencyResolvers( new ICoreModule[]
+service.AddDependencyResolvers(new ICoreModule[]
 {
     new CoreModule(),
 });
@@ -89,23 +90,23 @@ service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //app
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.ConfigureCustomExceptionMiddleware();
 
-//app.ConfigureCustomExceptionMiddleware();
 app.UseAuthentication();
+
 app.UseAuthorization();
+
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
-
-
 
 app.MapControllers();
 
