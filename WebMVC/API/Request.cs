@@ -22,9 +22,16 @@ namespace WebMVC.API
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>().Value;
-            token = _httpContextAccessor.HttpContext.Request.Cookies[Constants.XAccessToken];
+            //null geliyor ilk loginden sonra
         }
         #endregion
+
+        private string Value()
+        {
+            this.token = _httpContextAccessor?.HttpContext?.Request.Cookies[Constants.XAccessToken];
+            var authValue = "Bearer " + token;
+            return authValue;
+        }
 
         #region CallApiAsync
         public async Task<string> GetAsync(string Url)
@@ -32,9 +39,10 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
+                var authValue = Value();
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.token);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
                     using (var response = await httpClient.GetAsync(string.Format(baseUrl + Url)))
                     {
                         apiResponse = await response.Content.ReadAsStringAsync();
@@ -44,10 +52,8 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-
-                throw;
+                return baseUrl;
             }
-
         }
 
         public async Task<string> PostAsync(string Url, object Request)
@@ -55,9 +61,10 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
+                var authValue = Value();
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.token);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(Request), Encoding.UTF8, "application/json");
                     using (var response = await httpClient.PostAsync(string.Format(baseUrl + Url), content))
                     {
@@ -68,8 +75,7 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-
-                throw;
+                return baseUrl;
             }
 
         }
@@ -80,9 +86,10 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
+                var authValue = Value();
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.token);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
                     using (var response = httpClient.GetAsync(string.Format(baseUrl + Url)).Result)
                     {
                         apiResponse = response.Content.ReadAsStringAsync().Result;
@@ -92,8 +99,7 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-
-                throw;
+                return baseUrl;
             }
 
         }
@@ -102,9 +108,10 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
+                var authValue = Value();
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.token);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(Request), Encoding.UTF8, "application/json");
                     using (var response = httpClient.PostAsync(string.Format(baseUrl + Url), content).Result)
                     {
@@ -113,10 +120,9 @@ namespace WebMVC.API
                 }
                 return apiResponse;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw;
+                return baseUrl + Url;
             }
 
         }
@@ -125,9 +131,10 @@ namespace WebMVC.API
             try
             {
                 string apiResponse = "Response Is Null";
+                var authValue = Value();
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.token);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
                     using (var response = httpClient.DeleteAsync(string.Format(baseUrl + Url)).Result)
                     {
                         apiResponse = response.Content.ReadAsStringAsync().Result;
@@ -137,8 +144,7 @@ namespace WebMVC.API
             }
             catch (Exception)
             {
-
-                throw;
+                return baseUrl;
             }
 
         }

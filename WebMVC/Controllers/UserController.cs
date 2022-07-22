@@ -20,16 +20,9 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            try
-            {
-                var ApiObject = _request.Get("api/Users/getall");
-                var ApiResult = JsonConvert.DeserializeObject<List<UserModel>>(ApiObject);
-                return View(ApiResult);
-            }
-            catch (Exception e)
-            {
-                throw new InvalidCredentialException(e.Message);
-            }
+            var ApiObject = _request.Get("api/Users/getall");
+            var ApiResult = JsonConvert.DeserializeObject<List<UserModel>>(ApiObject);
+            return View(ApiResult);
         }
     }
 }

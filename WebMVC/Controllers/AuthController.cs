@@ -17,20 +17,26 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult Login(UserForLoginDtoModel userForLoginDto)
         {
-            var result = _request.Post("api/Auth/login", userForLoginDto);
-            var apiResultJson = JsonConvert.DeserializeObject<TokenModel>(result);
-            //token tutulacak ve işleme sokulacak
-
-            Response.Cookies.Append(Constants.XAccessToken, apiResultJson.Token, new CookieOptions
+            // burada data da kayıp olabilir result her türlü gelebilir
+                var result = _request.Post("api/Auth/login", userForLoginDto);
+            try
             {
-                //object initialization
-                HttpOnly = true,
-                SameSite = SameSiteMode.Strict,
+                var apiResultJson = JsonConvert.DeserializeObject<TokenModel>(result);
+                Response.Cookies.Append(Constants.XAccessToken, apiResultJson.Token, new CookieOptions
+                {
+                    //object initialization
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Strict,
 
-            });
-            if (apiResultJson != null && apiResultJson.ExpirationTime >= DateTime.Now)
+                });
+                if (apiResultJson != null && apiResultJson.ExpirationTime >= DateTime.Now)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception)
             {
-                return RedirectToAction("Index", "Home");
+                return View(result);
             }
             return View();
         }
