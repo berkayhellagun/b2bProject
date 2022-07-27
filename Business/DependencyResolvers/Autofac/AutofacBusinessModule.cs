@@ -34,8 +34,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance();
 
             //supplier solve
-            builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
-            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
+            builder.RegisterType<SupplierManager>().As<ISupplierService>().SingleInstance();
+            builder.RegisterType<EfSupplierDal>().As<ISupplierDal>().SingleInstance();
 
             //user solve
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();

@@ -19,7 +19,7 @@ namespace Entities.Concrete
         public int ProductCategoryId { get; set; }
         public string? ProductDescription { get; set; }
         public string ProductCountry { get; set; }
-        public double ProductPrice { get; set; }
+        public decimal ProductPrice { get; set; }
         public DateTime ProductionDate { get; set; }
         public int ProductInStock { get; set; }
     }

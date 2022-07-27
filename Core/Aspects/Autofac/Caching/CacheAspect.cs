@@ -18,7 +18,7 @@ namespace Core.Aspects.Autofac.Caching
 
         public CacheAspect()
         {
-            _duration = 60 ;
+            _duration = 10;
             _cacheService = ServiceTool.ServiceProvider.GetService<ICacheService>();
         }
 
