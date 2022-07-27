@@ -26,5 +26,14 @@ namespace WebAPI.Controllers.Concrete
                 : BadRequest(result.Message);
         }
 
+        [HttpGet("getproductbycategoryid")]
+        public IActionResult GetByCategoryId(int categoryId)
+        {
+            var result = _productService.GetByCategoryId(categoryId);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
+
     }
 }

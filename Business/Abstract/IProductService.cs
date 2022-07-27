@@ -12,5 +12,6 @@ namespace Business.Abstract
     public interface IProductService : IGenericService<Product>
     {
         IDataResult<List<ProductDetail>> GetProductDetail();
+        IDataResult<List<Product>> GetByCategoryId(int categoryId);
     }
 }

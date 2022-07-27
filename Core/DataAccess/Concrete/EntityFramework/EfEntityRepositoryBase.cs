@@ -83,5 +83,15 @@ namespace Core.DataAccess.Concrete.EntityFramework
         {
             return Task.Run(() => { return UpdateDB(entity); });
         }
+
+        public IList<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
+        {
+            using (var db = new TContext())
+            {
+                return filter == null
+                   ? db.Set<TEntity>().ToList()
+                   : db.Set<TEntity>().Where(filter).ToList();
+            }
+        }
     }
 }

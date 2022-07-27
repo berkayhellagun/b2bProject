@@ -69,5 +69,10 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
         }
+
+        public IDataResult<List<Product>> GetByCategoryId(int categoryId)
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductCategoryId == categoryId).ToList());
+        }
     }
 }
