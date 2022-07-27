@@ -1,25 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Dynamic;
 using WebMVC.API;
 using WebMVC.Models;
 
-namespace WebMVC.Controllers
+namespace WebMVC.ViewComponents
 {
-    public class HomeController : Controller
+    public class ProductGetList : ViewComponent
     {
         IRequest _request;
-        public HomeController(IRequest request)
+        public ProductGetList(IRequest request)
         {
             _request = request;
         }
 
-        //[HttpGet]
-        public IActionResult Index()
+        public IViewComponentResult Invoke()
         {
-            var apiObject = _request.Get("api/Products/getall");
+            var apiObject = _request.GetAsync("api/Products/getall").Result;
             var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
             return View(jsonObject);
-        }
+        } 
     }
 }
