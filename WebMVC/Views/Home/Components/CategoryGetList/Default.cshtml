@@ -11,7 +11,7 @@
             <ul class="nav navbar-nav nav_1">
                 @foreach (var category in Model)
                 {
-                    <li><a href="">@category.Name</a></li>
+                    <li><a href="/Home/CategoryDetails/@category.Id">@category.Name</a></li>
                 }
             </ul>
         </div>

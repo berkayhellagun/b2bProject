@@ -1,6 +1,7 @@
-﻿@using WebMVC
-@model List<WebMVC.Models.ProductModel>
-<!DOCTYPE html>
+﻿
+@using WebMVC
+@*@model List<WebMVC.Models.ProductModel>
+*@<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -54,7 +55,7 @@
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
             @await Component.InvokeAsync("CategoryGetList")
-            @await Component.InvokeAsync("ProductGetList")
+            @await Component.InvokeAsync("ProductListByCategory", new { categoryId = @ViewBag.id })
         </div>
     </div>
     <!-- Category and Product End -->
@@ -68,7 +69,7 @@
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="card product-item border-0 mb-4">
-                    @foreach (var item in Model)
+                    @*@foreach (var item in Model)
                     {
                         @if (@item.ProductInStock < 10 && @item.ProductionDate.AddDays(10) >= DateTime.Now)
                         {
@@ -87,7 +88,7 @@
                                 <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                             </div>
                         }
-                    }
+                    }*@
                 </div>
             </div>
         </div>
@@ -101,17 +102,15 @@
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="card product-item border-0 mb-4">
-                    @await Component.InvokeAsync("ProductGetList")
-
-                    @foreach (var item in Model)
+                    @*@foreach (var item in Model)
                     {
                         @*<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                    </div>*@
+                    </div>
 
                         @if (@item.ProductionDate.AddDays(10) >= DateTime.Now)
                         {
-                            @*son on gün içerisinde gelen ürünler listesi*@
+                            @*son on gün içerisinde gelen ürünler listesi
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <h6 class="text-truncate mb-3">@item.ProductName</h6>
                                 <div class="d-flex justify-content-center">
@@ -122,7 +121,7 @@
                                 <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                             </div>
                         }
-                    }
+                    }*@
                 </div>
             </div>
         </div>

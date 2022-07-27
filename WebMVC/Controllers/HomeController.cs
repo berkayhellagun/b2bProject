@@ -21,5 +21,13 @@ namespace WebMVC.Controllers
             var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
             return View(jsonObject);
         }
+
+        public IActionResult CategoryDetails()
+        {
+            //i need string convert to int
+            var categoryId = RouteData.Values["id"];
+            ViewBag.id = categoryId;
+            return View();
+        }
     }
 }
