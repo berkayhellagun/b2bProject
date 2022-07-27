@@ -34,7 +34,7 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Data)
                 : BadRequest(result.Message);
         }
-        [HttpGet("{id:int}")]
+        [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _genericService.AsyncGetById(id);
