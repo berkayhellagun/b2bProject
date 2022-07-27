@@ -12,7 +12,7 @@ namespace Entities.Concrete
 {
     public class Product : IEntity
     {
-        [Key, JsonIgnore]
+        [Key]
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int ProductSupplierId { get; set; }
