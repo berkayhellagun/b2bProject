@@ -15,5 +15,16 @@ namespace WebAPI.Controllers.Concrete
         {
             _productService = productService;
         }
+
+
+        [HttpGet("getproductdetail")]
+        public IActionResult GetProductDetail()
+        {
+            var result = _productService.GetProductDetail();
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
+
     }
 }

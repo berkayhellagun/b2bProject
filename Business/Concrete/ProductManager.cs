@@ -5,6 +5,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,13 @@ namespace Business.Concrete
                 ? new SuccessDataResult<List<Product>>(result)
                 : new ErrorDataResult<List<Product>>(Messages.Error);
         }
+
+        public IDataResult<List<ProductDetail>> GetProductDetail()
+        {
+            return new SuccessDataResult<List<ProductDetail>>(_productDal.GetProductDetail());
+        }
+
+
         [CacheAspect]
         public async Task<IDataResult<Product>> AsyncGetById(int id)
         {
