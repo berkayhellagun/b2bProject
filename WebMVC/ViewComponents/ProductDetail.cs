@@ -5,19 +5,19 @@ using WebMVC.Models;
 
 namespace WebMVC.ViewComponents
 {
-    public class ProductListByCategory : ViewComponent
+    public class ProductDetail : ViewComponent
     {
         IRequest _request;
 
-        public ProductListByCategory(IRequest request)
+        public ProductDetail(IRequest request)
         {
             _request = request;
         }
 
-        public IViewComponentResult Invoke(string categoryId)
+        public IViewComponentResult Invoke(string productId)
         {
-            var url = string.Format("api/Products/getproductbycategoryid?categoryId=" + categoryId);
-            var apiObject = _request.GetAsync(url).Result;
+            var requestUrl = string.Format("api/Products/getbyid?id=" + productId);
+            var apiObject = _request.GetAsync(requestUrl).Result;
             var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
             return View(jsonObject);
         }
