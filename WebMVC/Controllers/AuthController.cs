@@ -44,12 +44,12 @@ namespace WebMVC.Controllers
             }
             return View();
         }
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
-
 
         [HttpPost]
         public IActionResult Register(UserForRegisterDtoModel userForRegisterDtoModel)
@@ -67,6 +67,7 @@ namespace WebMVC.Controllers
             }
             return View();
         }
+
         [HttpGet]
         public IActionResult Register()
         {
