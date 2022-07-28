@@ -18,7 +18,7 @@ namespace WebMVC.ViewComponents
         {
             var requestUrl = string.Format("api/Products/getbyid?id=" + productId);
             var apiObject = _request.GetAsync(requestUrl).Result;
-            var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
+            var jsonObject = JsonConvert.DeserializeObject<ProductModel>(apiObject);
             return View(jsonObject);
         }
     }

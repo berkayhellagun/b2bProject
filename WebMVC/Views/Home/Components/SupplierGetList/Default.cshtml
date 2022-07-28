@@ -7,7 +7,7 @@
             @if (@item.SupplierGiro >= 1000)
             {
                 <div class="col-xs-12 col-sm-6 col-md-3 col">
-                    <a href="" class="seoContent">
+                    <a href="/Supplier/SupplierDetail/@item.SupplierId" class="seoContent">
                         <div class="seoContentTop">
                             <div class="seoContentImg">
                                 <img src="https://img.kompass.com/sys-master-root/hd3/h7e/9208415059998/no_company_logo.png" alt="">
@@ -23,9 +23,6 @@
                             <p class="seoContentActivity">
                                 @item.SupplierDescription
                             </p>
-                        </div>
-                        <div class="seoContentLink text-center">
-                            <div class="btn btn-nkcGreen">Firma hakkında daha fazlası</div>
                         </div>
                     </a>
                 </div>
