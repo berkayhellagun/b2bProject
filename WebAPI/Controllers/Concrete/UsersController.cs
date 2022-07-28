@@ -15,5 +15,14 @@ namespace WebAPI.Controllers.Concrete
         {
             _userService = userService;
         }
+
+        [HttpGet("getuserbysupplierid")]
+        public IActionResult GetUserBySupplierId(int supplierId)
+        {
+            var result = _userService.GetUserBySupplierId(supplierId);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }

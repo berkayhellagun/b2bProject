@@ -79,5 +79,10 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
         }
+
+        public IDataResult<List<User>> GetUserBySupplierId(int supplierId)
+        {
+            return new SuccessDataResult<List<User>>(_userDal.GetList(u => u.SupplierId == supplierId).ToList());
+        }
     }
 }

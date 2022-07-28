@@ -35,5 +35,13 @@ namespace WebAPI.Controllers.Concrete
                 : BadRequest(result.Message);
         }
 
+        [HttpGet("getproductbysupplierid")]
+        public IActionResult GetBySupplierId(int supplierId)
+        {
+            var result = _productService.GetBySupplierId(supplierId);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }

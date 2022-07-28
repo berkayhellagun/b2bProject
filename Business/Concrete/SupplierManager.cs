@@ -42,7 +42,7 @@ namespace Business.Concrete
         {
             var result = await _supplierDal.AsyncGetDB(s => s.SupplierId == id);
             return result != null
-                ? new SuccessDataResult<Supplier>()
+                ? new SuccessDataResult<Supplier>(result)
                 : new ErrorDataResult<Supplier>(Messages.Error);
         }
 

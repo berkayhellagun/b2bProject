@@ -74,5 +74,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductCategoryId == categoryId).ToList());
         }
+
+        public IDataResult<List<Product>> GetBySupplierId(int supplierId)
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSupplierId == supplierId).ToList());
+        }
     }
 }
