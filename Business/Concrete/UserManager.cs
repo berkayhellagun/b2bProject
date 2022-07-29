@@ -4,6 +4,7 @@ using Business.Constants;
 using Business.Validation.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -19,15 +20,25 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         readonly IUserDal _userDal;
+        readonly ISupplierService _supplierService;
+        ICacheService _cacheService;
 
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal, ISupplierService supplierService, ICacheService cacheService)
         {
             _userDal = userDal;
+            _supplierService = supplierService;
+            _cacheService = cacheService;
         }
         [ValidationAspect(typeof(UserValidator))]
         public async Task<IResult> AsyncAdd(User t)
         {
+            if(t.SupplierId != null)
+            {
+                var supplierName = BindSupplierName(t.SupplierId.Value);
+                t.SupplierName = supplierName;
+            }
             var result = await _userDal.AsyncAddDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
@@ -83,6 +94,21 @@ namespace Business.Concrete
         public IDataResult<List<User>> GetUserBySupplierId(int supplierId)
         {
             return new SuccessDataResult<List<User>>(_userDal.GetList(u => u.SupplierId == supplierId).ToList());
+        }
+
+        private string BindSupplierName(int supplierId)
+        {
+            var supplier = _supplierService.AsyncGetById(supplierId).Result;
+            if (supplier.Data == null)
+            {
+                return string.Empty;
+            }
+            return supplier.Data.SupplierName;
+        }
+
+        public Task<IResult> RemoveById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

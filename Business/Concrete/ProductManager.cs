@@ -79,5 +79,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSupplierId == supplierId).ToList());
         }
+
+        public Task<IResult> RemoveById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

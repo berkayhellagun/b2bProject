@@ -45,7 +45,7 @@ namespace Business.Concrete
         public async Task<IDataResult<List<Category>>> AsyncGetAll()
         {
             var result = await _categoryDal.AsyncGetAllDB();
-            return result != null 
+            return result != null
                 ? new SuccessDataResult<List<Category>>(result)
                 : new ErrorDataResult<List<Category>>(Messages.Error);
         }
@@ -72,6 +72,15 @@ namespace Business.Concrete
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
+        }
+
+        public async Task<IResult> RemoveById(int id)
+        {
+            var category = await AsyncGetById(id);
+            var result = await AsyncRemove(category.Data);
+            return result.Success
+                ? new SuccessResult()
+                : new ErrorResult();
         }
     }
 }

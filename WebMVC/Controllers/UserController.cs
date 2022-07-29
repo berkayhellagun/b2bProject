@@ -18,7 +18,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var ApiObject = await _request.GetAsync("api/Users/getall");
-            if (ApiObject == Constants.Exception )
+            if (ApiObject == Constants.Exception)
             {
                 //exception
                 return View();
@@ -27,16 +27,34 @@ namespace WebMVC.Controllers
             return View(ApiResult);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
+        public async Task<IActionResult> Remove()
         {
-            var apiObject = await _request.DeleteAsync("api/Users/remove");
-            if (apiObject == Constants.Exception)
+            var userId = RouteData.Values["id"];
+            var url = string.Format("api/Users/remove/" + userId);
+            var apiObject = await _request.DeleteAsync(url);
+            return RedirectToAction("/Admin/Users");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UserModel user)
+        {
+            user.Status = true;
+            var result = await _request.PutAsync("api/Users/update", user);
+            if (result == Constants.Exception)
             {
                 return View();
             }
-            var ApiResult = JsonConvert.DeserializeObject<List<UserModel>>(apiObject);
-            return View(ApiResult);
+            return RedirectToAction("/Admin/Users");
+        }
+
+        [HttpGet]
+        public IActionResult Update()
+        {
+            var userId = RouteData.Values["id"];
+            var url = string.Format("api/Users/getbyid?id=" + userId);
+            var apiObject = _request.GetAsync(url).Result;
+            var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
+            return View(jsonObject);
         }
     }
 }

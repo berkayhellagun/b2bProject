@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace Core.CrossCuttingConcerns.Caching.MemoryCaching
     public class MemoryCacheManager : ICacheService
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ConcurrentDictionary<object, ICacheEntry> _cacheEntries = new ConcurrentDictionary<object, ICacheEntry>();
+
         public MemoryCacheManager()
         {
             // we need low coupling so use inversion of control design principles
@@ -41,6 +44,12 @@ namespace Core.CrossCuttingConcerns.Caching.MemoryCaching
         public void Remove(string key)
         {
             _memoryCache.Remove(key);
+        }
+
+        public void Clear()
+        {
+            foreach (var cacheEntry in this._cacheEntries.Keys.ToList())
+                this._memoryCache.Remove(cacheEntry);
         }
     }
 }

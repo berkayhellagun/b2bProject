@@ -18,5 +18,6 @@ namespace Core.Entities.Concrete
         public byte[] PasswordSalt { get; set; }
         public bool Status { get; set; } //otomatic binding
         public int? SupplierId { get; set; }
+        public string? SupplierName { get; set; }
     }
 }

@@ -59,5 +59,15 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Success)
                 : BadRequest(result.Message);
         }
+
+        [HttpDelete("removebyid")]
+        public async Task<IActionResult> RemoveById(int id)
+        {
+            var result = await _genericService.RemoveById(id);
+            return result.Success
+                ? Ok(result.Success)
+                : BadRequest(result.Message);
+        }
+
     }
 }

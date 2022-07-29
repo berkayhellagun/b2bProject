@@ -1,0 +1,61 @@
+﻿@model WebMVC.Models.UserModel
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Edit Profile</h4>
+        <p class="card-category">Complete your profile</p>
+    </div>
+    <div class="card-body">
+        <form action="/User/Update" method="post">
+            <div class="row">
+                @*<div class="col-md-5">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">UserId (lütfen dikkatli olun)</label>
+                        <input type="text" class="form-control" name="UserId" value=@Model.UserId>
+                    </div>
+                </div>*@
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Email address</label>
+                        <input type="email" class="form-control" name="Email" value=@Model.Email>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">First Name</label>
+                        <input type="text" class="form-control" name="FirstName" value=@Model.FirstName>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Last Name</label>
+                        <input type="text" class="form-control" name="LastName" value=@Model.LastName>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Id</label>
+                        <input type="text" class="form-control" name="SupplierId" value=@Model.SupplierId>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Name</label>
+                        <input type="text" class="form-control" name="SupplierName" value=@Model.SupplierName>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" action="">Update Profile</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>

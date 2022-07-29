@@ -10,5 +10,6 @@ namespace WebAPI.Controllers.Abstract
         Task<IActionResult> Update(T t);
         Task<IActionResult> GetAll();
         Task<IActionResult> GetById(int id);
+        Task<IActionResult> RemoveById(int id);
     }
 }

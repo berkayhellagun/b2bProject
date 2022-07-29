@@ -15,5 +15,6 @@ namespace Business.Abstract
         Task<IResult> AsyncUpdate(T t);
         Task<IDataResult<List<T>>> AsyncGetAll();
         Task<IDataResult<T>> AsyncGetById(int id);
+        Task<IResult> RemoveById(int id);
     }
 }

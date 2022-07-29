@@ -61,5 +61,10 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
         }
+
+        public Task<IResult> RemoveById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
