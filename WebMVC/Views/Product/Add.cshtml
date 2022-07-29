@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Add Product</h4>
+        <p class="card-category">Complete Product</p>
+    </div>
+    <div class="card-body">
+        <form action="/Product/Add" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Name</label>
+                        <input type="text" class="form-control" name="ProductName">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Supplier Id</label>
+                        <input type="text" class="form-control" name="ProductSupplierId">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Category Id</label>
+                        <input type="text" class="form-control" name="ProductCategoryId">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Description</label>
+                        <input type="text" class="form-control" name="ProductDescription">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Country</label>
+                        <input type="text" class="form-control" name="ProductCountry">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Price</label>
+                        <input type="text" class="form-control" name="ProductPrice">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product Date</label>
+                        <input type="text" class="form-control" name="ProductionDate">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Product In Stock</label>
+                        <input type="text" class="form-control" name="ProductInStock">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" action="">Add Product</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+
+

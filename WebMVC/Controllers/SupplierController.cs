@@ -28,20 +28,52 @@ namespace WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Add(UserModel user)
+        public async Task<IActionResult> Add(SupplierModel supplier)
         {
-            var result = await _request.PostAsync("api/Users/add", user);
+            var result = await _request.PostAsync("api/Suppliers/add", supplier);
             if (result == Constants.Exception)
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Users");
+            return RedirectToAction("/Admin/Suppliers");
         }
 
         [HttpGet]
         public IActionResult Add()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(SupplierModel supplier)
+        {
+            var result = await _request.PutAsync("api/Suppliers/update", supplier);
+            if (result == Constants.Exception)
+            {
+                return View();
+            }
+            return RedirectToAction("/Admin/Suppliers");
+        }
+        [HttpGet]
+        public IActionResult Update()
+        {
+            var SupplierId = RouteData.Values["id"];
+            var url = string.Format("api/Suppliers/getbyid?id=" + SupplierId);
+            var apiObject = _request.GetAsync(url).Result;
+            var jsonObject = JsonConvert.DeserializeObject<SupplierModel>(apiObject);
+            return View(jsonObject);
+        }
+
+        public async Task<IActionResult> Remove()
+        {
+            var SupplierId = RouteData.Values["id"];
+            var url = string.Format("api/Suppliers/removebyid?id=" + SupplierId);
+            var result = await _request.DeleteAsync(url);
+            if (result == Constants.Exception)
+            {
+                return View();
+            }
+            return RedirectToAction("/Admin/Suppliers");
         }
     }
 }

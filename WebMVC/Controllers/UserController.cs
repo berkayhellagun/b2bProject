@@ -30,8 +30,12 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> Remove()
         {
             var userId = RouteData.Values["id"];
-            var url = string.Format("api/Users/remove/" + userId);
-            var apiObject = await _request.DeleteAsync(url);
+            var url = string.Format("api/Users/removebyid?id=" + userId);
+            var result = await _request.DeleteAsync(url);
+            if (result == Constants.Exception)
+            {
+                return View();
+            }
             return RedirectToAction("/Admin/Users");
         }
 

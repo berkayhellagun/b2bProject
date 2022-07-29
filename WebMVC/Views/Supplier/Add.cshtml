@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Add Supplier</h4>
+        <p class="card-category">Complete Supplier</p>
+    </div>
+    <div class="card-body">
+        <form action="/Supplier/Add" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Name</label>
+                        <input type="text" class="form-control" name="SupplierName">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Mail</label>
+                        <input type="text" class="form-control" name="SupplierMail"l>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Telephone Number</label>
+                        <input type="text" class="form-control" name="SupplierTelephoneNumber">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Contact Person Id</label>
+                        <input type="text" class="form-control" name="SupplierContactPersonId">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Giro</label>
+                        <input type="text" class="form-control" name="SupplierGiro">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Country</label>
+                        <input type="text" class="form-control" name="SupplierCountry">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Found Year</label>
+                        <input type="text" class="form-control" name="SupplierFoundYear">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Employee Count</label>
+                        <input type="text" class="form-control" name="EmployeeCount">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Tax No</label>
+                        <input type="text" class="form-control" name="SupplierTaxNo">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Supplier Description</label>
+                        <input type="text" class="form-control" name="SupplierDescription">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" action="">Add Supplier</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
