@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.Models;
+using WebMVC.Models.AddModel;
 
 namespace WebMVC.Controllers
 {
@@ -51,7 +52,7 @@ namespace WebMVC.Controllers
             return RedirectToAction("/Admin/Users");
         }
         [HttpPost]
-        public async Task<IActionResult> Add(CategoryModel category)
+        public async Task<IActionResult> Add(Category category)
         {
             var result = await _request.PostAsync("api/Categories/add", category);
             if (result == Constants.Exception)

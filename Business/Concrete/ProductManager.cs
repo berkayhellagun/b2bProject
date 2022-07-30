@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
+using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -17,15 +18,17 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-
-        public ProductManager(IProductDal productDal)
+        ICacheService _cacheService;
+        public ProductManager(IProductDal productDal, ICacheService cacheService)
         {
             _productDal = productDal;
+            _cacheService = cacheService;
         }
 
         public async Task<IResult> AsyncAdd(Product t)
         {
             var result = await _productDal.AsyncAddDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
@@ -57,6 +60,7 @@ namespace Business.Concrete
         public async Task<IResult> AsyncRemove(Product t)
         {
             var result = await _productDal.AsyncDeleteDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Removed)
                 : new ErrorResult(Messages.NotRemoved);
@@ -65,6 +69,7 @@ namespace Business.Concrete
         public async Task<IResult> AsyncUpdate(Product t)
         {
             var result = await _productDal.AsyncUpdateDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
@@ -80,9 +85,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSupplierId == supplierId).ToList());
         }
 
-        public Task<IResult> RemoveById(int id)
+        public async Task<IResult> RemoveById(int id)
         {
-            throw new NotImplementedException();
+            var product = await AsyncGetById(id);
+            var result = await AsyncRemove(product.Data);
+            return result.Success
+                ? new SuccessResult()
+                : new ErrorResult();
         }
     }
 }

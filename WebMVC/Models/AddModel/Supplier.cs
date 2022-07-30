@@ -1,9 +1,7 @@
-﻿
-namespace WebMVC.Models
+﻿namespace WebMVC.Models.AddModel
 {
-    public class SupplierModel
+    public class Supplier
     {
-        public int SupplierId { get; set; }
         public string SupplierName { get; set; }
         public string SupplierMail { get; set; }
         public string SupplierTelephoneNumber { get; set; }

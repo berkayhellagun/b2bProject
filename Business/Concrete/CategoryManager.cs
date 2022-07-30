@@ -5,6 +5,7 @@ using Business.Validation.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Logging.NLog.Types;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -24,10 +25,12 @@ namespace Business.Concrete
     public class CategoryManager : ICategoryService
     {
         readonly ICategoryDal _categoryDal;
+        readonly ICacheService _cacheService;
 
-        public CategoryManager(ICategoryDal categoryDal)
+        public CategoryManager(ICategoryDal categoryDal, ICacheService cacheService)
         {
             _categoryDal = categoryDal;
+            _cacheService = cacheService;
         }
 
         [SecuredOperation("admin,")]
@@ -36,6 +39,7 @@ namespace Business.Concrete
         public async Task<IResult> AsyncAdd(Category t)
         {
             var result = await _categoryDal.AsyncAddDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
@@ -61,6 +65,7 @@ namespace Business.Concrete
         public async Task<IResult> AsyncRemove(Category t)
         {
             var result = await _categoryDal.AsyncDeleteDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Removed)
                 : new ErrorResult(Messages.NotRemoved);
@@ -69,6 +74,7 @@ namespace Business.Concrete
         public async Task<IResult> AsyncUpdate(Category t)
         {
             var result = await _categoryDal.AsyncUpdateDB(t);
+            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);

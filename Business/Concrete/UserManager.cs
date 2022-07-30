@@ -106,9 +106,13 @@ namespace Business.Concrete
             return supplier.Data.SupplierName;
         }
 
-        public Task<IResult> RemoveById(int id)
+        public async Task<IResult> RemoveById(int id)
         {
-            throw new NotImplementedException();
+            var user = await AsyncGetById(id);
+            var result = await AsyncRemove(user.Data);
+            return result.Success
+                ? new SuccessResult()
+                : new ErrorResult();
         }
     }
 }

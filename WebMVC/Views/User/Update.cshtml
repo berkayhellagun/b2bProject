@@ -13,12 +13,12 @@
     <div class="card-body">
         <form action="/User/Update" method="post">
             <div class="row">
-                @*<div class="col-md-5">
+                <div class="col-md-5">
                     <div class="form-group bmd-form-group">
-                        <label class="bmd-label-floating">UserId (lütfen dikkatli olun)</label>
-                        <input type="text" class="form-control" name="UserId" value=@Model.UserId>
+                        <label class="bmd-label-floating">UserId</label>
+                        <input type="text" class="form-control" name="UserId" value=@Model.UserId readonly="readonly">
                     </div>
-                </div>*@
+                </div>
                 <div class="col-md-4">
                     <div class="form-group bmd-form-group">
                         <label class="bmd-label-floating">Email address</label>

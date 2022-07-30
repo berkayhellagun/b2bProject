@@ -38,7 +38,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Suppliers()
         {
-            var apiObj = _request.GetAsync("api/Supplier/getall").Result;
+            var apiObj = _request.GetAsync("api/Suppliers/getall").Result;
             var jsonObj = JsonConvert.DeserializeObject<List<SupplierModel>>(apiObj);
             return View(jsonObj);
         }

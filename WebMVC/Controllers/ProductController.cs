@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.Models;
+using WebMVC.Models.AddModel;
 
 namespace WebMVC.Controllers
 {
@@ -19,7 +20,7 @@ namespace WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Add(ProductModel product)
+        public async Task<IActionResult> Add(Product product)
         {
             var result = await _request.PostAsync("api/Products/add", product);
             if (result == Constants.Exception)

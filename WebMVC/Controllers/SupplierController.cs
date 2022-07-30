@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.Models;
+using WebMVC.Models.AddModel;
 
 namespace WebMVC.Controllers
 {
@@ -28,7 +29,7 @@ namespace WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Add(SupplierModel supplier)
+        public async Task<IActionResult> Add(Supplier supplier)
         {
             var result = await _request.PostAsync("api/Suppliers/add", supplier);
             if (result == Constants.Exception)
@@ -58,6 +59,7 @@ namespace WebMVC.Controllers
         public IActionResult Update()
         {
             var SupplierId = RouteData.Values["id"];
+            ViewBag.id = SupplierId;
             var url = string.Format("api/Suppliers/getbyid?id=" + SupplierId);
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<SupplierModel>(apiObject);
@@ -71,7 +73,7 @@ namespace WebMVC.Controllers
             var result = await _request.DeleteAsync(url);
             if (result == Constants.Exception)
             {
-                return View();
+                return RedirectToAction("/Admin/Suppliers");
             }
             return RedirectToAction("/Admin/Suppliers");
         }
