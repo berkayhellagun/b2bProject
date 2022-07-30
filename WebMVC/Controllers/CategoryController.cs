@@ -28,7 +28,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Categories");
+            return RedirectToAction("Categories","Admin");
         }
         [HttpGet]
         public IActionResult Update()
@@ -43,13 +43,13 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> Remove()
         {
             var categoryId = RouteData.Values["id"];
-            var url = string.Format("api/Users/removebyid?id=" + categoryId);
+            var url = string.Format("api/Categories/removebyid?id=" + categoryId);
             var result = await _request.DeleteAsync(url);
             if (result == Constants.Exception)
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Users");
+            return RedirectToAction("Categories","Admin");
         }
         [HttpPost]
         public async Task<IActionResult> Add(Category category)
@@ -59,7 +59,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Categories");
+            return RedirectToAction("Categories", "Admin");
         }
 
         [HttpGet]

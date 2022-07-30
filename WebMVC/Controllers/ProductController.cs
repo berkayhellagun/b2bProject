@@ -27,7 +27,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Products");
+            return RedirectToAction("Products", "Admin");
         }
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Products");
+            return RedirectToAction("Products", "Admin");
         }
         [HttpGet]
         public IActionResult Update()
@@ -65,7 +65,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Products");
+            return RedirectToAction("Products", "Admin");
         }
     }
 }

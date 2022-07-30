@@ -36,7 +36,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Suppliers");
+            return RedirectToAction("Suppliers", "Admin");
         }
 
         [HttpGet]
@@ -53,7 +53,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Suppliers");
+            return RedirectToAction("Suppliers", "Admin");
         }
         [HttpGet]
         public IActionResult Update()
@@ -73,9 +73,9 @@ namespace WebMVC.Controllers
             var result = await _request.DeleteAsync(url);
             if (result == Constants.Exception)
             {
-                return RedirectToAction("/Admin/Suppliers");
+                return RedirectToAction("Suppliers", "Admin");
             }
-            return RedirectToAction("/Admin/Suppliers");
+            return RedirectToAction("Suppliers", "Admin");
         }
     }
 }

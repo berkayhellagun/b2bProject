@@ -36,7 +36,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Users");
+            return RedirectToAction("Users", "Admin");
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("/Admin/Users");
+            return RedirectToAction("Users", "Admin");
         }
 
         [HttpGet]
