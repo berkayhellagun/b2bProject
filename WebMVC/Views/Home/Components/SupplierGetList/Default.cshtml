@@ -10,7 +10,10 @@
                     <a href="/Supplier/SupplierDetail/@item.SupplierId" class="seoContent">
                         <div class="seoContentTop">
                             <div class="seoContentImg">
-                                <img src="https://img.kompass.com/sys-master-root/hd3/h7e/9208415059998/no_company_logo.png" alt="">
+                                @if (item.SupplierImage == "" || @item.SupplierImage == null)
+                                {
+                                    <img src="https://img.kompass.com/sys-master-root/hd3/h7e/9208415059998/no_company_logo.png" alt="">
+                                }
                             </div>
                             <div class="seoContentTitle">
                                 <h3>@item.SupplierName</h3>

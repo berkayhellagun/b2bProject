@@ -11,5 +11,6 @@
         public bool Status { get; set; } //otomatic binding
         public int? SupplierId { get; set; }
         public string? SupplierName { get; set; }
+        public string? UserImage { get; set; }
     }
 }

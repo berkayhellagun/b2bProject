@@ -24,5 +24,6 @@ namespace Entities.Concrete
         public string EmployeeCount { get; set; }
         public string SupplierTaxNo { get; set; }
         public string SupplierDescription { get; set; }
+        public string? SupplierImage { get; set; }
     }
 }

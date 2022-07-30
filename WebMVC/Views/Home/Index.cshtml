@@ -24,7 +24,7 @@
             <div class="card product-item border-0 mb-4">
                 @foreach (var item in Model)
                 {
-                    @if (@item.ProductInStock < 10 && @item.ProductionDate.AddDays(10) >= DateTime.Now)
+                    @if (@item.ProductSalesAmount > 20 && @item.ProductionDate.AddDays(10) >= DateTime.Now)
                     {
                         // top product
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">

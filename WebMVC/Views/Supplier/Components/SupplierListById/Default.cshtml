@@ -2,6 +2,25 @@
 
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        @if (@Model.SupplierImage == "" || @Model.SupplierImage == null)
+                        {
+                            <img class="w-100 h-100" src="~/Images/SupplierImage/default.png" alt="Image">
+                        }
+                        <img class="w-100 h-100" src="~/@Model.SupplierImage" alt="Image">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
+            </div>
+        </div>
         <div class="col-lg-7 pb-5">
             <h3 class="font-weight-semi-bold">@Model.SupplierName</h3>
             <h5 class="font-weight-semi-thin">Bu firma @Model.SupplierCountry içerisinde bulunmakta.</h5>
