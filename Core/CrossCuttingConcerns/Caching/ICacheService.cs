@@ -14,5 +14,6 @@ namespace Core.CrossCuttingConcerns.Caching
         void Remove(string key);
         bool IsAdd(string key);
         void Clear();
+
     }
 }
