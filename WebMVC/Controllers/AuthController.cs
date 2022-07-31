@@ -35,6 +35,7 @@ namespace WebMVC.Controllers
                 });
                 if (apiResultJson != null && apiResultJson.ExpirationTime >= DateTime.Now)
                 {
+                    HttpContext.Session.SetString("email", userForLoginDto.Email);
                     return RedirectToAction("Index", "Home");
                 }
             }

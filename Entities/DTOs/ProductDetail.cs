@@ -13,5 +13,7 @@ namespace Entities.DTOs
         public decimal Price { get; set; }
         public string Country { get; set; }
         public DateTime Date { get; set; }
+        public string SupplierName { get; set; }
+        public string CategoryName { get; set; }
     }
 }

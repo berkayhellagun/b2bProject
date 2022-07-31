@@ -23,6 +23,8 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  Name = p.ProductName,
                                  Price = p.ProductPrice,
+                                 SupplierName = s.SupplierName,
+                                 CategoryName = c.Name,
                                  Country = p.ProductCountry,
                                  Description = p.ProductDescription,
                                  Date = p.ProductionDate

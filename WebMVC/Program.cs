@@ -14,7 +14,7 @@ IServiceCollection service = builder.Services;
 service.AddSingleton<IRequest, Request>();
 service.AddHttpContextAccessor();
 service.AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();
-
+service.AddSession();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -23,7 +23,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 };
-
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
