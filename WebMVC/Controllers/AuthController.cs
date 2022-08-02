@@ -1,21 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.Models;
 
 namespace WebMVC.Controllers
 {
+    [AllowAnonymous]
     public class AuthController : Controller
     {
         private readonly IRequest _request;
-
         public AuthController(IRequest request)
         {
             _request = request;
         }
-
         [HttpPost]
-        public IActionResult Login(UserForLoginDtoModel userForLoginDto)
+        public async Task<IActionResult> Login(UserForLoginDtoModel userForLoginDto)
         {
             var result = _request.Post("api/Auth/login", userForLoginDto);
             if (result == Constants.Exception)
@@ -33,25 +35,23 @@ namespace WebMVC.Controllers
                     SameSite = SameSiteMode.Strict,
 
                 });
-                if (apiResultJson != null && apiResultJson.ExpirationTime >= DateTime.Now)
+                if (apiResultJson == null && apiResultJson.ExpirationTime <= DateTime.Now)
                 {
-                    HttpContext.Session.SetString("email", userForLoginDto.Email);
-                    return RedirectToAction("Index", "Home");
+                    return View();
                 }
+                HttpContext.Session.SetString("email", userForLoginDto.Email);
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {
                 return View();
             }
-            return View();
         }
-
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult Register(UserForRegisterDtoModel userForRegisterDtoModel)
         {
@@ -68,7 +68,6 @@ namespace WebMVC.Controllers
             }
             return View();
         }
-
         [HttpGet]
         public IActionResult Register()
         {

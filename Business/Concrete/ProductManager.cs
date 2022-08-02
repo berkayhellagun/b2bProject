@@ -27,8 +27,8 @@ namespace Business.Concrete
 
         public async Task<IResult> AsyncAdd(Product t)
         {
+            t.ProductionDate = DateTime.Now;
             var result = await _productDal.AsyncAddDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);

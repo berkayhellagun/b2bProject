@@ -1,0 +1,32 @@
+﻿@model WebMVC.Models.OperationClaimModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Update Operation</h4>
+    </div>
+    <div class="card-body">
+        <form action="/Operation/Update" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Operation Id</label>
+                        <input type="text" class="form-control" name="OperationId" value=@Model.OperationId readonly="readonly">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Operation Name</label>
+                        <input type="text" class="form-control" value=@Model.OperationName name="OperationName">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" action="">Update Operation</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+

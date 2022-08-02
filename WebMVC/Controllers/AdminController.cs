@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.Models;
@@ -48,6 +49,21 @@ namespace WebMVC.Controllers
         {
             var apiObj = _request.GetAsync("api/Categories/getall").Result;
             var jsonObj = JsonConvert.DeserializeObject<List<CategoryModel>>(apiObj);
+            return View(jsonObj);
+        }
+        [HttpGet]
+        public IActionResult OperationClaims()
+        {
+            var apiObj = _request.GetAsync("api/OperationClaims/getall").Result;
+            var jsonObj = JsonConvert.DeserializeObject<List<OperationClaimModel>>(apiObj);
+            return View(jsonObj);
+        }
+
+        [HttpGet]
+        public IActionResult UserOperationClaims()
+        {
+            var apiObj = _request.GetAsync("api/UserOperationClaims/getdetailuseroperation").Result;
+            var jsonObj = JsonConvert.DeserializeObject<List<UserOperationClaimModel>>(apiObj);
             return View(jsonObj);
         }
     }

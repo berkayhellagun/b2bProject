@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Add User Operation</h4>
+    </div>
+    <div class="card-body">
+        <form action="/UserOperation/Add" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">User Id</label>
+                        <input type="text" class="form-control" name="UserId">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Operation Id</label>
+                        <input type="text" class="form-control" name="OperationId">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" action="">Add User Operation</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+

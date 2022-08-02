@@ -1,15 +1,27 @@
 using Flurl.Http.Configuration;
-using WebMVC.API;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Security.Principal;
+using WebMVC.API;
+using WebMVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+IServiceCollection service = builder.Services;
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+service.AddControllersWithViews();
 
-IServiceCollection service = builder.Services;
+//service.AddMvc(config =>
+//{
+//    var policy = new AuthorizationPolicyBuilder()
+//                     .RequireAuthenticatedUser()
+//                     .Build();
+//    config.Filters.Add(new AuthorizeFilter(policy));
+//});
+
+service.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => x.LoginPath = "/Auth/Login");
 
 service.AddSingleton<IRequest, Request>();
 service.AddHttpContextAccessor();

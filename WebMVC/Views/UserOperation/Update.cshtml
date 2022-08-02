@@ -1,0 +1,52 @@
+﻿@model List<WebMVC.Models.UserOperationClaimModel>
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Update User Operation</h4>
+    </div>
+    <div class="card-body">
+        <form action="/UserOperation/Update" method="post">
+            <div class="row">
+                @foreach (var item in @Model)
+                {
+                        <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">User Operation Id</label>
+                        <input type="text" class="form-control" name="UserOperationClaimId" value=@item.UserOperationId  readonly="readonly">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">User Id</label>
+                        <input type="text" class="form-control" name="UserId" value=@item.UserId>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">User Name</label>
+                        <input type="text" class="form-control" value=@item.UserName readonly="readonly">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Operation Id</label>
+                        <input type="text" class="form-control" name="OperationId" value=@item.OperationId>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">Operation Name</label>
+                        <input type="text" class="form-control" value=@item.OperationName readonly="readonly">
+                    </div>
+                </div>
+                }
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" action="">Update User Operation</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>

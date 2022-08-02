@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Dynamic;
 using WebMVC.API;
@@ -15,15 +16,21 @@ namespace WebMVC.Controllers
         }
 
         //[HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var apiObject = _request.Get("api/Products/getall");
             var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
             return View(jsonObject);
         }
-
+        [AllowAnonymous]
         public IActionResult CategoryDetails()
         {
+            var cookie = HttpContext.Request.Cookies[Constants.XAccessToken];
+            if (cookie == null)
+            {
+                return View();
+            }
             //i need string convert to int
             var categoryId = RouteData.Values["id"];
             ViewBag.id = categoryId;
