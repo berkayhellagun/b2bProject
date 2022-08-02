@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using WebMVC.API;
-using WebMVC.Extensions;
 using WebMVC.Models;
 
 namespace WebMVC.Controllers
@@ -42,10 +41,10 @@ namespace WebMVC.Controllers
                 {
                     return View();
                 }
-                HttpContext.Session.SetString("email", userForLoginDto.Email);
                 JwtSecurityToken token = new JwtSecurityToken(jwtEncodedString: apiResultJson.Token);
-                var value = token.Claims.First(claims => claims.Type.Contains("role")).Value;
-
+                var role = token.Claims.First(claims => claims.Type.Contains("role")).Value;
+                HttpContext.Session.SetString(Constants.Email, userForLoginDto.Email);
+                HttpContext.Session.SetString(Constants.Role, role);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)

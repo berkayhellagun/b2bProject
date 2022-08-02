@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Security.Principal;
 using WebMVC.API;
+using WebMVC.Middleware;
 using WebMVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +39,7 @@ if (!app.Environment.IsDevelopment())
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseMiddleware<WebMVC.Middleware.AuthorizationMiddleware>();
 app.UseRouting();
 
 app.UseAuthentication();

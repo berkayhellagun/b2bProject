@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebMVC.API;
+using WebMVC.CustomAttribute;
 using WebMVC.Models;
 using WebMVC.Models.AddModel;
 
@@ -14,7 +15,7 @@ namespace WebMVC.Controllers
         {
             _request = request;
         }
-
+        [MyAuthorizeAttribute(Roles = "user")]
         public IActionResult Index()
         {
             var apiObject = _request.GetAsync("api/Suppliers/getall").Result;
