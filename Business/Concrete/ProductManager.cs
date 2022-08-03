@@ -42,9 +42,9 @@ namespace Business.Concrete
                 : new ErrorDataResult<List<Product>>(Messages.Error);
         }
 
-        public IDataResult<List<ProductDetail>> GetProductDetail()
-        {
-            return new SuccessDataResult<List<ProductDetail>>(_productDal.GetProductDetail());
+        public IDataResult<List<ProductDetail>> GetProductDetail(int id)
+        {   
+            return new SuccessDataResult<List<ProductDetail>>(_productDal.GetProductDetail(id));
         }
 
 

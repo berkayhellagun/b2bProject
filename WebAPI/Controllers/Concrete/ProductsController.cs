@@ -17,10 +17,10 @@ namespace WebAPI.Controllers.Concrete
         }
 
 
-        [HttpGet("getproductdetail")]
-        public IActionResult GetProductDetail()
+        [HttpGet("getproductdetailbyid")]
+        public IActionResult GetProductDetail(int id)
         {
-            var result = _productService.GetProductDetail();
+            var result = _productService.GetProductDetail(id);
             return result.Success
                 ? Ok(result.Data)
                 : BadRequest(result.Message);
