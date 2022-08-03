@@ -30,6 +30,7 @@ namespace Business.Concrete
             _cacheService = cacheService;
         }
         [ValidationAspect(typeof(UserValidator))]
+        [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> AsyncAdd(User t)
         {
             if(t.SupplierId != null)
@@ -38,7 +39,6 @@ namespace Business.Concrete
                 t.SupplierName = supplierName;
             }
             var result = await _userDal.AsyncAddDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
@@ -75,6 +75,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<OperationClaim>>(result);
         }
 
+        [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> AsyncRemove(User t)
         {
             var result = await _userDal.AsyncDeleteDB(t);
@@ -83,6 +84,7 @@ namespace Business.Concrete
                 : new ErrorResult(Messages.NotRemoved);
         }
 
+        [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> AsyncUpdate(User t)
         {
             var result = await _userDal.AsyncUpdateDB(t);
@@ -106,6 +108,7 @@ namespace Business.Concrete
             return supplier.Data.SupplierName;
         }
 
+        [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> RemoveById(int id)
         {
             var user = await AsyncGetById(id);

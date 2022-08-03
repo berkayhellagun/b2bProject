@@ -25,10 +25,10 @@ namespace Business.Concrete
             _cacheService = cacheService;
         }
 
+        [CacheRemoveAspect("ISupplierService.Get")]
         public async Task<IResult> AsyncAdd(Supplier t)
         {
             var result = await _supplierDal.AsyncAddDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(message: Messages.Added)
                 : new ErrorResult(message: Messages.NotAdded);
@@ -50,19 +50,19 @@ namespace Business.Concrete
                 : new ErrorDataResult<Supplier>(Messages.Error);
         }
 
+        [CacheRemoveAspect("ISupplierService.Get")]
         public async Task<IResult> AsyncRemove(Supplier t)
         {
             var result = await _supplierDal.AsyncDeleteDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Removed)
                 : new ErrorResult(Messages.NotRemoved);
         }
 
+        [CacheRemoveAspect("ISupplierService.Get")]
         public async Task<IResult> AsyncUpdate(Supplier t)
         {
             var result = await _supplierDal.AsyncUpdateDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);

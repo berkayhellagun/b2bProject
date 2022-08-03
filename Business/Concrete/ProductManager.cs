@@ -25,6 +25,7 @@ namespace Business.Concrete
             _cacheService = cacheService;
         }
 
+        [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> AsyncAdd(Product t)
         {
             t.ProductionDate = DateTime.Now;
@@ -57,19 +58,19 @@ namespace Business.Concrete
                 : new ErrorDataResult<Product>(Messages.Error);
         }
 
+        [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> AsyncRemove(Product t)
         {
             var result = await _productDal.AsyncDeleteDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Removed)
                 : new ErrorResult(Messages.NotRemoved);
         }
 
+        [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> AsyncUpdate(Product t)
         {
             var result = await _productDal.AsyncUpdateDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
@@ -85,6 +86,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSupplierId == supplierId).ToList());
         }
 
+        [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> RemoveById(int id)
         {
             var product = await AsyncGetById(id);

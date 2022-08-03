@@ -36,10 +36,10 @@ namespace Business.Concrete
         [SecuredOperation(Roles ="admin,category.add")]
         [LogAspect(typeof(FileLogger))]
         [ValidationAspect(typeof(CategoryValidator))]
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> AsyncAdd(Category t)
         {
             var result = await _categoryDal.AsyncAddDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
@@ -62,24 +62,25 @@ namespace Business.Concrete
                 : new ErrorDataResult<Category>(Messages.Error);
         }
 
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> AsyncRemove(Category t)
         {
             var result = await _categoryDal.AsyncDeleteDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Removed)
                 : new ErrorResult(Messages.NotRemoved);
         }
 
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> AsyncUpdate(Category t)
         {
             var result = await _categoryDal.AsyncUpdateDB(t);
-            _cacheService.Clear();
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
         }
 
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> RemoveById(int id)
         {
             var category = await AsyncGetById(id);
