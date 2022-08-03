@@ -1,8 +1,4 @@
-﻿
-
-
-
-<div class="navbar-nav ml-auto py-0">
+﻿<div class="navbar-nav ml-auto py-0">
     @if (@ViewBag.Email == "" || @ViewBag.Email == null)
     {
         <a href="/Auth/Login" class="nav-item nav-link">Giriş Yap</a>
@@ -10,6 +6,10 @@
     }
     else
     {
+        if (ViewBag.Role == "salesEngineer")
+        {
+            <a href="/Product/Panel" class="nav-item nav-link">Panel</a>
+        }
         <a href="/User/Profile" class="nav-item nav-link">@ViewBag.Email</a>
         <a href="/Auth/Logout" class="nav-item nav-link">Çıkış Yap</a>
     }

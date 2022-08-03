@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebMVC.API;
+using WebMVC.CustomAttribute;
 using WebMVC.Models;
 using WebMVC.Models.AddModel;
 
@@ -66,6 +67,24 @@ namespace WebMVC.Controllers
                 return View();
             }
             return RedirectToAction("Products", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Panel(Product product)
+        {
+            var result = await _request.PostAsync("api/Products/add", product);
+            if (result == Constants.Exception)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [MyAuthorizeAttribute(Roles = "salesEngineer")]
+        [HttpGet]
+        public IActionResult Panel()
+        {
+            return View();
         }
     }
 }
