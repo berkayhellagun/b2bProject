@@ -104,7 +104,8 @@ namespace WebMVC.API
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    using (var response = await httpClient.DeleteAsync(Url))
+
+                    using (var response = await httpClient.DeleteAsync(String.Format(baseUrl + Url)))
                     {
                         apiResponse = response.Content.ReadAsStringAsync().Result;
                     }
@@ -116,7 +117,7 @@ namespace WebMVC.API
 
                 return Constants.Exception;
             }
-            
+
         }
 
 

@@ -36,11 +36,6 @@ namespace Business.Concrete
                 : new ErrorDataResult<User>("Check your password!");
         }
 
-        public Task<bool> Logout()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto)
         {
             var user = RegisterModule(userForRegisterDto);

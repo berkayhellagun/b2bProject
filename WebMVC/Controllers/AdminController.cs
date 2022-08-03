@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebMVC.API;
+using WebMVC.CustomAttribute;
 using WebMVC.Models;
 
 namespace WebMVC.Controllers
 {
+    [MyAuthorizeAttribute(Roles ="admin")]
     public class AdminController : Controller
     {
         IRequest _request;
@@ -17,6 +19,8 @@ namespace WebMVC.Controllers
 
         public IActionResult Index()
         {
+            string email = HttpContext.Session.GetString(Constants.Email);
+            ViewBag.Email = email;
             return View();
         }
 

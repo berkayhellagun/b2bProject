@@ -10,22 +10,19 @@ namespace Business.BusinessAspect
 {
     public class SecuredOperation : MethodInterception
     {
-        private string[] _roles;
+        public string Roles { get; set; }
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private string[] _roles;
 
-        public SecuredOperation(string roles)
+        public SecuredOperation()
         {
-            _roles = roles.Split(",");
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var header = _httpContextAccessor.HttpContext.Request.Headers;
-            var isAuth = _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated;
-            var roleClaims = _httpContextAccessor.HttpContext?.User?.ClaimRoles();// we get user claims 
-
-            
+            _roles = Roles.Split(','); // this roles came from business class
+            var roleClaims = _httpContextAccessor.HttpContext?.User?.ClaimRoles();// we get user claims    
             foreach (var role in _roles)
             {
                 if (roleClaims.Contains(role)) //does exist role claims in role array

@@ -41,11 +41,7 @@
                     <a href="/Admin/Index" class="nav-item nav-link active">Admin</a>
 
                 </div>
-                <div class="navbar-nav ml-auto py-0">
-                    <a href="/Auth/Login" class="nav-item nav-link">Giriş Yap</a>
-                    <a href="/Auth/Register" class="nav-item nav-link">Kayıt Ol</a>
-
-                </div>
+                @await Component.InvokeAsync("CurrentUserInHome")
             </div>
         </nav>
 
@@ -122,7 +118,6 @@
         </div>
     </div>
     <!-- Footer End -->
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 

@@ -7,11 +7,12 @@ namespace WebMVC.CustomAttribute
     public class MyAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         public string Roles { get; set; }
+        private string[] _roles;
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+             _roles = Roles.Split(',');
             var role = context.HttpContext.Session.GetString(Constants.Role);
-            string[] roles = Roles.Split(new char[] { ',' });
-            if (!roles.Contains(role))
+            if (!_roles.Contains(role))
             {
                 context.HttpContext.Response.Redirect("/Auth/Login");
             }

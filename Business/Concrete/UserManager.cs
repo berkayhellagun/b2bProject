@@ -43,7 +43,7 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
-        //[SecuredOperation("admin,")]
+        [SecuredOperation(Roles ="admin,user.add")]
         [CacheAspect]
         public async Task<IDataResult<List<User>>> AsyncGetAll()
         {

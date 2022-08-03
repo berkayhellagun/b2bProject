@@ -52,7 +52,6 @@ namespace Core.Utilities.Security.JWT
                 issuer: _tokenOptions.Issuer,
                 audience: _tokenOptions.Audience,
                 expires: _expirationTime,
-                notBefore: DateTime.Now,
                 claims: SetClaims(user, operationClaims),
                 signingCredentials: signingCredentials
                 );

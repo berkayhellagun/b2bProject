@@ -33,7 +33,7 @@ namespace Business.Concrete
             _cacheService = cacheService;
         }
 
-        [SecuredOperation("admin,")]
+        [SecuredOperation(Roles ="admin,category.add")]
         [LogAspect(typeof(FileLogger))]
         [ValidationAspect(typeof(CategoryValidator))]
         public async Task<IResult> AsyncAdd(Category t)

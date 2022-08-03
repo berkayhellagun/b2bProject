@@ -25,7 +25,7 @@ namespace WebMVC.Controllers
         {
             var url = "api/OperationClaims/add";
             var apiObject = _request.PostAsync(url, operationClaim);
-            return View();
+            return RedirectToAction("OperationClaims","Admin");
         }
 
         [HttpGet]
@@ -54,15 +54,14 @@ namespace WebMVC.Controllers
             return View(jsonObj);
         }
 
-        [HttpDelete]
         public async Task<IActionResult> Remove()
         {
             var id = RouteData.Values["id"];
             var url = string.Format("api/OperationClaims/removebyid?id=" + id);
-            var result = await _request.DeleteAsync(url);
+            var result = _request.DeleteAsync(url).Result;
             if (result == Constants.Exception)
             {
-                return View();
+                return RedirectToAction("Exception", "Error");
             }
             return RedirectToAction("OperationClaims", "Admin");
         }

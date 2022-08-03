@@ -39,7 +39,7 @@ if (!app.Environment.IsDevelopment())
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseMiddleware<WebMVC.Middleware.AuthorizationMiddleware>();
+//app.UseMiddleware<WebMVC.Middleware.AuthorizationMiddleware>();
 app.UseRouting();
 
 app.UseAuthentication();

@@ -78,5 +78,13 @@ namespace WebMVC.Controllers
         {
             return View();
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove(Constants.Email);
+            HttpContext.Session.Remove(Constants.Role);
+            HttpContext.Response.Cookies.Delete(Constants.XAccessToken);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

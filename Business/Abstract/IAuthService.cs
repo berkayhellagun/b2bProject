@@ -10,6 +10,5 @@ namespace Business.Abstract
         Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto);
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         Task<IDataResult<AccessToken>> CreateAccessToken(User user);
-        Task<bool> Logout();
     }
 }

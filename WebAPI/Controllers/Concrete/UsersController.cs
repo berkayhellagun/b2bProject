@@ -24,5 +24,14 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Data)
                 : BadRequest(result.Message);
         }
+
+        [HttpGet("getbyemail")]
+        public async Task<IActionResult> GetByMail(string email)
+        {
+            var result = await _userService.AsyncGetByMail(email);
+            return result.Data != null
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }

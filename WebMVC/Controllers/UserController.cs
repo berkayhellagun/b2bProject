@@ -54,11 +54,24 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Update()
         {
+            var user = GetUser();
+            return View(user);
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var user = GetUser();
+            return View(user);
+        }
+
+        public UserModel? GetUser()
+        {
             var userId = RouteData.Values["id"];
             var url = string.Format("api/Users/getbyid?id=" + userId);
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
-            return View(jsonObject);
+            return jsonObject;
         }
     }
 }
