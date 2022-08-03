@@ -18,7 +18,7 @@ namespace Core.Aspects.Autofac.Logging
         {
             if (logger.BaseType != typeof(LoggerBase))
             {
-                throw new Exception("Invalid logger type.");
+                throw new System.Exception("Invalid logger type.");
             }
             _loggerBase = (LoggerBase)Activator.CreateInstance(logger);
         }
