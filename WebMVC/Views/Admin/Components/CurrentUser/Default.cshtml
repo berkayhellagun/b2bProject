@@ -18,7 +18,7 @@
                         <div class="avatar avatar-online">
                             @if (@Model.UserImage == "" || @Model.UserImage == null)
                             {
-                                <img src="~/Images/UserImage/default.png" class="w-px-40 h-auto rounded-circle" />
+                                <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/>
                             }
                             <img src="~/@Model.UserImage" class="w-px-40 h-auto rounded-circle" />
                         </div>
@@ -33,7 +33,7 @@
             <div class="dropdown-divider"></div>
         </li>
         <li>
-            <a class="dropdown-item" href="/User/Profile">
+            <a class="dropdown-item" href="/User/Profile/@Model.Email">
                 <i class="bx bx-user me-2"></i>
                 <span class="align-middle">My Profile</span>
             </a>

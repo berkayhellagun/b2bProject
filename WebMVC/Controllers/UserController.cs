@@ -43,8 +43,8 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UserModel user)
         {
-            user.Status = true;
-            var result = await _request.PutAsync("api/Users/update", user);
+            var newUser = UpdateExtension(user);
+            var result = await _request.PutAsync("api/Users/update", newUser);
             if (result == Constants.Exception)
             {
                 return View();
@@ -59,11 +59,26 @@ namespace WebMVC.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserModel user)
+        {
+            var newUser = UpdateExtension(user);
+            var result = await _request.PutAsync("api/Users/update", newUser);
+            if (result == Constants.Exception)
+            {
+                return View();
+            }
+            return RedirectToAction("Profile", "User");
+        }
+
         [HttpGet]
         public IActionResult Profile()
         {
-            var user = GetUser();
-            return View(user);
+            var email = RouteData.Values["id"];
+            var url = string.Format("api/Users/getbyemail?email=" + email);
+            var apiObject = _request.GetAsync(url).Result;
+            var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
+            return View(jsonObject);
         }
 
         public UserModel? GetUser()
@@ -73,6 +88,18 @@ namespace WebMVC.Controllers
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
             return jsonObject;
+        }
+
+        private UserModel UpdateExtension(UserModel user)
+        {
+            var url = string.Format("api/Users/getbyemail?email=" + user.Email);
+            var apiObject = _request.GetAsync(url).Result;
+            var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
+            user.PasswordHash = jsonObject.PasswordHash;
+            user.PasswordSalt = jsonObject.PasswordSalt;
+            user.Status = jsonObject.Status;
+            user.UserImage = jsonObject.UserImage;
+            return user;
         }
     }
 }

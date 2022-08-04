@@ -2,133 +2,85 @@
 @{
     Layout = null;
 }
+
 <style>
-
-
     body {
-        margin-top: 20px;
-        color: #bcd0f7;
-        background: #1A233A;
+        background: rgb(99, 39, 120)
     }
 
-    .account-settings .user-profile {
-        margin: 0 0 1rem 0;
-        padding-bottom: 1rem;
-        text-align: center;
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #BA68C8
     }
 
-        .account-settings .user-profile .user-avatar {
-            margin: 0 0 1rem 0;
+    .profile-button {
+        background: rgb(99, 39, 120);
+        box-shadow: none;
+        border: none
+    }
+
+        .profile-button:hover {
+            background: #682773
         }
 
-            .account-settings .user-profile .user-avatar img {
-                width: 90px;
-                height: 90px;
-                -webkit-border-radius: 100px;
-                -moz-border-radius: 100px;
-                border-radius: 100px;
-            }
-
-        .account-settings .user-profile h5.user-name {
-            margin: 0 0 0.5rem 0;
+        .profile-button:focus {
+            background: #682773;
+            box-shadow: none
         }
 
-        .account-settings .user-profile h6.user-email {
-            margin: 0;
-            font-size: 0.8rem;
-            font-weight: 400;
+        .profile-button:active {
+            background: #682773;
+            box-shadow: none
         }
 
-    .account-settings .about {
-        margin: 1rem 0 0 0;
-        font-size: 0.8rem;
-        text-align: center;
+    .back:hover {
+        color: #682773;
+        cursor: pointer
     }
 
-    .card {
-        background: #272E48;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        border: 0;
-        margin-bottom: 1rem;
+    .labels {
+        font-size: 11px
     }
 
-    .form-control {
-        border: 1px solid #596280;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-        font-size: .825rem;
-        background: #1A233A;
-        color: #bcd0f7;
+    .add-experience:hover {
+        background: #BA68C8;
+        color: #fff;
+        cursor: pointer;
+        border: solid 1px #BA68C8
     }
+
 </style>
-<!DOCTYPE html>
-<div class="container">
-    <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="account-settings">
-                        <div class="user-profile">
-                            <div class="user-avatar">
-                                @if (@Model.UserImage == "" || @Model.UserImage == null)
-                                {
-                                    <img src="~/Images/UserImage/default.png">
-                                }
-                                <img src="~/@Model.UserImage">
-                            </div>
-                            <h5 class="user-name">@Model.FirstName @Model.LastName</h5>
-                            <h6 class="user-email">@Model.Email</h6>
-                        </div>
-                        <div class="about">
-                            <h5 class="mb-2 text-primary">Status</h5>
-                            <p>@Model.Status</p>
-                        </div>
-                    </div>
-                </div>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <span class="font-weight-bold">@Model.LastName</span><span class="text-black-50">@Model.Email</span>
             </div>
         </div>
-        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="row gutters">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h6 class="mb-3 text-primary">Personal Details</h6>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="fullName">First Name</label>
-                                <input type="text" class="form-control" name="FirstName" value=@Model.FirstName>
-                            </div>
-                            <div class="form-group">
-                                <label for="fullName">Last Name</label>
-                                <input type="text" class="form-control" name="LastName" value=@Model.LastName>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="eMail">Email</label>
-                                <input type="email" class="form-control" name="Email" value=@Model.Email>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" name="SupplierId" value=@Model.SupplierId>
-                            </div>
-                        </div>
+        <div class="col-md-5 border-right">
+            <form action="/User/Profile" method="post">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
                     </div>
-                    <div class="row gutters">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="text-right">
-                                <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" name="FirstName" placeholder="first name" value=@Model.FirstName></div>
+                        <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" name="LastName" value=@Model.LastName placeholder="surname"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">User Id</label><input type="text" class="form-control" value=@Model.UserId readonly="readonly"></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" value=@Model.Email></div>
+                        <div class="col-md-12"><label class="labels">Supplier Id</label><input type="text" class="form-control" value=@Model.SupplierId></div>
+                        <div class="col-md-12"><label class="labels">Supplier Name</label><input type="text" class="form-control" value="@Model.SupplierName" readonly="readonly"></div>
+
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button type="submit" class="btn btn-primary pull-right" action="">Update Profile</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -36,7 +36,7 @@ namespace Business.Concrete
         [SecuredOperation(Roles ="admin,category.add")]
         [LogAspect(typeof(FileLogger))]
         [ValidationAspect(typeof(CategoryValidator))]
-        [CacheRemoveAspect("ICategoryService.Get")]
+        [CacheRemoveAspect("Business.Abstract.IGenericService`1[[Entities.Concrete.Category, Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]].AsyncGetAll()")]
         public async Task<IResult> AsyncAdd(Category t)
         {
             var result = await _categoryDal.AsyncAddDB(t);
