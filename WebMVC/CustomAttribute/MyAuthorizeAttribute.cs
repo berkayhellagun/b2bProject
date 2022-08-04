@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using WebMVC.Models;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.CustomAttribute
 {

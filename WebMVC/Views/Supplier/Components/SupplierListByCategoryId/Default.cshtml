@@ -1,15 +1,4 @@
 ﻿@model List<WebMVC.Models.SupplierModel>
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-
-<div class="container-fluid mb-5">
-    <div class="row border-top px-xl-5">
-        @await Component.InvokeAsync("CategoryGetList")
-    </div>
-</div>
 
 <div class="col-lg-9">
     <div class="row px-xl-5 pb-3">
@@ -20,7 +9,7 @@
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                         <h6 class="text-truncate mb-3">@item.SupplierName</h6>
                         <div class="d-flex justify-content-center">
-                            <h6>@item.SupplierDescription</h6><h6 class="text-muted ml-2"></h6>
+                            <h5>@item.SupplierDescription TL</h5><h5 class="text-muted ml-2"></h5>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">

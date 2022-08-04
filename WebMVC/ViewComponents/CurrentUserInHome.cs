@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebMVC.API;
-using WebMVC.Models;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.ViewComponents
 {

@@ -93,11 +93,6 @@ namespace Business.Concrete
                 : new ErrorResult(Messages.NotUpdated);
         }
 
-        public IDataResult<List<User>> GetUserBySupplierId(int supplierId)
-        {
-            return new SuccessDataResult<List<User>>(_userDal.GetList(u => u.SupplierId == supplierId).ToList());
-        }
-
         private string BindSupplierName(int supplierId)
         {
             var supplier = _supplierService.AsyncGetById(supplierId).Result;

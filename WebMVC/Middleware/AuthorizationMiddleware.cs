@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using WebMVC.Models;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.Middleware
 {

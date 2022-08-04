@@ -1,19 +1,18 @@
-﻿@{
-    ViewData["Title"] = "SupplierDetail";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
+﻿
+@using WebMVC
+@*@model List<WebMVC.Models.ProductModel>
+*@<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>B2B Program</title>
+    <title>B2B Platform</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="~/HomeTemplate/img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -30,27 +29,19 @@
 </head>
 
 <body>
-
-    <!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Supplier Detail</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="/Home/Index">Home</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Supplier Detail</p>
-            </div>
+    
+    <!-- Category and Product Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            @await Component.InvokeAsync("CategoryGetList")
+            @await Component.InvokeAsync("SupplierListByCategoryId", new { categoryId = @ViewBag.categoryId })
         </div>
     </div>
-    <!-- Page Header End -->
+    <!-- Category and Product End -->
+   
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-    <!-- Supplier Detail Start -->
-    @await Component.InvokeAsync("SupplierListById", new { supplierId = ViewBag.id })
-    <!-- Supplier Detail End -->
-
-    <!-- Product List Start -->
-    @await Component.InvokeAsync("ProductListBySupplierId", new{ supplierId = ViewBag.id })
-    <!-- Product List Start -->
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -67,4 +58,5 @@
 </body>
 
 </html>
+
 

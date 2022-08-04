@@ -15,5 +15,23 @@ namespace WebAPI.Controllers.Concrete
         {
             _supplierService = supplierService;
         }
+
+        [HttpGet("supplierdetailbyid")]
+        public IActionResult SupplierDetailById(int supplierId)
+        {
+            var result = _supplierService.GetSupplierDetailById(supplierId);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
+
+        [HttpGet("supplierlistbycategoryid")]
+        public IActionResult SupplierListByCategoryId(int categoryId)
+        {
+            var result = _supplierService.GetSupplierListByCategoryId(categoryId);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }

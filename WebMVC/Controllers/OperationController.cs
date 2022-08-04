@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.Models;
 using WebMVC.Models.AddModel;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.Controllers
 {
@@ -58,7 +59,7 @@ namespace WebMVC.Controllers
         {
             var id = RouteData.Values["id"];
             var url = string.Format("api/OperationClaims/removebyid?id=" + id);
-            var result = _request.DeleteAsync(url).Result;
+            var result = await _request.DeleteAsync(url);
             if (result == Constants.Exception)
             {
                 return RedirectToAction("Exception", "Error");

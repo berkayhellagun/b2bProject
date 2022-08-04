@@ -2,7 +2,7 @@
 using Flurl.Http.Configuration;
 using Newtonsoft.Json;
 using System.Text;
-using WebMVC.Models;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.API
 {

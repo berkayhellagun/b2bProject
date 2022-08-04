@@ -6,6 +6,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,22 @@ namespace Business.Concrete
             return result
                 ? new SuccessResult(Messages.Updated)
                 : new ErrorResult(Messages.NotUpdated);
+        }
+
+        public IDataResult<SupplierDetail> GetSupplierDetailById(int supplierId)
+        {
+            var result = _supplierDal.GetSupplierDetail(supplierId);
+            return result != null
+                ? new SuccessDataResult<SupplierDetail>(result)
+                : new ErrorDataResult<SupplierDetail>();
+        }
+
+        public IDataResult<List<Supplier>> GetSupplierListByCategoryId(int categoryId)
+        {
+            var result = _supplierDal.GetList(s => s.CategoryId == categoryId).ToList();
+            return result != null
+                ? new SuccessDataResult<List<Supplier>>(result)
+                : new ErrorDataResult<List<Supplier>>();
         }
 
         public async Task<IResult> RemoveById(int id)

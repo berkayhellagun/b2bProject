@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Dynamic;
 using WebMVC.API;
 using WebMVC.Models;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.Controllers
 {
@@ -26,11 +27,6 @@ namespace WebMVC.Controllers
         [AllowAnonymous]
         public IActionResult CategoryDetails()
         {
-            var cookie = HttpContext.Request.Cookies[Constants.XAccessToken];
-            if (cookie == null)
-            {
-                return View();
-            }
             //i need string convert to int
             var categoryId = RouteData.Values["id"];
             ViewBag.id = categoryId;

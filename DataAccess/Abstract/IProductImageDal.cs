@@ -1,4 +1,4 @@
-﻿using Core.Utilities.Results.Abstract;
+﻿using Core.DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Abstract
+namespace DataAccess.Abstract
 {
-    public interface ICategoryService : IGenericService<Category>
+    public interface IProductImageDal : IEntityRepositoryBase<ProductImage>
     {
 
     }

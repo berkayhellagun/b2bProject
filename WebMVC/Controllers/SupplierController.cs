@@ -4,6 +4,7 @@ using WebMVC.API;
 using WebMVC.CustomAttribute;
 using WebMVC.Models;
 using WebMVC.Models.AddModel;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.Controllers
 {
@@ -26,6 +27,13 @@ namespace WebMVC.Controllers
         {
             var supplierId = RouteData.Values["id"];
             ViewBag.id = supplierId;
+            return View();
+        }
+
+        public IActionResult CategoryDetailForSupplier()
+        {
+            var categoryId = RouteData.Values["id"];
+            ViewBag.categoryId = categoryId;
             return View();
         }
         [HttpPost]

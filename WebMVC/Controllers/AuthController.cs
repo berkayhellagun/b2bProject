@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using WebMVC.API;
 using WebMVC.Models;
+using WebMVC.Models.Cons;
 
 namespace WebMVC.Controllers
 {

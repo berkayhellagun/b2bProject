@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using WebMVC.API;
 using WebMVC.CustomAttribute;
 using WebMVC.Models;
+using WebMVC.Models.Cons;
+using WebMVC.Models.DetailModel;
 
 namespace WebMVC.Controllers
 {

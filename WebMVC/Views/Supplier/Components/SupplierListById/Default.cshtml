@@ -1,4 +1,4 @@
-﻿@model WebMVC.Models.SupplierModel
+﻿@model WebMVC.Models.DetailModel.SupplierDetailModel
 
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
@@ -24,9 +24,10 @@
         <div class="col-lg-7 pb-5">
             <h3 class="font-weight-semi-bold">@Model.SupplierName</h3>
             <h5 class="font-weight-semi-thin">Bu firma @Model.SupplierCountry içerisinde bulunmakta.</h5>
-            @*<div class="d-flex mb-3">
-            <a href="/Supplier/SupplierDetail/@Model.ProductSupplierId">Tedarikçi Firma Sayfası</a>
-            </div>*@
+            <div class="d-flex mb-3">
+                <h5 class="font-weight-semi-thin">Kategori: @Model.CategoryName</h5>
+                <a href="/Supplier/CategoryDetailForSupplier/@Model.CategoryId">Benzer Firmalar için Tıklayınız..</a>
+            </div>
         </div>
     </div>
 
@@ -76,6 +77,27 @@
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Firma Sorumluları</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <img class="img-fluid w-100" src="" alt="">
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">@Model.PersonName</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>@Model.PersonEmail</h6><h6 class="text-muted ml-2"></h6>
                     </div>
                 </div>
             </div>

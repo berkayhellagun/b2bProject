@@ -18,11 +18,9 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-        ICacheService _cacheService;
-        public ProductManager(IProductDal productDal, ICacheService cacheService)
+        public ProductManager(IProductDal productDal)
         {
             _productDal = productDal;
-            _cacheService = cacheService;
         }
 
         [CacheRemoveAspect("IProductService.Get")]
@@ -44,7 +42,7 @@ namespace Business.Concrete
         }
 
         public IDataResult<List<ProductDetail>> GetProductDetail(int id)
-        {   
+        {
             return new SuccessDataResult<List<ProductDetail>>(_productDal.GetProductDetail(id));
         }
 
