@@ -68,7 +68,7 @@ namespace WebMVC.Controllers
             {
                 return View();
             }
-            return RedirectToAction("Profile", "User");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
