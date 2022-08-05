@@ -11,6 +11,7 @@
         public string SupplierFoundYear { get; set; }
         public string EmployeeCount { get; set; }
         public string SupplierTaxNo { get; set; }
+        public int CategoryId { get; set; }
         public string SupplierDescription { get; set; }
     }
 }
