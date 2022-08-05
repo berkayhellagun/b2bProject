@@ -13,10 +13,12 @@ namespace Business.Concrete
     {
         IUserService _userService;
         ITokenHelper _tokenHelper;
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        IUserOperationClaimService _userOperation;
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IUserOperationClaimService userOperation)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
+            _userOperation = userOperation;
         }
 
         public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
@@ -43,7 +45,10 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<User>(user.Message);
             }
-            var result = await _userService.AsyncAdd(user.Data);
+            await _userService.AsyncAdd(user.Data);
+            var dbuser = await _userService.AsyncGetByMail(user.Data.Email);
+            var operation = new UserOperationClaim { UserId = dbuser.Data.UserId, OperationId = 2 }; // 2 is default user
+            var result = await _userOperation.AsyncAdd(operation);
             return result.Success
                 ? new SuccessDataResult<User>(user.Data)
                 : new ErrorDataResult<User>();
