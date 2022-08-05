@@ -32,7 +32,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  Date = p.ProductionDate,
                                  SupplierId = s.SupplierId,
                                  InStock = p.ProductInStock,
-                                 CategoryId = c.Id
+                                 CategoryId = c.Id,
+                                 ProductImage = p.ProductImage
                              };
                 return result.ToList();
             }
