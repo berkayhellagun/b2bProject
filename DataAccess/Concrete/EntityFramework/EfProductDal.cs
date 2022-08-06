@@ -23,16 +23,16 @@ namespace DataAccess.Concrete.EntityFramework
 
                              select new ProductDetail
                              {
-                                 Name = p.ProductName,
-                                 Price = p.ProductPrice,
+                                 ProductName = p.ProductName,
+                                 ProductPrice = p.ProductPrice,
                                  SupplierName = s.SupplierName,
                                  CategoryName = c.Name,
-                                 Country = p.ProductCountry,
-                                 Description = p.ProductDescription,
-                                 Date = p.ProductionDate,
-                                 SupplierId = s.SupplierId,
-                                 InStock = p.ProductInStock,
-                                 CategoryId = c.Id,
+                                 ProductCountry = p.ProductCountry,
+                                 ProductDescription = p.ProductDescription,
+                                 ProductionDate = p.ProductionDate,
+                                 ProductSupplierId = s.SupplierId,
+                                 ProductInStock = p.ProductInStock,
+                                 ProductCategoryId = c.Id,
                                  ProductImage = p.ProductImage
                              };
                 return result.ToList();
