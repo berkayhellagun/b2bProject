@@ -11,7 +11,7 @@ namespace WebMVC.CustomAttribute
         public void OnAuthorization(AuthorizationFilterContext context)
         {
              _roles = Roles.Split(',');
-            var role = context.HttpContext.Session.GetString(Constants.Role);
+            var role = context.HttpContext.Request.Cookies[Constants.Role];
             if (!_roles.Contains(role))
             {
                 context.HttpContext.Response.Redirect("/Auth/Login");
