@@ -27,7 +27,6 @@ namespace Core.DataAccess.Concrete.EntityFramework
                     }
                     catch (Exception)
                     {
-                        transaction.Dispose();
                         return Status;
                     }
                 }

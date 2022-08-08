@@ -22,7 +22,6 @@ namespace Core.Aspects.Autofac.Transaction
                 }
                 catch (System.Exception)
                 {
-                    transaction.Dispose();
                     throw;
                 }
             }
