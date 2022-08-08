@@ -15,7 +15,7 @@ namespace WebMVC.ViewComponents
         public IViewComponentResult Invoke()
         {
             var userMail = HttpContext.Session.GetString(Constants.Email);
-            var role = HttpContext.Session.GetString(Constants.Role);
+            var role = HttpContext.Request.Cookies[Constants.Role];
             if (userMail != null)
             {
                 ViewBag.Email = userMail;
