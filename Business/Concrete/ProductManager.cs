@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -57,6 +58,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("IProductService.Get")]
+        [TransactionAspect]
         public async Task<IResult> AsyncRemove(Product t)
         {
             var result = await _productDal.AsyncDeleteDB(t);

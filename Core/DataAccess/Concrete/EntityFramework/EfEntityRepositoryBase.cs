@@ -82,11 +82,25 @@ namespace Core.DataAccess.Concrete.EntityFramework
 
         private bool UpdateDB(TEntity entity)
         {
+            bool Status = false;
             using (var db = new TContext())
             {
-                var entityUpdated = db.Entry(entity);
-                entityUpdated.State = EntityState.Modified;
-                return db.SaveChanges() > 0;
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var entityEntry = db.Entry(entity);
+                        entityEntry.State = EntityState.Modified;
+                        Status = db.SaveChanges() > 0;
+                        transaction.Commit();
+                        return Status;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        return Status;
+                    }
+                }
             }
         }
         public Task<bool> AsyncUpdateDB(TEntity entity)
