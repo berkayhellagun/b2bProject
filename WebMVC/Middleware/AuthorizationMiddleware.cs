@@ -20,7 +20,7 @@ namespace WebMVC.Middleware
             PathString path = httpContext.Request.Path;
             if (path.Value.StartsWith("/Admin"))
             {
-                var role = httpContext.Session.GetString(Constants.Role);
+                var role = httpContext.Request.Cookies[Constants.Role];
                 if (role == null || role != "admin")
                 {
                     httpContext.Response.Redirect("/Auth/Login");
