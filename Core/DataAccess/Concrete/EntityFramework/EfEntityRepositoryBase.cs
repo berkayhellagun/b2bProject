@@ -1,12 +1,8 @@
 ﻿using Core.DataAccess.Abstract;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Core.DataAccess.Concrete.EntityFramework
 {
@@ -16,11 +12,25 @@ namespace Core.DataAccess.Concrete.EntityFramework
     {
         private bool AddDB(TEntity entity)
         {
+            bool Status = false;
             using (var db = new TContext())
             {
-                var entityEntry = db.Entry(entity);
-                entityEntry.State = EntityState.Added;
-                return db.SaveChanges() > 0; //save changes return integer value
+                using (TransactionScope transaction = new TransactionScope())
+                {
+                    try
+                    {
+                        var entityEntry = db.Entry(entity);
+                        entityEntry.State = EntityState.Added;
+                        Status = db.SaveChanges() > 0; //save changes return integer value
+                        transaction.Complete();
+                        return Status;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Dispose();
+                        return Status;
+                    }
+                }
             }
         }
         public Task<bool> AsyncAddDB(TEntity entity)
