@@ -13,14 +13,16 @@ namespace WebMVC.API
         string baseUrl;
         IHttpContextAccessor _httpContextAccessor;
         string? token;
+        private readonly HttpClient httpClient;
         #endregion
 
         #region Ctor
-        public Request(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public Request(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, HttpClient httpClient)
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             baseUrl = _configuration.GetSection("ApiBaseUrl").Get<ApiBaseUrl>().Value;
+            this.httpClient = httpClient;
         }
         #endregion
 
@@ -31,13 +33,10 @@ namespace WebMVC.API
             {
                 string apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                using (var response = await httpClient.GetAsync(string.Format(baseUrl + Url)))
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    using (var response = await httpClient.GetAsync(string.Format(baseUrl + Url)))
-                    {
-                        apiResponse = response.Content.ReadAsStringAsync().Result;
-                    }
+                    apiResponse = response.Content.ReadAsStringAsync().Result;
                 }
                 return apiResponse;
             }
@@ -53,15 +52,14 @@ namespace WebMVC.API
             {
                 string apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                StringContent content = new StringContent(JsonConvert.SerializeObject(Request), Encoding.UTF8, "application/json");
+                using (var response = await httpClient.PostAsync(string.Format(baseUrl + Url), content))
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(Request), Encoding.UTF8, "application/json");
-                    using (var response = await httpClient.PostAsync(string.Format(baseUrl + Url), content))
-                    {
-                        apiResponse = await response.Content.ReadAsStringAsync();
-                    }
+                    apiResponse = await response.Content.ReadAsStringAsync();
                 }
+
                 return apiResponse;
             }
             catch (Exception)
@@ -76,21 +74,18 @@ namespace WebMVC.API
             {
                 string apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                StringContent content = new StringContent(JsonConvert.SerializeObject(RequestItem),
+                    Encoding.UTF8, "application/json");
+                using (var response = await httpClient.PutAsync(String.Format(baseUrl + Url), content))
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(RequestItem),
-                        Encoding.UTF8, "application/json");
-                    using (var response = await httpClient.PutAsync(String.Format(baseUrl + Url), content))
-                    {
-                        apiResponse = response.Content.ReadAsStringAsync().Result;
-                    }
+                    apiResponse = response.Content.ReadAsStringAsync().Result;
                 }
+
                 return apiResponse;
             }
             catch (Exception)
             {
-
                 return Constants.Exception;
             }
         }
@@ -101,20 +96,16 @@ namespace WebMVC.API
             {
                 var apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                using (var response = await httpClient.DeleteAsync(String.Format(baseUrl + Url)))
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-
-                    using (var response = await httpClient.DeleteAsync(String.Format(baseUrl + Url)))
-                    {
-                        apiResponse = response.Content.ReadAsStringAsync().Result;
-                    }
+                    apiResponse = response.Content.ReadAsStringAsync().Result;
                 }
+
                 return apiResponse;
             }
             catch (Exception)
             {
-
                 return Constants.Exception;
             }
 
@@ -129,14 +120,12 @@ namespace WebMVC.API
             {
                 string apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                using (var response = httpClient.GetAsync(string.Format(baseUrl + Url)).Result)
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    using (var response = httpClient.GetAsync(string.Format(baseUrl + Url)).Result)
-                    {
-                        apiResponse = response.Content.ReadAsStringAsync().Result;
-                    }
+                    apiResponse = response.Content.ReadAsStringAsync().Result;
                 }
+
                 return apiResponse;
             }
             catch (Exception)
@@ -151,15 +140,13 @@ namespace WebMVC.API
             {
                 string apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                StringContent content = new StringContent(JsonConvert.SerializeObject(Request), Encoding.UTF8, "application/json");
+                using (var response = httpClient.PostAsync(string.Format(baseUrl + Url), content).Result)
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(Request), Encoding.UTF8, "application/json");
-                    using (var response = httpClient.PostAsync(string.Format(baseUrl + Url), content).Result)
-                    {
-                        apiResponse = response.Content.ReadAsStringAsync().Result;
-                    }
+                    apiResponse = response.Content.ReadAsStringAsync().Result;
                 }
+
                 return apiResponse;
             }
             catch (Exception)
@@ -174,14 +161,12 @@ namespace WebMVC.API
             {
                 string apiResponse = "Response Is Null";
                 var authValue = AuthValue();
-                using (var httpClient = new HttpClient())
+                httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
+                using (var response = httpClient.DeleteAsync(string.Format(baseUrl + Url)).Result)
                 {
-                    httpClient.DefaultRequestHeaders.Add("Authorization", authValue);
-                    using (var response = httpClient.DeleteAsync(string.Format(baseUrl + Url)).Result)
-                    {
-                        apiResponse = response.Content.ReadAsStringAsync().Result;
-                    }
+                    apiResponse = response.Content.ReadAsStringAsync().Result;
                 }
+
                 return apiResponse;
             }
             catch (Exception)

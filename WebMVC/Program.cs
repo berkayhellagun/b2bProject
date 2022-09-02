@@ -28,6 +28,7 @@ service.AddSingleton<IRequest, Request>();
 service.AddHttpContextAccessor();
 service.AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();
 service.AddSession();
+service.AddHttpClient<IRequest, Request>(config => { });
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
