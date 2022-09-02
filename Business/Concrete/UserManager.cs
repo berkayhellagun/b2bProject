@@ -21,13 +21,11 @@ namespace Business.Concrete
     {
         readonly IUserDal _userDal;
         readonly ISupplierService _supplierService;
-        ICacheService _cacheService;
 
-        public UserManager(IUserDal userDal, ISupplierService supplierService, ICacheService cacheService)
+        public UserManager(IUserDal userDal, ISupplierService supplierService)
         {
             _userDal = userDal;
             _supplierService = supplierService;
-            _cacheService = cacheService;
         }
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]

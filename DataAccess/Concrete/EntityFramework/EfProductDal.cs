@@ -33,7 +33,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ProductSupplierId = s.SupplierId,
                                  ProductInStock = p.ProductInStock,
                                  ProductCategoryId = c.Id,
-                                 ProductImage = p.ProductImage
+                                 ProductImage = p.ProductImage,
+                                 ProductSalesAmount = p.ProductSalesAmount
                              };
                 return result.ToList();
             }

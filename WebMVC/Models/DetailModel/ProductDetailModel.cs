@@ -2,16 +2,17 @@
 {
     public class ProductDetailModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public string Country { get; set; }
-        public DateTime Date { get; set; }
-        public int SupplierId { get; set; }
+        public string ProductName { get; set; }
+        public int ProductSupplierId { get; set; }
+        public int ProductCategoryId { get; set; }
+        public string? ProductDescription { get; set; }
+        public string ProductCountry { get; set; }
+        public decimal ProductPrice { get; set; }
+        public DateTime ProductionDate { get; set; }
+        public int ProductInStock { get; set; }
+        public int? ProductSalesAmount { get; set; }
+        public string? ProductImage { get; set; }
         public string SupplierName { get; set; }
-        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public string ProductImage { get; set; }
-        public int InStock { get; set; }
     }
 }
