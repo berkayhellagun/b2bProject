@@ -1,12 +1,5 @@
 ﻿using Core.Entities;
-using Core.Entities.Concrete;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
@@ -24,7 +17,5 @@ namespace Entities.Concrete
         public string EmployeeCount { get; set; }
         public string SupplierTaxNo { get; set; }
         public string SupplierDescription { get; set; }
-        public string? SupplierImage { get; set; }
-        public int CategoryId { get; set; }
     }
 }

@@ -12,6 +12,6 @@ namespace Business.Abstract
     public interface ISupplierService : IGenericService<Supplier>
     {
         IDataResult<SupplierDetail> GetSupplierDetailById(int supplierId);
-        IDataResult<List<Supplier>> GetSupplierListByCategoryId(int categoryId);
+        IDataResult<List<Supplier>> GetSupplierListByCategoryId(int subCategoryId);
     }
 }

@@ -76,9 +76,9 @@ namespace Business.Concrete
                 : new ErrorResult(Messages.NotUpdated);
         }
 
-        public IDataResult<List<Product>> GetByCategoryId(int categoryId)
+        public IDataResult<List<Product>> GetByCategoryId(int subCategoryId)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductCategoryId == categoryId).ToList());
+            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSubCategoryId == subCategoryId).ToList());
         }
 
         public IDataResult<List<Product>> GetBySupplierId(int supplierId)

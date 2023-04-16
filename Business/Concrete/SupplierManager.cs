@@ -77,12 +77,9 @@ namespace Business.Concrete
                 : new ErrorDataResult<SupplierDetail>();
         }
 
-        public IDataResult<List<Supplier>> GetSupplierListByCategoryId(int categoryId)
+        public IDataResult<List<Supplier>> GetSupplierListByCategoryId(int subCategoryId)
         {
-            var result = _supplierDal.GetList(s => s.CategoryId == categoryId).ToList();
-            return result != null
-                ? new SuccessDataResult<List<Supplier>>(result)
-                : new ErrorDataResult<List<Supplier>>();
+           throw new NotImplementedException();
         }
 
         public async Task<IResult> RemoveById(int id)

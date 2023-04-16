@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IProductService : IGenericService<Product>
     {
         IDataResult<List<ProductDetail>> GetProductDetail(int id);
-        IDataResult<List<Product>> GetByCategoryId(int categoryId);
+        IDataResult<List<Product>> GetByCategoryId(int subCategoryId);
         IDataResult<List<Product>> GetBySupplierId(int supplierId);
     }
 }

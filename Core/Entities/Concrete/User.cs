@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities.Concrete
 {
@@ -18,7 +13,5 @@ namespace Core.Entities.Concrete
         public byte[] PasswordSalt { get; set; }
         public bool Status { get; set; } //otomatic binding
         public int? SupplierId { get; set; }
-        public string? SupplierName { get; set; }
-        public string? UserImage { get; set; }
     }
 }

@@ -36,7 +36,6 @@ namespace Business.Concrete
         [SecuredOperation(Roles ="admin,category.add")]
         [LogAspect(typeof(FileLogger))]
         [ValidationAspect(typeof(CategoryValidator))]
-        [CacheRemoveAspect("Business.Abstract.IGenericService`1[[Entities.Concrete.Category, Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]].AsyncGetAll()")]
         public async Task<IResult> AsyncAdd(Category t)
         {
             var result = await _categoryDal.AsyncAddDB(t);
@@ -56,7 +55,7 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<Category>> AsyncGetById(int id)
         {
-            var result = await _categoryDal.AsyncGetDB(c => c.Id == id);
+            var result = await _categoryDal.AsyncGetDB(c => c.CategoryId == id);
             return result != null
                 ? new SuccessDataResult<Category>(result)
                 : new ErrorDataResult<Category>(Messages.Error);
