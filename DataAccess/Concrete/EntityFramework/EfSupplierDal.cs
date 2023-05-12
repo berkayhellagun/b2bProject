@@ -17,15 +17,15 @@ namespace DataAccess.Concrete.EntityFramework
             using (var db = new DBContext())
             {
                 var result = from supplier in db.Suppliers
-                             join category in db.Categories on supplier.CategoryId equals category.Id
+                             //join category in db.Categories on supplier.CategoryId equals category.Id
                              join user in db.Users on supplier.SupplierContactPersonId equals user.UserId
                              where supplier.SupplierId == id
                              select new SupplierDetail
                              {
                                  SupplierId = supplier.SupplierId,
                                  SupplierDescription = supplier.SupplierDescription,
-                                 CategoryId = category.Id,
-                                 CategoryName = category.Name,
+                                 //CategoryId = category.Id,
+                                 //CategoryName = category.Name,
                                  EmployeeCount = supplier.EmployeeCount,
                                  SupplierContactPersonId = supplier.SupplierContactPersonId,
                                  PersonName = user.FirstName + " " + user.LastName,
@@ -33,7 +33,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  SupplierCountry = supplier.SupplierCountry,
                                  SupplierFoundYear = supplier.SupplierFoundYear,
                                  SupplierGiro = supplier.SupplierGiro,
-                                 SupplierImage = supplier.SupplierImage,
                                  SupplierMail = supplier.SupplierMail,
                                  SupplierName = supplier.SupplierName,
                                  SupplierTaxNo = supplier.SupplierTaxNo,

@@ -10,6 +10,6 @@ namespace Entities.DTOs
     public class ProductDetail : Product
     {
         public string SupplierName { get; set; }
-        public string CategoryName { get; set; }
+        public string SubCategoryName { get; set; }
     }
 }

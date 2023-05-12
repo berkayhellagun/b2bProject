@@ -19,7 +19,7 @@ namespace Business.Validation.FluentValidation
             RuleFor(product => product.ProductSupplierId)
                 .NotNull()
                 .NotEmpty();
-            RuleFor(product => product.ProductCategoryId)
+            RuleFor(product => product.ProductSubCategoryId)
                 .NotNull()
                 .NotEmpty();
             RuleFor(product => product.ProductCountry)

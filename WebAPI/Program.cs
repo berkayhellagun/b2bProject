@@ -13,6 +13,7 @@ using Core.Utilities.IoC;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Neo4jClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,9 @@ service.AddDependencyResolvers(new ICoreModule[]
     new CoreModule(),
 });
 
+var client = new BoltGraphClient(new Uri("bolt+s://39ddb34f.databases.neo4j.io:7687"), "neo4j", "testConnection");
+client.ConnectAsync();
+service.AddSingleton<IGraphClient>(client);
 //Autofac integretion for resolve of dependency
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>
