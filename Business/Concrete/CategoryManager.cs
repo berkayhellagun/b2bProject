@@ -55,7 +55,7 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<Category>> AsyncGetById(int id)
         {
-            var result = await _categoryDal.AsyncGetDB(c => c.CategoryId == id);
+            var result = await _categoryDal.AsyncGetDB(c => c.Id == id);
             return result != null
                 ? new SuccessDataResult<Category>(result)
                 : new ErrorDataResult<Category>(Messages.Error);

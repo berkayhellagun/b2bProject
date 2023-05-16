@@ -18,11 +18,11 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from supplier in db.Suppliers
                              //join category in db.Categories on supplier.CategoryId equals category.Id
-                             join user in db.Users on supplier.SupplierContactPersonId equals user.UserId
-                             where supplier.SupplierId == id
+                             join user in db.Users on supplier.SupplierContactPersonId equals user.Id
+                             where supplier.Id == id
                              select new SupplierDetail
                              {
-                                 SupplierId = supplier.SupplierId,
+                                 Id = supplier.Id,
                                  SupplierDescription = supplier.SupplierDescription,
                                  //CategoryId = category.Id,
                                  //CategoryName = category.Name,

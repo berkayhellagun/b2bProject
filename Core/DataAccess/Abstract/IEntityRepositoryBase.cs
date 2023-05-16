@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess.Abstract
 {
-    public interface IEntityRepositoryBase<T> where T : class, IEntity, new()
+    public interface IEntityRepositoryBase<T> where T : BaseEntity, new()
     {
         Task<bool> AsyncAddDB(T entity);
         Task<bool> AsyncUpdateDB(T entity);

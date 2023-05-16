@@ -53,7 +53,7 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<User>> AsyncGetById(int id)
         {
-            var result = await _userDal.AsyncGetDB(u => u.UserId == id);
+            var result = await _userDal.AsyncGetDB(u => u.Id == id);
             return result != null
                 ? new SuccessDataResult<User>(result)
                 : new ErrorDataResult<User>(Messages.Error);

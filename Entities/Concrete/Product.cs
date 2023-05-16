@@ -1,12 +1,15 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Concrete
 {
-    public class Product : IEntity
+    public class Product : BaseEntity
     {
-        [Key]
-        public int ProductId { get; set; }
+        //[Key]
+        //public int ProductId { get; set; }
+        [JsonProperty("pName")]
         public string ProductName { get; set; }
         public int ProductSupplierId { get; set; }
         public int ProductSubCategoryId { get; set; }

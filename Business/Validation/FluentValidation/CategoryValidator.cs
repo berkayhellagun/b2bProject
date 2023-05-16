@@ -15,7 +15,6 @@ namespace Business.Validation.FluentValidation
             RuleFor(category => category.Title.Length)
                 .NotEmpty()
                 .GreaterThanOrEqualTo(2);
-            RuleFor(category => category.SubCategories[0]).Empty();
         }
     }
 }

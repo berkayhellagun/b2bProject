@@ -1,12 +1,13 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Concrete
 {
-    public class Supplier : IEntity
+    public class Supplier : BaseEntity
     {
-        [Key]
-        public int SupplierId { get; set; }
+        //[Key]
+        //public int SupplierId { get; set; }
         public string SupplierName { get; set; }
         public string SupplierMail { get; set; }
         public string SupplierTelephoneNumber { get; set; }

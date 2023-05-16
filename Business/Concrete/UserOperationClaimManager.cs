@@ -73,7 +73,7 @@ namespace Business.Concrete
 
         public async Task<IResult> RemoveById(int id)
         {
-            var userOperation = await _userOperationClaimDal.AsyncGetDB(o => o.UserOperationClaimId == id);
+            var userOperation = await _userOperationClaimDal.AsyncGetDB(o => o.Id == id);
             var result = await AsyncRemove(userOperation);
             return result.Success
                 ? new SuccessResult()

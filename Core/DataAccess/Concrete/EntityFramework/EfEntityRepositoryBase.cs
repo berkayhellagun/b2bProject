@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess.Abstract;
 using Core.Entities;
+using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Transactions;
@@ -7,7 +8,7 @@ using System.Transactions;
 namespace Core.DataAccess.Concrete.EntityFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepositoryBase<TEntity>
-        where TEntity : class, IEntity, new()
+        where TEntity : BaseEntity, new()
         where TContext : DbContext, new()
     {
         private bool AddDB(TEntity entity)
