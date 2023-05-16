@@ -16,12 +16,12 @@ namespace DataAccess.Concrete.EntityFramework
             using (var db = new DBContext())
             {
                 var result = from userOperation in db.UserOperationClaims
-                             join operationClaim in db.OperationClaims on userOperation.OperationId equals operationClaim.OperationId
-                             join user in db.Users on userOperation.UserId equals user.UserId
-                             where userOperation.UserOperationClaimId == id
+                             join operationClaim in db.OperationClaims on userOperation.OperationId equals operationClaim.Id
+                             join user in db.Users on userOperation.UserId equals user.Id
+                             where userOperation.Id == id
                              select new UserOperationClaimDetail
                              {
-                                 UserOperationId = userOperation.UserOperationClaimId,
+                                 UserOperationId = userOperation.Id,
                                  OperationId = userOperation.OperationId,
                                  OperationName = operationClaim.OperationName,
                                  UserId = userOperation.UserId,
@@ -36,11 +36,11 @@ namespace DataAccess.Concrete.EntityFramework
             using (var db = new DBContext())
             {
                 var result = from userOperation in db.UserOperationClaims
-                             join operationClaim in db.OperationClaims on userOperation.OperationId equals operationClaim.OperationId
-                             join user in db.Users on userOperation.UserId equals user.UserId
+                             join operationClaim in db.OperationClaims on userOperation.OperationId equals operationClaim.Id
+                             join user in db.Users on userOperation.UserId equals user.Id
                              select new UserOperationClaimDetail
                              {
-                                 UserOperationId = userOperation.UserOperationClaimId,
+                                 UserOperationId = userOperation.Id,
                                  OperationId = userOperation.OperationId,
                                  OperationName = operationClaim.OperationName,
                                  UserId = userOperation.UserId,

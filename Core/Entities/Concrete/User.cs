@@ -2,10 +2,10 @@
 
 namespace Core.Entities.Concrete
 {
-    public class User : IEntity
+    public class User : BaseEntity
     {
-        [Key]
-        public int UserId { get; set; }
+        //[Key]
+        //public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

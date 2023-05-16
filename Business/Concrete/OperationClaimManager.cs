@@ -38,7 +38,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<OperationClaim>> AsyncGetById(int id)
         {
-            var result = await _operationClaimDal.AsyncGetDB(o => o.OperationId == id);
+            var result = await _operationClaimDal.AsyncGetDB(o => o.Id == id);
             return result != null
                 ? new SuccessDataResult<OperationClaim>(result)
                 : new ErrorDataResult<OperationClaim>();
@@ -62,7 +62,7 @@ namespace Business.Concrete
 
         public async Task<IResult> RemoveById(int id)
         {
-            var operation = await _operationClaimDal.AsyncGetDB(o => o.OperationId == id);
+            var operation = await _operationClaimDal.AsyncGetDB(o => o.Id == id);
             var result = await AsyncRemove(operation);
             return result.Success
                 ? new SuccessResult()

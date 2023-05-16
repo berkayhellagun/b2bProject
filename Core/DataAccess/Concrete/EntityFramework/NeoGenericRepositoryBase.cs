@@ -1,12 +1,13 @@
 ﻿using Core.DataAccess.Abstract;
 using Core.Entities;
+using Core.Entities.Concrete;
 using Neo4jClient;
 using System.Linq.Expressions;
 
 namespace Core.DataAccess.Concrete.EntityFramework
 {
     public class NeoGenericRepositoryBase<TEntity> : IEntityRepositoryBase<TEntity>
-        where TEntity : class, IEntity, new()
+        where TEntity : BaseEntity, new()
     {
         private readonly IGraphClient _graphClient;
 
@@ -46,12 +47,14 @@ namespace Core.DataAccess.Concrete.EntityFramework
             try
             {
                 string type = typeof(TEntity).Name;
-                var property = "e." + type + "Id";
-                var entityId = entity.GetType().GetProperty(type + "Id").GetValue(entity, null);
-                _graphClient.Cypher.Match("(e:" + type)
-                    .Where((TEntity e) => e.GetType().GetProperties() == entityId)
+                //var property = "e." + type + "Id";               
+                var entityId = Convert.ToInt32(entity.GetType().GetProperty("Id").GetValue(entity, null));
+
+                _graphClient.Cypher.Match("(e:" + type + ")")
+                    .Where((TEntity e) => e.Id == entityId)
                     .Delete("e")
                     .ExecuteWithoutResultsAsync();
+                
                 return true;
             }
             catch (Exception)

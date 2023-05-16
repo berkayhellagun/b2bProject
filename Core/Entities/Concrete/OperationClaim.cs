@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete
 {
-    public class OperationClaim : IEntity
+    public class OperationClaim : BaseEntity
     {
-        [Key]
-        public int OperationId { get; set; }
+        //[Key]
+        //public int OperationId { get; set; }
         public string OperationName { get; set; }
     }
 }

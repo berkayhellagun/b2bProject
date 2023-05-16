@@ -47,7 +47,7 @@ namespace Business.Concrete
             }
             await _userService.AsyncAdd(user.Data);
             var dbuser = await _userService.AsyncGetByMail(user.Data.Email);
-            var operation = new UserOperationClaim { UserId = dbuser.Data.UserId, OperationId = 2 }; // 2 is default user
+            var operation = new UserOperationClaim { UserId = dbuser.Data.Id, OperationId = 2 }; // 2 is default user
             var result = await _userOperation.AsyncAdd(operation);
             return result.Success
                 ? new SuccessDataResult<User>(user.Data)
