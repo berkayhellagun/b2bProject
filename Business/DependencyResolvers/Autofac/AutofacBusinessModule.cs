@@ -8,6 +8,7 @@ using Core.Utilities.Security.JWT;
 using Core.Utilities.Security.JWT.Abstract;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.Neo4J;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +28,11 @@ namespace Business.DependencyResolvers.Autofac
 
             //category solve
             builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
-            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
+            builder.RegisterType<NeoCategoryDal>().As<ICategoryDal>().SingleInstance();
 
             //product solve
             builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();
-            builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance();
+            builder.RegisterType<NeoProductDal>().As<IProductDal>().SingleInstance();
 
             //supplier solve
             builder.RegisterType<SupplierManager>().As<ISupplierService>().SingleInstance();

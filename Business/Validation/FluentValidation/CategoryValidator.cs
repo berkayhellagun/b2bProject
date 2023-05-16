@@ -12,9 +12,10 @@ namespace Business.Validation.FluentValidation
     {
         public CategoryValidator()
         {
-            RuleFor(category => category.Name.Length)
+            RuleFor(category => category.Title.Length)
                 .NotEmpty()
                 .GreaterThanOrEqualTo(2);
+            RuleFor(category => category.SubCategories[0]).Empty();
         }
     }
 }

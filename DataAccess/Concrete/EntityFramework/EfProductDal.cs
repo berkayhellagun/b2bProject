@@ -18,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from p in db.Products
                              where p.ProductId == id
-                             join c in db.Categories on p.ProductCategoryId equals c.Id
+                             join c in db.SubCategories on p.ProductSubCategoryId equals c.SubCategoryId
                              join s in db.Suppliers on p.ProductSupplierId equals s.SupplierId
 
                              select new ProductDetail
@@ -26,14 +26,13 @@ namespace DataAccess.Concrete.EntityFramework
                                  ProductName = p.ProductName,
                                  ProductPrice = p.ProductPrice,
                                  SupplierName = s.SupplierName,
-                                 CategoryName = c.Name,
+                                 SubCategoryName = c.SubCategoryName,
                                  ProductCountry = p.ProductCountry,
                                  ProductDescription = p.ProductDescription,
                                  ProductionDate = p.ProductionDate,
                                  ProductSupplierId = s.SupplierId,
                                  ProductInStock = p.ProductInStock,
-                                 ProductCategoryId = c.Id,
-                                 ProductImage = p.ProductImage,
+                                 ProductSubCategoryId = c.SubCategoryId,
                                  ProductSalesAmount = p.ProductSalesAmount
                              };
                 return result.ToList();

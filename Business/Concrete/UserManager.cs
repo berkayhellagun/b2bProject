@@ -34,7 +34,7 @@ namespace Business.Concrete
             if(t.SupplierId != null)
             {
                 var supplierName = BindSupplierName(t.SupplierId.Value);
-                t.SupplierName = supplierName;
+                t.FirstName = supplierName;
             }
             var result = await _userDal.AsyncAddDB(t);
             return result
