@@ -11,8 +11,8 @@ namespace Entities.Concrete
     {
         //[Key]
         //public int CategoryId { get; set; }
-        public string Title { get; set; }
+        public string CategoryName { get; set; }
 
-        public List<SubCategory>? SubCategories { get; set; }// = new List<SubCategory>();
+        public IEnumerable<SubCategory>? SubCategories { get; set; }// = new List<SubCategory>();
     }
 }

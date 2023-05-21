@@ -8,6 +8,6 @@ namespace Entities.Concrete
         //[Key]
         //public int SubCategoryId { get; set; }
         public string SubCategoryName { get; set; }
-        public List<Product>? Products { get; set; }// = new List<Product>();
+        public IEnumerable<Product>? Products { get; set; }// = new List<Product>();
     }
 }

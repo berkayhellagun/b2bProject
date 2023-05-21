@@ -12,7 +12,7 @@ namespace Business.Validation.FluentValidation
     {
         public CategoryValidator()
         {
-            RuleFor(category => category.Title.Length)
+            RuleFor(category => category.CategoryName.Length)
                 .NotEmpty()
                 .GreaterThanOrEqualTo(2);
         }

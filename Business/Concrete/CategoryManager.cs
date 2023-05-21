@@ -79,6 +79,15 @@ namespace Business.Concrete
                 : new ErrorResult(Messages.NotUpdated);
         }
 
+        [CacheAspect]
+        public IDataResult<List<Category>> GetCategoryTreeById(int id)
+        {
+            var result = _categoryDal.GetCategoryTreeById(id);
+            return result != null
+                ? new SuccessDataResult<List<Category>>(result)
+                : new ErrorDataResult<List<Category>>(Messages.Error);
+        }
+
         [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> RemoveById(int id)
         {
