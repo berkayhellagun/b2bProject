@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface ICategoryDal : IEntityRepositoryBase<Category>
+    public interface ISubCategoryDal: IEntityRepositoryBase<SubCategory>
     {
-        List<Category> GetCategoryTreeById(int id);
     }
 }

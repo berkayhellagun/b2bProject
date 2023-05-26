@@ -92,9 +92,9 @@ namespace Core.DataAccess.Concrete.EntityFramework
 
         public IList<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            string entityType = filter.GetType().Name;
+            var type = typeof(TEntity).Name;
 
-            var products = _graphClient.Cypher.Match("(p: " + entityType + ")")
+            var products = _graphClient.Cypher.Match("(p: " + type + ")")
                         .Return(p => p.As<TEntity>())
                         .OrderBy("1")
                         .ResultsAsync.Result;

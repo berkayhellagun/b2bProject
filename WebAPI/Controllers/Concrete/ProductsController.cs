@@ -43,5 +43,14 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Data)
                 : BadRequest(result.Message);
         }
+
+        [HttpGet("getproductwithproperties")]
+        public IActionResult GetProductWithProperties()
+        {
+            var result = _productService.GetProductWithProperties();
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }

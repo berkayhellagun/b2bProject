@@ -7,9 +7,8 @@ namespace Entities.Concrete
 {
     public class Product : BaseEntity
     {
-        //[Key]
-        //public int ProductId { get; set; }
-        [JsonProperty("pName")]
+        // Bu şekilde çalışıyor
+        //[JsonProperty("pName")]
         public string ProductName { get; set; }
         public int ProductSupplierId { get; set; }
         public int ProductSubCategoryId { get; set; }
@@ -19,5 +18,6 @@ namespace Entities.Concrete
         public DateTime ProductionDate { get; set; }
         public int ProductInStock { get; set; }
         public int? ProductSalesAmount { get; set; }
+        public IEnumerable<Property>? Properties { get; set; }
     }
 }

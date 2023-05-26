@@ -30,9 +30,17 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
             builder.RegisterType<NeoCategoryDal>().As<ICategoryDal>().SingleInstance();
 
+            //category solve
+            builder.RegisterType<SubCategoryManager>().As<ISubCategoryService>().SingleInstance();
+            builder.RegisterType<NeoSubCategoryDal>().As<ISubCategoryDal>().SingleInstance();
+
             //product solve
             builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();
             builder.RegisterType<NeoProductDal>().As<IProductDal>().SingleInstance();
+
+            //property solve
+            builder.RegisterType<PropertyManager>().As<IPropertyService>().SingleInstance();
+            builder.RegisterType<NeoPropertyDal>().As<IPropertyDal>().SingleInstance();
 
             //supplier solve
             builder.RegisterType<SupplierManager>().As<ISupplierService>().SingleInstance();

@@ -15,5 +15,14 @@ namespace WebAPI.Controllers.Concrete
         {
             _categoryService = categoryService;
         }
+
+        [HttpGet("getcategorytreebyid")]
+        public IActionResult GetProductWithProperties(int id)
+        {
+            var result = _categoryService.GetCategoryTreeById(id);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }

@@ -95,5 +95,11 @@ namespace Business.Concrete
                 ? new SuccessResult()
                 : new ErrorResult();
         }
+
+        [CacheAspect]
+        public IDataResult<List<ProductWithProperties>> GetProductWithProperties()
+        {
+            return new SuccessDataResult<List<ProductWithProperties>>(_productDal.GetProductWithProperties().ToList());
+        }
     }
 }

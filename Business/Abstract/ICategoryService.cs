@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Business.Abstract
 {
     public interface ICategoryService : IGenericService<Category>
     {
+        IDataResult<List<Category>> GetCategoryTreeById(int id);
 
     }
 }
