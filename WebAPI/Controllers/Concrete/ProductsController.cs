@@ -70,5 +70,32 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Data)
                 : BadRequest(result.Message);
         }
+
+        [HttpPost("connectsubcategory")]
+        public async Task<IActionResult> connectCategory(int subCategoryId, int categoryId)
+        {
+            var result = await _productService.connectSubCategory(subCategoryId, categoryId);
+            return result.Success
+                ? Ok()
+                : BadRequest(result.Message);
+        }
+
+        [HttpPost("connectorder")]
+        public async Task<IActionResult> connectOrder(int orderId, int categoryId)
+        {
+            var result = await _productService.connectOrder(orderId, categoryId);
+            return result.Success
+                ? Ok()
+                : BadRequest(result.Message);
+        }
+
+        [HttpPost("connectproperty")]
+        public async Task<IActionResult> connectProperty(int propertyId, int categoryId)
+        {
+            var result = await _productService.connectProperty(propertyId, categoryId);
+            return result.Success
+                ? Ok()
+                : BadRequest(result.Message);
+        }
     }
 }

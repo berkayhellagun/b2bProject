@@ -113,5 +113,32 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<ProductDetails>(_productDal.GetProductsDetails().Where(x=> x.Id == productId).First());
         }
+
+        [CacheAspect]
+        public async Task<IResult> connectSubCategory(int subId, int productId)
+        {
+            var result = _productDal.connectSubCategory(subId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
+        public async Task<IResult> connectOrder(int orderId, int productId)
+        {
+            var result = _productDal.connectOrder(orderId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
+        public async Task<IResult> connectProperty(int propertyId, int productId)
+        {
+            var result = _productDal.connectProperty(propertyId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
     }
 }

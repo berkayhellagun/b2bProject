@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfSupplierDal : EfEntityRepositoryBase<Supplier, DBContext>, ISupplierDal
+    public class EfSupplierDal : EfEntityRepositoryBase<Supplier, DBContext>//, ISupplierDal
     {
         public SupplierDetail GetSupplierDetail(int id)
         {

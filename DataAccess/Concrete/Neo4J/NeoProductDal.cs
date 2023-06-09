@@ -7,6 +7,7 @@ using Entities.Relationships;
 using Microsoft.IdentityModel.Tokens;
 using Neo4j.Driver;
 using Neo4jClient;
+using System;
 
 namespace DataAccess.Concrete.Neo4J
 {
@@ -98,5 +99,106 @@ namespace DataAccess.Concrete.Neo4J
 
             return products;
         }
+
+        public bool connectSubCategory(int subId, int productId)
+        {
+            try
+            {
+                var lastInner = _graphClient.Cypher
+                .Match("()-[c:INNER]-()")
+                .Return((c) => new INNER
+                {
+                    Id = c.As<INNER>().Id
+                }).OrderByDescending("c.Id").Limit(1).ResultsAsync.Result.ToList();
+
+                int lastId = lastInner.FirstOrDefault().Id + 1;
+
+                _graphClient.Cypher.Match("(s:SubCategory), (p:Product)")
+                    .Where((SubCategory s, Product p) => s.Id == subId && p.Id == productId)
+                    .Create("(p)-[:INNER{Id:" + lastId + ", ProductId:" + productId + ", SubCatId:" + subId + "}]->(s)")
+                    .ExecuteWithoutResultsAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool connectOrder(int orderId, int productId)
+        {
+            try
+            {
+                var lastInner = _graphClient.Cypher
+                .Match("()-[c:ORDERED]-()")
+                .Return((c) => new ORDERED
+                {
+                    Id = c.As<ORDERED>().Id
+                }).OrderByDescending("c.Id").Limit(1).ResultsAsync.Result.ToList();
+
+                int lastId = lastInner.FirstOrDefault().Id + 1;
+
+                _graphClient.Cypher.Match("(o:Order), (p:Product)")
+                    .Where((Order o, Product p) => o.Id == orderId && p.Id == productId)
+                    .Create("(p)-[:ORDERED{Id:" + lastId + ", OrderId:" + orderId + ", ProductId:" + productId + "}]->(p)")
+                    .ExecuteWithoutResultsAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool connectProperty(int propertyId, int productId)
+        {
+            try
+            {
+                var lastInner = _graphClient.Cypher
+                .Match("()-[c:PROPERTY]-()")
+                .Return((c) => new PROPERTY
+                {
+                    Id = c.As<PROPERTY>().Id
+                }).OrderByDescending("c.Id").Limit(1).ResultsAsync.Result.ToList();
+
+                int lastId = lastInner.FirstOrDefault().Id + 1;
+
+                _graphClient.Cypher.Match("(pp:Property), (p:Product)")
+                    .Where((Property pp, Product p) => pp.Id == propertyId && p.Id == productId)
+                    .Create("(p)-[:PROPERTY{Id:" + lastId + ", PropertyId:" + propertyId + ", ProductId:" + productId + "}]->(pp)")
+                    .ExecuteWithoutResultsAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        /*
+        public bool connectSeller(int sellerId, int productId)
+        {
+            try
+            {
+                var lastInner = _graphClient.Cypher
+                .Match("()-[c:INNER]-()")
+                .Return((c) => new SELLING
+                {
+                    Id = c.As<SELLING>().Id
+                }).OrderByDescending("c.Id").Limit(1).ResultsAsync.Result.ToList();
+
+                int lastId = lastInner.FirstOrDefault().Id + 1;
+
+                _graphClient.Cypher.Match("(o:Order), (p:Product)")
+                    .Where((Person prs, Product p) => o.Id == sellerId && p.Id == productId)
+                    .Create("(prs)-[:SELLING{Id:" + lastId + ", PersonId:" + sellerId + ", ProductId:" + productId + "}]->(p)")
+                    .ExecuteWithoutResultsAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        */
     }
 }
