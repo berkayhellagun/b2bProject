@@ -80,16 +80,12 @@ namespace Business.Concrete
         public IDataResult<List<Product>> GetProductsByCategoryId(int categoryId)
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetProductsByCategoryId(categoryId).ToList());
-
-            //return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSubCategoryId == subCategoryId).ToList());
         }
 
         [CacheAspect]
         public IDataResult<List<Product>> GetProductsBySubCategoryId(int subCatId)
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetProductsBySubCategoryId(subCatId).ToList());
-
-            //return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSubCategoryId == subCategoryId).ToList());
         }
 
         public IDataResult<List<Product>> GetBySupplierId(int supplierId)

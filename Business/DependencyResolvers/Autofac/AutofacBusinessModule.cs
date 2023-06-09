@@ -44,19 +44,19 @@ namespace Business.DependencyResolvers.Autofac
 
             //supplier solve
             builder.RegisterType<SupplierManager>().As<ISupplierService>().SingleInstance();
-            builder.RegisterType<EfSupplierDal>().As<ISupplierDal>().SingleInstance();
+            builder.RegisterType<NeoSupplierDal>().As<ISupplierDal>().SingleInstance();
 
             //user solve
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+            builder.RegisterType<NeoUserDal>().As<IUserDal>().SingleInstance();
 
             //operation claim solve
             builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>().SingleInstance();
-            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>().SingleInstance();
+            builder.RegisterType<NeoOperationClaimDal>().As<IOperationClaimDal>().SingleInstance();
 
-            //user operation claim
+            //user operation claim -- kalkacak
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();
-            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
+            builder.RegisterType<NeoUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
 
             //for aop --- this section provide interception 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

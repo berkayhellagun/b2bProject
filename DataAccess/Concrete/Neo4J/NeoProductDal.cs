@@ -75,7 +75,7 @@ namespace DataAccess.Concrete.Neo4J
 
         public List<ProductDetail> GetProductDetail(int id)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public List<ProductDetails> GetProductsDetails()

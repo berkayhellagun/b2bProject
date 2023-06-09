@@ -22,7 +22,7 @@ namespace WebAPI.Controllers.Concrete
         {
             var result = _productService.GetProductDetail(id);
             return result.Success
-                ? Ok(result.Data)
+                ? Ok(result.Data + "\nKullanılmayan Controller")
                 : BadRequest(result.Message);
         }
 
