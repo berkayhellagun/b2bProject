@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserOperationClaimDal : EfEntityRepositoryBase<UserOperationClaim, DBContext>, IUserOperationClaimDal
+    public class EfUserOperationClaimDal : EfEntityRepositoryBase<UserOperationClaim, DBContext>//, IUserOperationClaimDal
     {
         public List<UserOperationClaimDetail> GetDetailByIdDB(int id)
         {

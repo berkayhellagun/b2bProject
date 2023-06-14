@@ -1,5 +1,4 @@
-﻿using Core.Entities.Concrete;
-using Entities.Concrete;
+﻿using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +7,8 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs
 {
-    public class ProductWithProperties:BaseEntity
+    public class ProductWithProperties
     {
-        
-        public string CategoryName{ get; set; }
-        public string SubCategoryName { get; set; }
-        public string ProductName { get; set; }
-        public decimal ProductPrice { get; set; }
-        public string? ProductDescription { get; set; }
-        public int ProductInStock { get; set; }
         public IEnumerable<Property>? Properties { get; set; }
-        
     }
 }

@@ -32,6 +32,15 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
+        public async Task<IResult> connectCategory(int subId, int catId)
+        {
+            var result = _subCategoryDal.connectCategory(subId, catId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
         public async Task<IDataResult<List<SubCategory>>> AsyncGetAll()
         {
             var result = await _subCategoryDal.AsyncGetAllDB();

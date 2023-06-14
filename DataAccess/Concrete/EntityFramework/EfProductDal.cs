@@ -10,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProductDal : EfEntityRepositoryBase<Product, DBContext>, IProductDal
+    public class EfProductDal : EfEntityRepositoryBase<Product, DBContext>//, IProductDal
     {
+        public List<Product> GetBySubCategoryId(int subCatId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<ProductDetail> GetProductDetail(int id)
         {
             using (DBContext db = new DBContext())
@@ -39,7 +44,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<ProductWithProperties> GetProductWithProperties()
+        public List<ProductDetails> GetProductWithProperties()
         {
             throw new NotImplementedException();
         }

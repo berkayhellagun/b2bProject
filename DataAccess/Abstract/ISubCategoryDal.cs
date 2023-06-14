@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface ISubCategoryDal: IEntityRepositoryBase<SubCategory>
     {
+        bool connectCategory(int subId, int catId);
     }
 }

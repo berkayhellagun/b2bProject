@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results.Abstract;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Business.Abstract
 {
     public interface ISubCategoryService: IGenericService<SubCategory>
     {
+        Task<IResult> connectCategory(int subId, int catId);
     }
 }

@@ -76,9 +76,16 @@ namespace Business.Concrete
                 : new ErrorResult(Messages.NotUpdated);
         }
 
-        public IDataResult<List<Product>> GetByCategoryId(int subCategoryId)
+        [CacheAspect]
+        public IDataResult<List<Product>> GetProductsByCategoryId(int categoryId)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSubCategoryId == subCategoryId).ToList());
+            return new SuccessDataResult<List<Product>>(_productDal.GetProductsByCategoryId(categoryId).ToList());
+        }
+
+        [CacheAspect]
+        public IDataResult<List<Product>> GetProductsBySubCategoryId(int subCatId)
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetProductsBySubCategoryId(subCatId).ToList());
         }
 
         public IDataResult<List<Product>> GetBySupplierId(int supplierId)
@@ -97,9 +104,41 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        public IDataResult<List<ProductWithProperties>> GetProductWithProperties()
+        public IDataResult<List<ProductDetails>> GetProductsDetails()
         {
-            return new SuccessDataResult<List<ProductWithProperties>>(_productDal.GetProductWithProperties().ToList());
+            return new SuccessDataResult<List<ProductDetails>>(_productDal.GetProductsDetails().ToList());
+        }
+
+        public IDataResult<ProductDetails> GetProductDetailsById(int productId)
+        {
+            return new SuccessDataResult<ProductDetails>(_productDal.GetProductsDetails().Where(x=> x.Id == productId).First());
+        }
+
+        [CacheAspect]
+        public async Task<IResult> connectSubCategory(int subId, int productId)
+        {
+            var result = _productDal.connectSubCategory(subId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
+        public async Task<IResult> connectOrder(int orderId, int productId)
+        {
+            var result = _productDal.connectOrder(orderId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
+        public async Task<IResult> connectProperty(int propertyId, int productId)
+        {
+            var result = _productDal.connectProperty(propertyId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
         }
     }
 }

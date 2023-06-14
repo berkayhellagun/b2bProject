@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCategoryDal : EfEntityRepositoryBase<Category, DBContext>, ICategoryDal
+    public class EfCategoryDal : EfEntityRepositoryBase<Category, DBContext>//, ICategoryDal
     {
         public List<Category> GetCategoryTreeById(int id)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfOperationClaimDal : EfEntityRepositoryBase<OperationClaim, DBContext>, IOperationClaimDal
+    public class EfOperationClaimDal : EfEntityRepositoryBase<OperationClaim, DBContext>//, IOperationClaimDal
     {
 
     }

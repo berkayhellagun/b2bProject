@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.Abstract;
+using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -12,6 +13,13 @@ namespace DataAccess.Abstract
     public interface IProductDal : IEntityRepositoryBase<Product>
     {
         List<ProductDetail> GetProductDetail(int id);
-        List<ProductWithProperties> GetProductWithProperties();
+        List<ProductDetails> GetProductsDetails();
+        List<Product> GetProductsBySubCategoryId(int subCatId);
+        List<Product> GetProductsByCategoryId(int categoryId);
+        bool connectSubCategory(int subId, int productId);
+        bool connectOrder(int orderId, int productId);
+        bool connectProperty(int propertyId, int productId);
+        //bool connectSeller(int sellerId, int productId);
+
     }
 }
