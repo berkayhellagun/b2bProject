@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validation.FluentValidation
 {
-    public class UserValidator : AbstractValidator<User>
+    public class UserValidator : AbstractValidator<Person>
     {
         public UserValidator()
         {
@@ -16,9 +16,11 @@ namespace Business.Validation.FluentValidation
                 .NotEmpty();
             RuleFor(user => user.LastName)
                 .NotEmpty();
-            RuleFor(user => user.Email)
+            RuleFor(user => user.eMail)
                 .NotEmpty()
                 .EmailAddress();
+            RuleFor(user => user.TCVKN)
+                .NotEmpty();
         }
     }
 }

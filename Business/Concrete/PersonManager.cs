@@ -17,23 +17,25 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class UserManager : IUserService
+    public class PersonManager : IPersonService
     {
-        readonly IUserDal _userDal;
+        readonly IPersonDal _userDal;
         readonly ISupplierService _supplierService;
 
-        public UserManager(IUserDal userDal, ISupplierService supplierService)
+        public PersonManager(IPersonDal userDal, ISupplierService supplierService)
         {
             _userDal = userDal;
             _supplierService = supplierService;
         }
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
-        public async Task<IResult> AsyncAdd(User t)
+        public async Task<IResult> AsyncAdd(Person t)
         {
-            if(t.SupplierId != null)
+            if(t.CompanyName != null)
             {
-                var supplierName = BindSupplierName(t.SupplierId.Value);
+                //var supplierName = BindSupplierName(t.SupplierId.Value);
+
+                var supplierName = t.CompanyName;
                 t.FirstName = supplierName;
             }
             var result = await _userDal.AsyncAddDB(t);
@@ -43,38 +45,38 @@ namespace Business.Concrete
         }
         [SecuredOperation(Roles ="admin,user.add")]
         [CacheAspect]
-        public async Task<IDataResult<List<User>>> AsyncGetAll()
+        public async Task<IDataResult<List<Person>>> AsyncGetAll()
         {
             var result = await _userDal.AsyncGetAllDB();
             return result != null
-                ? new SuccessDataResult<List<User>>(result)
-                : new ErrorDataResult<List<User>>(Messages.Error);
+                ? new SuccessDataResult<List<Person>>(result)
+                : new ErrorDataResult<List<Person>>(Messages.Error);
         }
         [CacheAspect]
-        public async Task<IDataResult<User>> AsyncGetById(int id)
+        public async Task<IDataResult<Person>> AsyncGetById(int id)
         {
             var result = await _userDal.AsyncGetDB(u => u.Id == id);
             return result != null
-                ? new SuccessDataResult<User>(result)
-                : new ErrorDataResult<User>(Messages.Error);
+                ? new SuccessDataResult<Person>(result)
+                : new ErrorDataResult<Person>(Messages.Error);
         }
 
-        public async Task<IDataResult<User>> AsyncGetByMail(string email)
+        public async Task<IDataResult<Person>> AsyncGetByMail(string email)
         {
-            var result = await _userDal.AsyncGetDB(u => u.Email == email);
+            var result = await _userDal.AsyncGetDB(u => u.eMail == email);
             return result != null
-                ? new SuccessDataResult<User>(result)
-                : new ErrorDataResult<User>();
+                ? new SuccessDataResult<Person>(result)
+                : new ErrorDataResult<Person>();
         }
 
-        public IDataResult<List<OperationClaim>> GetClaim(User user)
+        public IDataResult<List<OperationClaim>> GetClaim(Person user)
         {
             var result = _userDal.GetClaims(user);
             return new SuccessDataResult<List<OperationClaim>>(result);
         }
 
         [CacheRemoveAspect("IUserService.Get")]
-        public async Task<IResult> AsyncRemove(User t)
+        public async Task<IResult> AsyncRemove(Person t)
         {
             var result = await _userDal.AsyncDeleteDB(t);
             return result
@@ -83,7 +85,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("IUserService.Get")]
-        public async Task<IResult> AsyncUpdate(User t)
+        public async Task<IResult> AsyncUpdate(Person t)
         {
             var result = await _userDal.AsyncUpdateDB(t);
             return result

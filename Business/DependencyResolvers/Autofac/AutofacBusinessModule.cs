@@ -46,13 +46,21 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<SupplierManager>().As<ISupplierService>().SingleInstance();
             builder.RegisterType<NeoSupplierDal>().As<ISupplierDal>().SingleInstance();
 
-            //user solve
-            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<NeoUserDal>().As<IUserDal>().SingleInstance();
+            //person solve
+            builder.RegisterType<PersonManager>().As<IPersonService>().SingleInstance();
+            builder.RegisterType<NeoPersonDal>().As<IPersonDal>().SingleInstance();
+
+            //sector solve
+            builder.RegisterType<SectorManager>().As<ISectorService>().SingleInstance();
+            builder.RegisterType<NeoSectorDal>().As<ISectorDal>().SingleInstance();
 
             //operation claim solve
             builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>().SingleInstance();
             builder.RegisterType<NeoOperationClaimDal>().As<IOperationClaimDal>().SingleInstance();
+
+            //order solve
+            builder.RegisterType<OrderManager>().As<IOrderService>().SingleInstance();
+            builder.RegisterType<NeoOrderDal>().As<IOrderDal>().SingleInstance();
 
             //user operation claim -- kalkacak
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();

@@ -16,6 +16,7 @@ namespace DataAccess.Abstract
         List<ProductDetails> GetProductsDetails();
         List<Product> GetProductsBySubCategoryId(int subCatId);
         List<Product> GetProductsByCategoryId(int categoryId);
+        List<Product> GetProductsBySectorId(int sectorId);
         bool connectSubCategory(int subId, int productId);
         bool connectOrder(int orderId, int productId);
         bool connectProperty(int propertyId, int productId);

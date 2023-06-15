@@ -77,6 +77,12 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
+        public IDataResult<List<Product>> GetProductsBySectorId(int sectorId)
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetProductsBySectorId(sectorId).ToList());
+        }
+
+        [CacheAspect]
         public IDataResult<List<Product>> GetProductsByCategoryId(int categoryId)
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetProductsByCategoryId(categoryId).ToList());

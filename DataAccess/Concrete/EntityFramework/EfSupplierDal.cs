@@ -29,7 +29,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  EmployeeCount = supplier.EmployeeCount,
                                  SupplierContactPersonId = supplier.SupplierContactPersonId,
                                  PersonName = user.FirstName + " " + user.LastName,
-                                 PersonEmail = user.Email,
+                                 PersonEmail = user.eMail,
                                  SupplierCountry = supplier.SupplierCountry,
                                  SupplierFoundYear = supplier.SupplierFoundYear,
                                  SupplierGiro = supplier.SupplierGiro,

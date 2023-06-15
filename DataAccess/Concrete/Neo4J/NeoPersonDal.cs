@@ -11,20 +11,20 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.Neo4J
 {
-    public class NeoUserDal : NeoGenericRepositoryBase<User>, IUserDal
+    public class NeoPersonDal : NeoGenericRepositoryBase<Person>, IPersonDal
     {
         private readonly IGraphClient _graphClient;
 
-        public NeoUserDal(IGraphClient graphClient) : base(graphClient)
+        public NeoPersonDal(IGraphClient graphClient) : base(graphClient)
         {
             _graphClient = graphClient;
         }
 
-        public List<OperationClaim> GetClaims(User user)
+        public List<OperationClaim> GetClaims(Person user)
         {
             var claims = _graphClient.Cypher
                 .Match("(u:User)-[:USER_OPERATION_CLAIM]->(oc:OperationClaim)")
-                .Where((User u) => u.Id == user.Id)
+                .Where((Person u) => u.Id == user.Id)
                 .Return((oc) => new OperationClaim
                 {
                     Id = oc.As<OperationClaim>().Id,
