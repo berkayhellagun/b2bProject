@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Entities.Relationships
 {
-    public class INNER: BaseEntity
+    public class CONCERNED : BaseEntity
     {
-        public int CategoryId { get; set; }
-        public int SubCatId { get; set; }
-        public int ProductId { get; set; }
+        public int PersonId { get; set; }
         public int SectorId { get; set; }
     }
 }

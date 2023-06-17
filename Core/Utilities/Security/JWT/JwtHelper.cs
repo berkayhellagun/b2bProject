@@ -27,12 +27,12 @@ namespace Core.Utilities.Security.JWT
             _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
             _expirationTime = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpirationTime);
         }
-        public Task<AccessToken> AsyncCreateToken(User user, List<OperationClaim> operationClaims)
+        public Task<AccessToken> AsyncCreateToken(Person user, List<OperationClaim> operationClaims)
         {
             return Task.FromResult(CreateToken(user, operationClaims));
         }
 
-        private AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
+        private AccessToken CreateToken(Person user, List<OperationClaim> operationClaims)
         {
             // security key 
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
@@ -46,7 +46,7 @@ namespace Core.Utilities.Security.JWT
             // return access token 
             return new AccessToken { Token = tokenName, ExpirationTime = _expirationTime };
         }
-        private JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user, 
+        private JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, Person user, 
                                                         SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {
             var jwt = new JwtSecurityToken(
@@ -58,12 +58,12 @@ namespace Core.Utilities.Security.JWT
                 );
             return jwt;
         }
-        private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
+        private IEnumerable<Claim> SetClaims(Person user, List<OperationClaim> operationClaims)
         {
             var claims = new List<Claim>();
             claims.AddNameIdentifier(user.Id.ToString());
             claims.AddName($"{user.FirstName} {user.LastName}");
-            claims.AddEmail(user.Email);
+            claims.AddEmail(user.eMail);
             claims.AddRoles(operationClaims.Select(o => o.OperationName).ToArray());
             return claims;
         }

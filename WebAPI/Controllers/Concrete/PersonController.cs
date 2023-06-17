@@ -7,11 +7,11 @@ namespace WebAPI.Controllers.Concrete
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : GenericController<User>
+    public class PersonController : GenericController<Person>
     {
-        IUserService _userService;
+        IPersonService _userService;
 
-        public UsersController(IUserService userService) : base(userService)
+        public PersonController(IPersonService userService) : base(userService)
         {
             _userService = userService;
         }

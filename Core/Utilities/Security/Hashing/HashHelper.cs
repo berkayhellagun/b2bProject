@@ -18,13 +18,13 @@ namespace Core.Utilities.Security.Hashing
             }
         }
 
-        public static bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
+        public static bool VerifyPassword(string password, string passwordRepeat)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            if (password.Equals(passwordRepeat))
             {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
+                return true;
             }
+            return false;
         }
 
     }

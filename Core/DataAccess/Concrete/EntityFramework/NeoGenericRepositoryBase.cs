@@ -1,7 +1,9 @@
 ﻿using Core.DataAccess.Abstract;
 using Core.Entities;
 using Core.Entities.Concrete;
+using Neo4j.Driver;
 using Neo4jClient;
+using NLog.Filters;
 using System.Linq.Expressions;
 
 namespace Core.DataAccess.Concrete.EntityFramework
@@ -87,7 +89,28 @@ namespace Core.DataAccess.Concrete.EntityFramework
 
         public Task<bool> AsyncUpdateDB(TEntity entity)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => { return UpdateDB(entity); });
+        }
+        private bool UpdateDB(TEntity entity)
+        {
+            try
+            {
+                var type = typeof(TEntity).Name;
+
+                var products = _graphClient.Cypher.Match("(p: " + type + ")")
+                            .Where((TEntity p) => p.Id == entity.Id)
+                            .Set("p = $entity")
+                            .WithParam("entity", entity)
+                            .ExecuteWithoutResultsAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
 
         public IList<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
