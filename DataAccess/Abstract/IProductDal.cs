@@ -17,10 +17,11 @@ namespace DataAccess.Abstract
         List<Product> GetProductsBySubCategoryId(int subCatId);
         List<Product> GetProductsByCategoryId(int categoryId);
         List<Product> GetProductsBySectorId(int sectorId);
+        List<Tuple<Product,int>> GetProductsMostOrderedLast24Hours();
         bool connectSubCategory(int subId, int productId);
         bool connectOrder(int orderId, int productId);
         bool connectProperty(int propertyId, int productId);
-        //bool connectSeller(int sellerId, int productId);
+        bool connectSeller(int sellerId, int productId);
 
     }
 }

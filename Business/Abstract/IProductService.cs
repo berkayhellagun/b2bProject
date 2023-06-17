@@ -15,11 +15,14 @@ namespace Business.Abstract
         IDataResult<List<Product>> GetProductsBySubCategoryId(int subCatId);
         IDataResult<List<Product>> GetProductsByCategoryId(int categoryId);
         IDataResult<List<Product>> GetProductsBySectorId(int sectorId);
-        IDataResult<List<Product>> GetBySupplierId(int supplierId);
         IDataResult<List<ProductDetails>> GetProductsDetails();
         IDataResult<ProductDetails> GetProductDetailsById(int productId);
+
+        IDataResult<List<Tuple<Product, int>>> GetProductsMostOrderedLast24Hours();
+
         Task<IResult> connectSubCategory(int subId, int productId);
         Task<IResult> connectOrder(int orderId, int productId);
         Task<IResult> connectProperty(int propertyId, int productId);
+        Task<IResult> connectSeller(int sellerId, int productId);
     }
 }

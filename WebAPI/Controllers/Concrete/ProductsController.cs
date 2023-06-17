@@ -16,6 +16,14 @@ namespace WebAPI.Controllers.Concrete
             _productService = productService;
         }
 
+        [HttpGet("getproductsmostorderedlast24hours")]
+        public IActionResult GetProductsMostOrderedLast24Hours()
+        {
+            var result = _productService.GetProductsMostOrderedLast24Hours();
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
 
         [HttpGet("getproductdetailbyid")]
         public IActionResult GetProductDetail(int id)
@@ -53,15 +61,6 @@ namespace WebAPI.Controllers.Concrete
                 : BadRequest(result.Message);
         }
 
-        [HttpGet("getproductbysupplierid")]
-        public IActionResult GetBySupplierId(int supplierId)
-        {
-            var result = _productService.GetBySupplierId(supplierId);
-            return result.Success
-                ? Ok(result.Data)
-                : BadRequest(result.Message);
-        }
-
         [HttpGet("getproductsdetails")]
         public IActionResult GetProductsDetails()
         {
@@ -81,27 +80,36 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("connectsubcategory")]
-        public async Task<IActionResult> connectCategory(int subCategoryId, int categoryId)
+        public async Task<IActionResult> connectCategory(int subCategoryId, int productId)
         {
-            var result = await _productService.connectSubCategory(subCategoryId, categoryId);
+            var result = await _productService.connectSubCategory(subCategoryId, productId);
             return result.Success
                 ? Ok()
                 : BadRequest(result.Message);
         }
 
         [HttpPost("connectorder")]
-        public async Task<IActionResult> connectOrder(int orderId, int categoryId)
+        public async Task<IActionResult> connectOrder(int orderId, int productId)
         {
-            var result = await _productService.connectOrder(orderId, categoryId);
+            var result = await _productService.connectOrder(orderId, productId);
             return result.Success
                 ? Ok()
                 : BadRequest(result.Message);
         }
 
         [HttpPost("connectproperty")]
-        public async Task<IActionResult> connectProperty(int propertyId, int categoryId)
+        public async Task<IActionResult> connectProperty(int propertyId, int productId)
         {
-            var result = await _productService.connectProperty(propertyId, categoryId);
+            var result = await _productService.connectProperty(propertyId, productId);
+            return result.Success
+                ? Ok()
+                : BadRequest(result.Message);
+        }
+
+        [HttpPost("connectseller")]
+        public async Task<IActionResult> connectSeller(int sellerId, int productId)
+        {
+            var result = await _productService.connectSeller(sellerId, productId);
             return result.Success
                 ? Ok()
                 : BadRequest(result.Message);
