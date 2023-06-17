@@ -30,6 +30,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IOrderService.Get")]
         public async Task<IResult> AsyncAdd(Order t)
         {
+            t.OrderDate = DateTime.Now;
             var result = await _orderDal.AsyncAddDB(t);
             return result
                 ? new SuccessResult(Messages.Added)

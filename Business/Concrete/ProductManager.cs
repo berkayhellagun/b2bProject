@@ -27,12 +27,12 @@ namespace Business.Concrete
         [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> AsyncAdd(Product t)
         {
-            t.ProductionDate = DateTime.Now;
             var result = await _productDal.AsyncAddDB(t);
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
+
         [CacheAspect]
         public async Task<IDataResult<List<Product>>> AsyncGetAll()
         {
@@ -94,11 +94,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetProductsBySubCategoryId(subCatId).ToList());
         }
 
-        public IDataResult<List<Product>> GetBySupplierId(int supplierId)
-        {
-            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.ProductSupplierId == supplierId).ToList());
-        }
-
         [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> RemoveById(int id)
         {
@@ -145,6 +140,24 @@ namespace Business.Concrete
             return result
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
+        public async Task<IResult> connectSeller(int sellerId, int productId)
+        {
+            var result = _productDal.connectSeller(sellerId, productId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
+        [CacheAspect]
+        public IDataResult<List<Tuple<Product, int>>> GetProductsMostOrderedLast24Hours()
+        {
+            var result = _productDal.GetProductsMostOrderedLast24Hours();
+            return result != null
+                ? new SuccessDataResult<List<Tuple<Product, int>>>(result)
+                : new ErrorDataResult<List<Tuple<Product, int>>>(Messages.Error);
         }
     }
 }

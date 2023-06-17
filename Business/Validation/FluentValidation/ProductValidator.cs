@@ -16,14 +16,6 @@ namespace Business.Validation.FluentValidation
                 .GreaterThan(0);
             RuleFor(product => product.ProductName.Length)
                 .GreaterThanOrEqualTo(2);
-            RuleFor(product => product.ProductSupplierId)
-                .NotNull()
-                .NotEmpty();
-            RuleFor(product => product.ProductSubCategoryId)
-                .NotNull()
-                .NotEmpty();
-            RuleFor(product => product.ProductCountry)
-                .NotEmpty();
             RuleFor(product => product.ProductName.Length)
                 .GreaterThanOrEqualTo(2);
         }

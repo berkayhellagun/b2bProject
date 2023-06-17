@@ -13,5 +13,6 @@ namespace Entities.Concrete
         public int ProductId { get; set; }
         public int BuyerId { get; set; }
         public int SellerId { get; set; }
+        public DateTime OrderDate { get; set; }
     }
 }

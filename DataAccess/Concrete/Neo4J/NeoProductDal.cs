@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.Concrete.EntityFramework;
+using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -7,7 +8,10 @@ using Entities.Relationships;
 using Microsoft.IdentityModel.Tokens;
 using Neo4j.Driver;
 using Neo4jClient;
+using Neo4jClient.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAccess.Concrete.Neo4J
 {
@@ -23,23 +27,16 @@ namespace DataAccess.Concrete.Neo4J
         public List<Product> GetProductsBySubCategoryId(int subCategoryId)
         {
             var products = _graphClient.Cypher
-                .Match("p=(pp)-[]-(s:Product)-[i:INNER]->(:SubCategory)")
-                //.Match("p=(s:Product)-[i:INNER]->()")
-                .Where((INNER i, Property pp) => i.SubCatId == subCategoryId && (pp.Key == "Brand" || pp.Key == "Model"))
+                .Match("p=(pp)-[:PROPERTY]-(s:Product)-[i:INNER]->(:SubCategory)")
+                .Where((INNER i) => i.SubCatId == subCategoryId)
                 .Return((s, pp) => new Product
-                //.Return((s) => new Product
                 {
                     Id = s.As<Product>().Id,
                     ProductName = s.As<Product>().ProductName,
-                    ProductCountry = s.As<Product>().ProductCountry,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
                     ProductPrice = s.As<Product>().ProductPrice,
-                    ProductionDate = s.As<Product>().ProductionDate,
-                    ProductSalesAmount = s.As<Product>().ProductSalesAmount,
-                    ProductSupplierId = s.As<Product>().ProductSupplierId,
-                    ProductSubCategoryId = s.As<Product>().ProductSubCategoryId,
-                    Properties = pp.CollectAs<Property>() //(IEnumerable<Property>)pp.CollectAs<Property>().Select(s=> s.Key == "Brand" && s.Key == "Model"),
+                    Properties = pp.CollectAs<Property>()
                 })
                 .OrderBy("1")
                 .ResultsAsync.Result.ToList();
@@ -50,23 +47,16 @@ namespace DataAccess.Concrete.Neo4J
         public List<Product> GetProductsByCategoryId(int categoryId)
         {
             var products = _graphClient.Cypher
-                //.Match("p=(pp)-[]-(s:Product)-[i:INNER]->()")
-                .Match("p=(s:Product)-[:INNER]->(:SubCategory)-[i:INNER]->(:Category)")
+                .Match("p=(pp)-[:PROPERTY]-(s:Product)-[:INNER]->(:SubCategory)-[i:INNER]->(:Category)")
                 .Where((INNER i) => i.CategoryId == categoryId)
-                //.Return((s, pp) => new Product
-                .Return((s) => new Product
+                .Return((s, pp) => new Product
                 {
                     Id = s.As<Product>().Id,
                     ProductName = s.As<Product>().ProductName,
-                    ProductCountry = s.As<Product>().ProductCountry,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
                     ProductPrice = s.As<Product>().ProductPrice,
-                    ProductionDate = s.As<Product>().ProductionDate,
-                    ProductSalesAmount = s.As<Product>().ProductSalesAmount,
-                    ProductSupplierId = s.As<Product>().ProductSupplierId,
-                    ProductSubCategoryId = s.As<Product>().ProductSubCategoryId,
-                    //Properties = pp.CollectAs<Property>()
+                    Properties = pp.CollectAs<Property>()
                 })
                 .OrderBy("1")
                 .ResultsAsync.Result.ToList();
@@ -77,20 +67,15 @@ namespace DataAccess.Concrete.Neo4J
         public List<Product> GetProductsBySectorId(int sectorId)
         {
             var products = _graphClient.Cypher
-                .Match("(s:Product)-[:INNER]->(:SubCategory)-[:INNER]->(:Category)-[i:INNER]->(:Sector)")
+                .Match("(pp)-[:PROPERTY]-(s:Product)-[:INNER]->(:SubCategory)-[:INNER]->(:Category)-[i:INNER]->(:Sector)")
                 .Where((INNER i) => i.SectorId == sectorId)
-                .Return((s) => new Product
+                .Return((s, pp) => new Product
                 {
                     Id = s.As<Product>().Id,
                     ProductName = s.As<Product>().ProductName,
-                    ProductCountry = s.As<Product>().ProductCountry,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
-                    ProductPrice = s.As<Product>().ProductPrice,
-                    ProductionDate = s.As<Product>().ProductionDate,
-                    ProductSalesAmount = s.As<Product>().ProductSalesAmount,
-                    ProductSupplierId = s.As<Product>().ProductSupplierId,
-                    ProductSubCategoryId = s.As<Product>().ProductSubCategoryId,
+                    ProductPrice = s.As<Product>().ProductPrice
                 })
                 .OrderBy("1")
                 .ResultsAsync.Result.ToList();
@@ -199,31 +184,55 @@ namespace DataAccess.Concrete.Neo4J
             }
         }
 
-        /*
-public bool connectSeller(int sellerId, int productId)
-{
-   try
-   {
-       var lastInner = _graphClient.Cypher
-       .Match("()-[c:INNER]-()")
-       .Return((c) => new SELLING
-       {
-           Id = c.As<SELLING>().Id
-       }).OrderByDescending("c.Id").Limit(1).ResultsAsync.Result.ToList();
+        public bool connectSeller(int sellerId, int productId)
+        {
+           try
+           {
+               var lastInner = _graphClient.Cypher
+               .Match("()-[c:SELLING]-()")
+               .Return((c) => new SELLING
+               {
+                   Id = c.As<SELLING>().Id
+               }).OrderByDescending("c.Id").Limit(1).ResultsAsync.Result.ToList();
 
-       int lastId = lastInner.FirstOrDefault().Id + 1;
+               int lastId = lastInner.FirstOrDefault().Id + 1;
 
-       _graphClient.Cypher.Match("(o:Order), (p:Product)")
-           .Where((Person prs, Product p) => o.Id == sellerId && p.Id == productId)
-           .Create("(prs)-[:SELLING{Id:" + lastId + ", PersonId:" + sellerId + ", ProductId:" + productId + "}]->(p)")
-           .ExecuteWithoutResultsAsync();
-       return true;
-   }
-   catch (Exception)
-   {
-       return false;
-   }
-}
-*/
+               _graphClient.Cypher.Match("(p:Product), (prs:Person)")
+                   .Where((Person prs, Product p) => p.Id == productId && prs.Id == sellerId)
+                   .Create("(prs)-[:SELLING{Id:" + lastId + ", ProductId:" + productId + ", SellerId:" + sellerId + "}]->(p)")
+                   .ExecuteWithoutResultsAsync();
+               return true;
+           }
+           catch (Exception)
+           {
+               return false;
+           }
+        }
+
+        public List<Tuple<Product, int>> GetProductsMostOrderedLast24Hours()
+        {            
+            var result    = _graphClient.Cypher
+                .Match("(pp)-[:PROPERTY]-(p:Product)-[:ORDERED]-(o:Order)")
+                .Where("datetime(o.OrderDate) >= datetime({timezone:'Europe/Istanbul'}) - duration('PT24H')")
+                .With("p, pp, o.ProductId as ProductId, sum(o.ProductQuantity) as quantity")
+                .OrderByDescending("quantity")
+                .Return((p, pp, quantity) => new
+                {
+                    Product = p.As<Product>(),
+                    Properties = pp.CollectAs<Property>(),
+                    quantity = quantity.As<int>()
+                }).ResultsAsync.Result.Take(5).ToList();
+
+            List<Tuple<Product, int>> output = new List<Tuple<Product, int>>();
+
+            foreach (var item in result)
+            {
+                item.Product.Properties = item.Properties;
+                var tuple = Tuple.Create(item.Product, item.quantity);
+                output.Add(tuple);
+            }
+
+            return output;
+        }
     }
 }
