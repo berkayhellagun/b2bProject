@@ -14,6 +14,7 @@ namespace Entities.DTOs
         public string CategoryName{ get; set; }
         public string SubCategoryName { get; set; }
         public string ProductName { get; set; }
+        public DateTime ProductionDate { get; set; }
         public decimal ProductPrice { get; set; }
         public string? ProductDescription { get; set; }
         public int ProductInStock { get; set; }
