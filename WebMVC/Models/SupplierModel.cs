@@ -3,7 +3,7 @@ namespace WebMVC.Models
 {
     public class SupplierModel
     {
-        public int SupplierId { get; set; }
+        public int Id { get; set; }
         public string SupplierName { get; set; }
         public string SupplierMail { get; set; }
         public string SupplierTelephoneNumber { get; set; }
