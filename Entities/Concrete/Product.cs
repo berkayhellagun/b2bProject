@@ -15,7 +15,7 @@ namespace Entities.Concrete
         public string? ProductDescription { get; set; }
         //public string ProductCountry { get; set; }
         public decimal ProductPrice { get; set; }
-        //public DateTime ProductionDate { get; set; }
+        public DateTime ProductionDate { get; set; }
         public int ProductInStock { get; set; }
         //public int? ProductSalesAmount { get; set; }
         public IEnumerable<Property>? Properties { get; set; }

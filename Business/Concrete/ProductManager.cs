@@ -27,6 +27,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IProductService.Get")]
         public async Task<IResult> AsyncAdd(Product t)
         {
+            t.ProductionDate = DateTime.Now;
             var result = await _productDal.AsyncAddDB(t);
             return result
                 ? new SuccessResult(Messages.Added)
