@@ -290,7 +290,7 @@ namespace DataAccess.Concrete.Neo4J
                 var tuple = Tuple.Create(tempProduct, score);
                 output.Add(tuple);
             }
-
+            var deneme = "boş yazi";
             return output;
 
         }
