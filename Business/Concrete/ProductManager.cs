@@ -162,12 +162,21 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        public IDataResult<List<Tuple<Product, decimal>>> GetRecomendedProducts(int productId)
+        public IDataResult<List<Product>> GetRecomendedProducts(int productId)
         {
             var result = _productDal.GetRecomendedProducts(productId);
             return result != null
-                ? new SuccessDataResult<List<Tuple<Product, decimal>>>(result.Result)
-                : new ErrorDataResult<List<Tuple<Product, decimal>>>(Messages.Error);
+                ? new SuccessDataResult<List<Product>>(result.Result)
+                : new ErrorDataResult<List<Product>>(Messages.Error);
+        }
+
+        [CacheAspect]
+        public IDataResult<List<Product>> GetRecommendedProductsForOrders(int personId)
+        {
+            var result = _productDal.GetRecommendedProductsForOrders(personId);
+            return result != null
+                ? new SuccessDataResult<List<Product>>(result.Result)
+                : new ErrorDataResult<List<Product>>(Messages.Error);
         }
     }
 }
