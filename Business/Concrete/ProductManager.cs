@@ -160,5 +160,14 @@ namespace Business.Concrete
                 ? new SuccessDataResult<List<Tuple<Product, int>>>(result)
                 : new ErrorDataResult<List<Tuple<Product, int>>>(Messages.Error);
         }
+
+        [CacheAspect]
+        public IDataResult<List<Tuple<Product, decimal>>> GetRecomendedProducts(int productId)
+        {
+            var result = _productDal.GetRecomendedProducts(productId);
+            return result != null
+                ? new SuccessDataResult<List<Tuple<Product, decimal>>>(result.Result)
+                : new ErrorDataResult<List<Tuple<Product, decimal>>>(Messages.Error);
+        }
     }
 }

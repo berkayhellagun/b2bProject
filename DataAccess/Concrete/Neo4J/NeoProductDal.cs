@@ -8,6 +8,7 @@ using Entities.Relationships;
 using Microsoft.IdentityModel.Tokens;
 using Neo4j.Driver;
 using Neo4jClient;
+using Neo4jClient.Cypher;
 using Neo4jClient.Extensions;
 using System;
 using System.Collections.Generic;
@@ -237,6 +238,61 @@ namespace DataAccess.Concrete.Neo4J
             }
 
             return output;
+        }
+
+        [Obsolete]
+        public async Task<List<Tuple<Product, decimal>>> GetRecomendedProducts(int productId)
+        {
+            var driver = GraphDatabase.Driver("bolt://54.86.15.91:7687", 
+                    AuthTokens.Basic("neo4j", "glossaries-award-books"));
+
+            var query = @"
+                MATCH (n:Product)-[r:SIMILAR]->(m:Product)
+                WHERE n.Id = $productId
+                RETURN n, r, m ORDER BY r.score DESC";
+
+            var session = driver.AsyncSession(db => db.WithDatabase("neo4j"));
+
+            var result = await session.ReadTransactionAsync(async tx =>
+            {
+                var r = await tx.RunAsync(query, new { productId });
+                return await r.ToListAsync();
+            });
+            
+            await session.CloseAsync();
+
+            List<Tuple<Product, decimal>> output = new List<Tuple<Product, decimal>>();
+
+            foreach (var item in result)
+            {
+                Product tempProduct;
+                var node = item.Values.Where(x => x.Key == "m").FirstOrDefault().Value.As<INode>().Properties;
+                var tempId = int.Parse(node.GetValueOrDefault("Id").ToString());
+
+                if (productId == tempId)
+                {
+                    node = item.Values.Where(x => x.Key == "n").FirstOrDefault().Value.As<INode>().Properties;
+                }
+
+                tempProduct = new Product
+                {
+                    Id = int.Parse(node.GetValueOrDefault("Id").ToString()),
+                    ProductName = node.GetValueOrDefault("ProductName").ToString(),
+                    ProductDescription = node.GetValueOrDefault("ProductDescription").ToString(),
+                    ProductPrice = decimal.Parse(node.GetValueOrDefault("ProductPrice").ToString()),
+                    ProductionDate = DateTime.Parse(node.GetValueOrDefault("ProductionDate").ToString()),
+                    ProductInStock = int.Parse(node.GetValueOrDefault("ProductInStock").ToString())
+                };
+
+                var score = decimal.Parse(item.Values.Where(x => x.Key == "r").FirstOrDefault().Value
+                    .As<IRelationship>().Properties.GetValueOrDefault("score").ToString());
+
+                var tuple = Tuple.Create(tempProduct, score);
+                output.Add(tuple);
+            }
+            var deneme = "boş yazi";
+            return output;
+
         }
     }
 }
