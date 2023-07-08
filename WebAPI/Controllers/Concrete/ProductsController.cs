@@ -25,15 +25,6 @@ namespace WebAPI.Controllers.Concrete
                 : BadRequest(result.Message);
         }
 
-        [HttpGet("getproductdetailbyid")]
-        public IActionResult GetProductDetail(int id)
-        {
-            var result = _productService.GetProductDetail(id);
-            return result.Success
-                ? Ok(result.Data + "\nKullanılmayan Controller")
-                : BadRequest(result.Message);
-        }
-
         [HttpGet("getproductbysectorid")]
         public IActionResult GetProductsBySectorId(int sectorId)
         {

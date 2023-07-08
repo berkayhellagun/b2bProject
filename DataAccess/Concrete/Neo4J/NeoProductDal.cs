@@ -32,6 +32,7 @@ namespace DataAccess.Concrete.Neo4J
                 .Return((s, pp) => new Product
                 {
                     Id = s.As<Product>().Id,
+                    ProductionDate = s.As<Product>().ProductionDate,
                     ProductName = s.As<Product>().ProductName,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
@@ -52,6 +53,7 @@ namespace DataAccess.Concrete.Neo4J
                 .Return((s, pp) => new Product
                 {
                     Id = s.As<Product>().Id,
+                    ProductionDate = s.As<Product>().ProductionDate,
                     ProductName = s.As<Product>().ProductName,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
@@ -72,6 +74,7 @@ namespace DataAccess.Concrete.Neo4J
                 .Return((s, pp) => new Product
                 {
                     Id = s.As<Product>().Id,
+                    ProductionDate = s.As<Product>().ProductionDate,
                     ProductName = s.As<Product>().ProductName,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
@@ -101,6 +104,7 @@ namespace DataAccess.Concrete.Neo4J
                     ProductDescription = p.As<Product>().ProductDescription,
                     ProductPrice = p.As<Product>().ProductPrice,
                     ProductInStock = p.As<Product>().ProductInStock,
+                     ProductionDate = p.As<Product>().ProductionDate,
                     Properties = a.CollectAs<Property>()
                 })
                 .OrderBy("Id")
