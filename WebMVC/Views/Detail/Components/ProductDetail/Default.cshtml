@@ -1,73 +1,134 @@
-﻿@model List<WebMVC.Models.DetailModel.ProductDetailModel>
+﻿@model WebMVC.Models.DetailModel.ProductDetailModel
 
-<div class="container-fluid py-5">
-    @foreach (var item in @Model)
-    {
-        <div class="row px-xl-5">
-            <div class="col-lg-5 pb-5">
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner border">
-                        <div class="carousel-item active">
-                            @if (@item.ProductImage == "" || @item.ProductImage == null)
-                            {
-                                <img class="w-100 h-100" src="~/Images/ProductImage/default.png" alt="Image">
-                            }
-                            <img class="w-100 h-100" src="~/@item.ProductImage" alt="Image">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-7 pb-5">
-                <h3 class="font-weight-semi-bold">@item.ProductName</h3>
-                <h4 class="font-weight-semi-bold mb-4">@item.ProductPrice TL</h4>
-                <h5 class="font-weight-semi-thin">Made in @item.ProductCountry</h5>
-                <div class="d-flex mb-3">
-                    <a href="/Supplier/SupplierDetail/@item.ProductSupplierId">Tedarikçi: @item.SupplierName</a>
-                </div>
-                <div class="d-flex mb-3">
-                    <a href="/Home/CategoryDetails/@item.ProductCategoryId">Kategori: @item.CategoryName</a>
-                </div>
+<div class="container py-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-center align-items-center h-100 border rounded overflow-hidden">
+                @if (Model.ProductImage == "" || Model.ProductImage == null)
+                {
+                    <img class="img-fluid" src="~/Images/ProductImage/default.png" alt="Default Product Image">
+                }
+                <img class="img-fluid" src="~/Model.ProductImage" alt="Image">
             </div>
         </div>
 
-        <div class="row px-xl-5">
-            <div class="col">
-                <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Açıklama</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Bilgi</a>
+        <!-- Product Details -->
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <h1 class="mb-4">@Model.ProductName</h1>
+            <h2 class="text-success mb-4">@Model.ProductPrice TL</h2>
+            <h6 class="text-muted mb-4">Made in @Model.ProductCountry</h6>
+            <a class="d-block mb-2 text-decoration-none text-dark" href="/Supplier/SupplierDetail/@Model.ProductSupplierId">
+                <small>Tedarikçi: @Model.SupplierName</small>
+            </a>
+            <a class="d-block mb-4 text-decoration-none text-dark" href="/Home/CategoryDetails/@Model.ProductCategoryId">
+                <small>Kategori: @Model.CategoryName</small>
+            </a>
+            <h5 class="mb-3">Ürün Açıklaması</h5>
+            <p class="mb-4">@Model.ProductDescription</p>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Açıklama</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Bilgi</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">Ürün Açıklaması</h4>
+                    <p>@Model.ProductDescription</p>
                 </div>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">Ürün Açıklaması</h4>
-                        <p>@item.ProductDescription</p>
-                    </div>
-                    <div class="tab-pane fade" id="tab-pane-2">
-                        <h4 class="mb-3">Sağlanan Bilgiler</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item px-0">
-                                        Bu ürün @item.ProductCountry içerisinde üretilmiştir.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Üretim tarihi: @item.ProductionDate
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Firmanın sağladığı bilgiye göre @item.ProductInStock ürün stokta mevcuttur.
-                                    </li>
-                                </ul>
-                            </div>
+                <div class="tab-pane fade" id="tab-pane-2">
+                    <h4 class="mb-3">Sağlanan Bilgiler</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0">
+                                    Bu ürün @Model.ProductCountry içerisinde üretilmiştir.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Üretim tarihi: @Model.ProductionDate
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Firmanın sağladığı bilgiye göre @Model.ProductInStock ürün stokta mevcuttur.
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
 </div>
+
+
+
+@*<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        @if (Model.ProductImage == "" || Model.ProductImage == null)
+                        {
+                            <img class="w-100 h-100" src="~/Images/ProductImage/default.png">
+                        }
+                        <img class="w-100 h-100" src="~/Model.ProductImage" alt="Image">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">@Model.ProductName</h3>
+            <h4 class="font-weight-semi-bold mb-4">@Model.ProductPrice TL</h4>
+            <h5 class="font-weight-semi-thin">Made in @Model.ProductCountry</h5>
+            <div class="d-flex mb-3">
+                <a href="/Supplier/SupplierDetail/@Model.ProductSupplierId">Tedarikçi: @Model.SupplierName</a>
+            </div>
+            <div class="d-flex mb-3">
+                <a href="/Home/CategoryDetails/@Model.ProductCategoryId">Kategori: @Model.CategoryName</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Açıklama</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Bilgi</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">Ürün Açıklaması</h4>
+                    <p>@Model.ProductDescription</p>
+                </div>
+                <div class="tab-pane fade" id="tab-pane-2">
+                    <h4 class="mb-3">Sağlanan Bilgiler</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0">
+                                    Bu ürün @Model.ProductCountry içerisinde üretilmiştir.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Üretim tarihi: @Model.ProductionDate
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Firmanın sağladığı bilgiye göre @Model.ProductInStock ürün stokta mevcuttur.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

@@ -44,8 +44,10 @@ namespace WebMVC.Controllers
                 }
                 JwtSecurityToken token = new JwtSecurityToken(jwtEncodedString: apiResultJson.Token);
                 var role = token.Claims.First(claims => claims.Type.Contains("role")).Value;
+                var userId = token.Claims.First(claims => claims.Type.Contains("userId")).Value;
                 Response.Cookies.Append(Constants.Role, role);
                 HttpContext.Session.SetString(Constants.Email, userForLoginDto.Email);
+                HttpContext.Session.SetString(Constants.UserId, userId);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)

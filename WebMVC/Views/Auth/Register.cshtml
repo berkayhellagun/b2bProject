@@ -1,4 +1,4 @@
-﻿<html lang="en">
+﻿@*<html lang="en">
 <head>
     <style>
         .bd-placeholder-img {
@@ -75,4 +75,202 @@
         <div class="text-center small">Zaten bir hesabınız var mı? <a href="~/Auth/Login">Burdan Giriş Yapın</a></div>
     </div>
 </body>
+</html>*@
+
+
+
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html class="loading semi-dark-layout" lang="en" data-layout="semi-dark-layout" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="author" content="PIXINVENT">
+    <title>B2B Register</title>
+    <link rel="apple-touch-icon" href="~/app-assets/images/ico/apple-icon-120.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/pages/authentication.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <!-- END: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/extensions/ext-component-toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/extensions/toastr.min.css">
+
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
+    <!-- BEGIN: Content-->
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="auth-wrapper auth-basic px-2">
+                <div class="auth-inner my-2">
+                    <!-- Login basic -->
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <a href="" class="brand-logo">
+                                <h2 class="brand-text text">B2B Platform</h2>
+                            </a>
+                            <form class="auth-login-form mt-2" id="registerForm" action="#">
+                                <div class="mb-1">
+                                    <label for="login-firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="login-firstName" value="" name="FirstName" required="required" tabindex="1" autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="login-lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="login-lastName" value="" name="LastName" required="required" tabindex="1" autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="login-email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="login-email" value="" name="Email" required="required" placeholder="mail@example.com" aria-describedby="login-email" tabindex="1" autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="form-label" for="login-password">Password</label>
+                                    </div>
+                                    <div class="input-group input-group-merge form-password-toggle">
+                                        <input type="password" class="form-control form-control-merge" id="pass" value=""
+                                               name="Password" required="required" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                               aria-describedby="login-password" autocomplete="off" />
+                                        <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-1">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="form-label" for="login-password">Confirm Password</label>
+                                    </div>
+                                    <div class="input-group input-group-merge form-password-toggle">
+                                        <input type="password" class="form-control form-control-merge" id="cPass" value=""
+                                               required="required" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                               aria-describedby="login-password" autocomplete="off" />
+                                        <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="btn btn-secondary w-100" id="registerButton" onclick="registerFormSubmit()" tabindex="4">Register</button>
+                            <div class="text-center small">Already have an account? <a href="~/Auth/Login">Login here</a></div>
+                        </div>
+                        <!-- /Login basic -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    <script src="~/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="~/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="~/app-assets/js/core/app-menu.js"></script>
+    <script src="~/app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="~/app-assets/js/scripts/pages/auth-login.js"></script>
+    <!-- END: Page JS-->
+    <script src="~/app-assets/js/scripts/extensions/ext-component-toastr.min.js"></script>
+    <script src="~/app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        $(window).on('load', function () {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var Information = '@(ViewBag.Information)';
+            var Error = '@(ViewBag.Error)';
+            var Success = '@(ViewBag.Success)';
+            var Warning = '@(ViewBag.Warning)';
+            if (Information !== "") {
+                info(Information)
+            }
+            if (Error !== "") {
+                error(Error)
+            }
+            if (Success !== "") {
+                success(Success)
+            }
+            if (Warning !== "") {
+                warning(Warning)
+            }
+        });
+
+        function error(message) {
+            var isRtl = $('html').attr('data-textdirection') === 'rtl';
+            toastr['error'](message, 'Error!', {
+                closeButton: false,
+                tapToDismiss: true,
+                positionClass: 'toast-top-right',
+                rtl: isRtl,
+                showDuration: "300",
+                hideDuration: "1000",
+                timeOut: "5000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut"
+            });
+        };
+
+        function registerFormSubmit(){
+            var pass = $("#pass").val();
+            var cPass = $("#cPass").val();
+
+            if(pass != cPass){
+                error("Please check your password");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "../Auth/Register",
+                data: $('#registerForm').serialize(),
+                success: function (data) {
+                    
+                }
+            })
+        };
+    </script>
+</body>
+<!-- END: Body-->
+
 </html>

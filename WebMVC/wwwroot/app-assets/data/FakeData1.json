@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "RoleId": 1,
+      "UserName": "Test 456",
+      "RoleName": "GD",
+      "CreatedDate": "2022-09-13T12:50:37.8015479",
+      "UpdateDate": "2022-09-13T12:50:37.8015479"
+    },
+    {
+      "RoleId": 2,
+      "UserName": "Test 456",
+      "RoleName": "GD",
+      "CreatedDate": "2022-09-13T12:50:37.8015479",
+      "UpdateDate": "2022-09-13T12:50:37.8015479"
+    }
+  ]
+}
+
+

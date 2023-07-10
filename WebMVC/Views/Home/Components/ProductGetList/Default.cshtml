@@ -1,7 +1,48 @@
 ﻿@model List<WebMVC.Models.ProductModel>
 
+<style>
+    /* Custom.css */
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
 
-<div class="col-lg-9">
+    .card {
+        border: none;
+        border-radius: 10px;
+        transition: all 0.3s ease-out;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        .card .card-body h6 {
+            color: #333;
+        }
+
+        .card .card-footer {
+            background-color: #f8f9fa;
+        }
+
+            .card .card-footer a {
+                color: black;
+            }
+
+                .card .card-footer a:hover {
+                    color: black;
+                    text-decoration: none;
+                }
+
+    .text-gradient {
+        background: linear-gradient(to right, gray, black);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+</style>
+@*<div class="col-lg-9">
     <div class="row px-xl-5 pb-3">
 
         @foreach (var item in Model)
@@ -21,4 +62,47 @@
             </div>
         }
     </div>
+</div>*@
+
+@*<div class="col-lg-9">
+    <div class="row px-xl-5 pb-3">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4 shadow-sm">
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">@item.ProductName</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>@item.ProductPrice TL</h6><h6 class="text-muted ml-2"></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="/Detail/Index/@item.Id" class="btn btn-sm text-dark p-0" data-toggle="tooltip" data-placement="top" title="View Details"><i class="fas fa-eye text-primary mr-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>*@
+
+<div class="col-lg-9">
+    <div class="row px-xl-5 pb-3">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item mb-4">
+                    <div class="card-body text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3 text-gradient">@item.ProductName</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>@item.ProductPrice TL</h6><h6 class="text-muted ml-2"></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/Detail/Index/@item.Id" class="p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
