@@ -9,6 +9,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,16 @@ namespace Business.Concrete
             _userDal = userDal;
             _supplierService = supplierService;
         }
+
+        [CacheAspect]
+        public async Task<IResult> connectPersonToOrder(int orderId, int personId)
+        {
+            var result = _userDal.connectPersonToOrder(orderId, personId);
+            return result
+                ? new SuccessResult(Messages.Added)
+                : new ErrorResult(Messages.NotAdded);
+        }
+
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> AsyncAdd(Person t)
@@ -111,6 +122,14 @@ namespace Business.Concrete
             return result.Success
                 ? new SuccessResult()
                 : new ErrorResult();
+        }
+
+        public IDataResult<bool> AuthPerson(string mail, string pwd)
+        {
+            var result = _userDal.AuthPerson(mail, pwd);
+            return result != null
+                ? new SuccessDataResult<bool>(result)
+                : new ErrorDataResult<bool>();
         }
     }
 }

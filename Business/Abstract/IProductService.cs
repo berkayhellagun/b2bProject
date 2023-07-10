@@ -24,6 +24,8 @@ namespace Business.Abstract
         Task<IResult> connectOrder(int orderId, int productId);
         Task<IResult> connectProperty(int propertyId, int productId);
         Task<IResult> connectSeller(int sellerId, int productId);
-        IDataResult<List<Tuple<Product, decimal>>> GetRecomendedProducts(int productId);
+
+        IDataResult<List<Product>> GetRecomendedProducts(int productId);
+        IDataResult<List<Product>> GetRecommendedProductsForOrders(int personId);
     }
 }

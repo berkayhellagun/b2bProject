@@ -154,7 +154,7 @@ namespace DataAccess.Concrete.Neo4J
 
                 _graphClient.Cypher.Match("(o:Order), (p:Product)")
                     .Where((Order o, Product p) => o.Id == orderId && p.Id == productId)
-                    .Create("(p)-[:ORDERED{Id:" + lastId + ", OrderId:" + orderId + ", ProductId:" + productId + "}]->(p)")
+                    .Create("(o)-[:ORDERED{Id:" + lastId + ", OrderId:" + orderId + ", ProductId:" + productId + "}]->(p)")
                     .ExecuteWithoutResultsAsync();
                 return true;
             }
@@ -240,11 +240,14 @@ namespace DataAccess.Concrete.Neo4J
             return output;
         }
 
+        private readonly string driverHost = "bolt://3.239.67.172:7687";
+        private readonly string user = "neo4j";
+        private readonly string pwd = "river-helmet-custodian";
+
         [Obsolete]
-        public async Task<List<Tuple<Product, decimal>>> GetRecomendedProducts(int productId)
+        public async Task<List<Product>> GetRecomendedProducts(int productId)
         {
-            var driver = GraphDatabase.Driver("bolt://54.86.15.91:7687", 
-                    AuthTokens.Basic("neo4j", "glossaries-award-books"));
+            var driver = GraphDatabase.Driver(driverHost, AuthTokens.Basic(user, pwd));
 
             var query = @"
                 MATCH (n:Product)-[r:SIMILAR]->(m:Product)
@@ -261,7 +264,7 @@ namespace DataAccess.Concrete.Neo4J
             
             await session.CloseAsync();
 
-            List<Tuple<Product, decimal>> output = new List<Tuple<Product, decimal>>();
+            List<Product> output = new List<Product>();
 
             foreach (var item in result)
             {
@@ -284,15 +287,29 @@ namespace DataAccess.Concrete.Neo4J
                     ProductInStock = int.Parse(node.GetValueOrDefault("ProductInStock").ToString())
                 };
 
-                var score = decimal.Parse(item.Values.Where(x => x.Key == "r").FirstOrDefault().Value
-                    .As<IRelationship>().Properties.GetValueOrDefault("score").ToString());
-
-                var tuple = Tuple.Create(tempProduct, score);
-                output.Add(tuple);
+                output.Add(tempProduct);
             }
-            var deneme = "boş yazi";
+
             return output;
 
+        }
+
+        public async Task<List<Product>> GetRecommendedProductsForOrders(int personId)
+        {
+            var orderedProducts = _graphClient.Cypher
+                .Match("(p:Person)-[:BOUGHT]->(n:Order)")
+                .Where((Person p) => p.Id == personId)
+                .Return((n) => n.As<Order>().ProductId).ResultsAsync.Result.ToList();
+
+            List<Product> products = new List<Product>(); 
+            foreach (var item in orderedProducts)
+            {
+                var tempProducts = await this.GetRecomendedProducts(item);
+
+                products.AddRange(tempProducts);
+            }
+
+            return products.DistinctBy(p => p.Id).ToList();
         }
     }
 }

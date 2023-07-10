@@ -34,6 +34,15 @@ namespace WebAPI.Controllers.Concrete
                 : BadRequest(result.Message);
         }
 
+        [HttpGet("getrecommendedproductsfororders")]
+        public IActionResult GetRecommendedProductsForOrders(int personId)
+        {
+            var result = _productService.GetRecommendedProductsForOrders(personId);
+            return result.Success
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
+
         [HttpGet("getproductbysectorid")]
         public IActionResult GetProductsBySectorId(int sectorId)
         {
