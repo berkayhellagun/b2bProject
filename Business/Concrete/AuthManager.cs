@@ -73,7 +73,7 @@ namespace Business.Concrete
                 FirstName = userDto.FirstName,
                 LastName = userDto.LastName,
                 Password = userDto.Password,
-                Status = true
+                Status = 1
             };
             return new SuccessDataResult<Person>(user);
         }
@@ -94,7 +94,7 @@ namespace Business.Concrete
                 // user not exist
                 return new ErrorDataResult<Person>("E-mail not found!");
             }
-            if (!userCheck.Data.Status)
+            if (userCheck.Data.Status == 0)
             {
                 // user status false
                 return new ErrorDataResult<Person>("This user status is inactive!");

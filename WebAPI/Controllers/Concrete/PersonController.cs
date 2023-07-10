@@ -24,5 +24,23 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Data)
                 : BadRequest(result.Message);
         }
+
+        [HttpGet("authperson")]
+        public async Task<IActionResult> AuthPerson(string email, string password)
+        {
+            var result = _userService.AuthPerson(email, password);
+            return result.Data != null
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
+
+        [HttpPost("connectpersontoorder")]
+        public async Task<IActionResult> connectPersonToOrder(int orderId, int personId)
+        {
+            var result = await _userService.connectPersonToOrder(orderId, personId);
+            return result.Success
+                ? Ok()
+                : BadRequest(result.Message);
+        }
     }
 }

@@ -23,7 +23,9 @@ namespace DataAccess.Abstract
         bool connectProperty(int propertyId, int productId);
         bool connectSeller(int sellerId, int productId);
 
-        Task<List<Tuple<Product, decimal>>> GetRecomendedProducts(int productId);
+        Task<List<Product>> GetRecomendedProducts(int productId);
+
+        Task<List<Product>> GetRecommendedProductsForOrders(int personId);
 
     }
 }

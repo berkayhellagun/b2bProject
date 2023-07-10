@@ -15,7 +15,7 @@ namespace Core.Entities.Concrete
         public bool isCanSell { get; set; } 
         public string eMail { get; set; }
         public string Password { get; set; }
-        public bool Status { get; set; }
+        public int Status { get; set; }
 
     }
 }
