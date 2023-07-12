@@ -10,6 +10,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,5 +132,22 @@ namespace Business.Concrete
                 ? new SuccessDataResult<bool>(result)
                 : new ErrorDataResult<bool>();
         }
+
+        public IDataResult<List<ProductDetails>> GetProductsBySellerId(int sellerId)
+        {
+            var result = _userDal.GetProductsBySellerId(sellerId);
+            return result != null
+                ? new SuccessDataResult<List<ProductDetails>>(result)
+                : new ErrorDataResult<List<ProductDetails>>();
+        }
+
+        public IDataResult<List<Person>> GetSellerByCategoryId(int sellerId)
+        {
+            var result = _userDal.GetSellerByCategoryId(sellerId);
+            return result != null
+                ? new SuccessDataResult<List<Person>>(result)
+                : new ErrorDataResult<List<Person>>();
+        }
+
     }
 }

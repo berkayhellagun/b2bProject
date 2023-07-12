@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace Business.Abstract
         IDataResult<List<OperationClaim>> GetClaim(Person user);
         IDataResult<bool> AuthPerson(string mail, string pwd);
         Task<IResult> connectPersonToOrder(int orderId, int personId);
+        IDataResult<List<ProductDetails>> GetProductsBySellerId(int sellerId);
+        IDataResult<List<Person>> GetSellerByCategoryId(int categoryId);
     }
 }

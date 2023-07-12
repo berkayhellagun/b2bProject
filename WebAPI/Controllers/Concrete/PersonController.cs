@@ -42,5 +42,23 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok()
                 : BadRequest(result.Message);
         }
+
+        [HttpGet("getproductsbysellerid")]
+        public async Task<IActionResult> GetProductsBySellerId(int sellerId)
+        {
+            var result = _userService.GetProductsBySellerId(sellerId);
+            return result.Data != null
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
+
+        [HttpGet("getsellerbycategoryid")]
+        public async Task<IActionResult> GetSellerByCategoryId(int categoryId)
+        {
+            var result = _userService.GetSellerByCategoryId(categoryId);
+            return result.Data != null
+                ? Ok(result.Data)
+                : BadRequest(result.Message);
+        }
     }
 }
