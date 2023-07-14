@@ -18,6 +18,9 @@ namespace Entities.DTOs
         public decimal ProductPrice { get; set; }
         public string? ProductDescription { get; set; }
         public int ProductInStock { get; set; }
+        public string ProductCountry { get; set; }
+        public int SellerId { get; set; }
+        public string SellerNickName { get; set; }
         public IEnumerable<Property>? Properties { get; set; }
         
     }

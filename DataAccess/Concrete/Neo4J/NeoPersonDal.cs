@@ -2,6 +2,7 @@
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Entities.Relationships;
 using Neo4j.Driver;
 using Neo4jClient;
@@ -86,5 +87,48 @@ namespace DataAccess.Concrete.Neo4J
                 return false;
             }
         }
+
+        public List<ProductDetails> GetProductsBySellerId(int sellerId)
+        {
+
+            var products = _graphClient.Cypher
+                .Match("(c:Category)<-[:INNER]-(s:SubCategory)<-[:INNER]-(p:Product)-[:PROPERTY]->(a:Property)")
+                .Match("(p)<-[:SELLING]-(pp:Person)")
+                .Return((c, s, p, a, pp) => new ProductDetails
+                {
+                    Id = p.As<Product>().Id,
+                    CategoryName = c.As<Category>().CategoryName,
+                    SubCategoryName = s.As<SubCategory>().SubCategoryName,
+                    ProductName = p.As<Product>().ProductName,
+                    ProductDescription = p.As<Product>().ProductDescription,
+                    ProductPrice = p.As<Product>().ProductPrice,
+                    ProductInStock = p.As<Product>().ProductInStock,
+                    ProductionDate = p.As<Product>().ProductionDate,
+                    SellerId = pp.As<Person>().Id,
+                    SellerNickName = pp.As<Person>().NickName,
+                    ProductCountry = p.As<Product>().ProductCountry,
+                    Properties = a.CollectAs<Property>()
+                })
+                .OrderBy("Id")
+                .ResultsAsync.Result.ToList();
+
+            return products;
+
+        }
+
+        public List<Person> GetSellerByCategoryId(int categoryId)
+        {
+            var seller = _graphClient.Cypher
+                .Match("(p:Person)-[:CONCERNED]->(s:Sector)<-[:INNER]-(c:Category)")
+                .Where((Category c) => c.Id == categoryId)
+                .Return((p) => p.As<Person>()).ResultsAsync.Result.ToList();
+
+            return seller;
+        }
+        /*
+match a=(p:Person)-[:CONCERNED]->(s:Sector)<-[:INNER]-(c:Category)
+where c.Id = 5
+return a
+*/
     }
 }

@@ -38,10 +38,11 @@ namespace DataAccess.Concrete.Neo4J
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
                     ProductPrice = s.As<Product>().ProductPrice,
+                    ProductCountry = s.As<Product>().ProductCountry,
                     Properties = pp.CollectAs<Property>()
                 })
                 .OrderBy("1")
-                .ResultsAsync.Result.ToList();
+                .ResultsAsync.Result.Take(16).ToList();
 
             return products;
         }
@@ -59,10 +60,11 @@ namespace DataAccess.Concrete.Neo4J
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
                     ProductPrice = s.As<Product>().ProductPrice,
+                    ProductCountry = s.As<Product>().ProductCountry,
                     Properties = pp.CollectAs<Property>()
                 })
                 .OrderBy("1")
-                .ResultsAsync.Result.ToList();
+                .ResultsAsync.Result.Take(16).ToList();
 
             return products;
         }
@@ -79,10 +81,11 @@ namespace DataAccess.Concrete.Neo4J
                     ProductName = s.As<Product>().ProductName,
                     ProductDescription = s.As<Product>().ProductDescription,
                     ProductInStock = s.As<Product>().ProductInStock,
-                    ProductPrice = s.As<Product>().ProductPrice
+                    ProductPrice = s.As<Product>().ProductPrice,
+                    ProductCountry = s.As<Product>().ProductCountry
                 })
                 .OrderBy("1")
-                .ResultsAsync.Result.ToList();
+                .ResultsAsync.Result.Take(16).ToList();
 
             return products;
         }
@@ -96,7 +99,8 @@ namespace DataAccess.Concrete.Neo4J
         {
             var products = _graphClient.Cypher
                 .Match("(c:Category)<-[:INNER]-(s:SubCategory)<-[:INNER]-(p:Product)-[:PROPERTY]->(a:Property)")
-                .Return((c, s, p, a) => new ProductDetails
+                .Match("(p)<-[:SELLING]-(pp:Person)")
+                .Return((c, s, p, a, pp) => new ProductDetails
                 {
                     Id = p.As<Product>().Id,
                     CategoryName = c.As<Category>().CategoryName,
@@ -105,11 +109,14 @@ namespace DataAccess.Concrete.Neo4J
                     ProductDescription = p.As<Product>().ProductDescription,
                     ProductPrice = p.As<Product>().ProductPrice,
                     ProductInStock = p.As<Product>().ProductInStock,
-                     ProductionDate = p.As<Product>().ProductionDate,
+                    ProductionDate = p.As<Product>().ProductionDate,
+                    SellerId = pp.As<Person>().Id,
+                    SellerNickName = pp.As<Person>().NickName,
+                    ProductCountry = p.As<Product>().ProductCountry,
                     Properties = a.CollectAs<Property>()
                 })
-                .OrderBy("Id")
-                .ResultsAsync.Result.ToList();
+                .OrderBy("1")
+                .ResultsAsync.Result.Take(16).ToList();
 
             return products;
         }
@@ -284,7 +291,8 @@ namespace DataAccess.Concrete.Neo4J
                     ProductDescription = node.GetValueOrDefault("ProductDescription").ToString(),
                     ProductPrice = decimal.Parse(node.GetValueOrDefault("ProductPrice").ToString()),
                     ProductionDate = DateTime.Parse(node.GetValueOrDefault("ProductionDate").ToString()),
-                    ProductInStock = int.Parse(node.GetValueOrDefault("ProductInStock").ToString())
+                    ProductInStock = int.Parse(node.GetValueOrDefault("ProductInStock").ToString()),
+                    ProductCountry = node.GetValueOrDefault("ProductCountry").ToString()
                 };
 
                 output.Add(tempProduct);
@@ -309,7 +317,7 @@ namespace DataAccess.Concrete.Neo4J
                 products.AddRange(tempProducts);
             }
 
-            return products.DistinctBy(p => p.Id).ToList();
+            return products.DistinctBy(p => p.Id).Take(16).ToList();
         }
     }
 }
