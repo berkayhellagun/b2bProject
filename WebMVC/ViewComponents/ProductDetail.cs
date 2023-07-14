@@ -21,8 +21,13 @@ namespace WebMVC.ViewComponents
             var userId = HttpContext.Session.GetString(Constants.UserId);
             if (!string.IsNullOrEmpty(userId))
             {
-                var orderData = new OrderAddModel { BuyerId = Convert.ToInt32(userId), OrderDate = DateTime.Now, ProductId = Convert.ToInt32(productId), ProductQuantity = 0, SellerId = 0 };
+                Guid myGuid = Guid.NewGuid();
+                int guidInt = myGuid.GetHashCode();
+
+                var orderData = new OrderAddModel { Id = guidInt, BuyerId = Convert.ToInt32(userId), OrderDate = DateTime.Now, ProductId = Convert.ToInt32(productId), ProductQuantity = 0, SellerId = 0 };
                 _request.PostAsync("api/order/add", orderData);
+                _request.PostAsync($"api/person/connectpersontoorder?orderId={guidInt}&personId={userId}", null);
+                _request.PostAsync($"api/Products/connectorder?orderId={guidInt}&productId={productId}", null);
             }
 
             var requestUrl = string.Format($"api/Products/getproductdetailsbyid?productId={productId}");
