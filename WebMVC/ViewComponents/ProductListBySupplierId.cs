@@ -16,7 +16,7 @@ namespace WebMVC.ViewComponents
 
         public IViewComponentResult Invoke(string supplierId)
         {
-            var url = string.Format("api/Products/getproductbysupplierid?supplierId="+supplierId);
+            var url = string.Format("api/Person/getproductsbysellerid?sellerId=" + supplierId);
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
             return View(jsonObject);

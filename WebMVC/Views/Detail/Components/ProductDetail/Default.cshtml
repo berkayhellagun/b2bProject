@@ -18,8 +18,8 @@
             <h1 class="mb-4">@Model.ProductName</h1>
             <h2 class="text-success mb-4">@Model.ProductPrice TL</h2>
             <h6 class="text-muted mb-4">Made in @Model.ProductCountry</h6>
-            <a class="d-block mb-2 text-decoration-none text-dark" href="/Supplier/SupplierDetail/@Model.ProductSupplierId">
-                <small>Tedarikçi: @Model.SupplierName</small>
+            <a class="d-block mb-2 text-decoration-none text-dark" href="/Supplier/SupplierDetail/@Model.SellerId">
+                <small>Tedarikçi: @Model.SellerNickName</small>
             </a>
             <a class="d-block mb-4 text-decoration-none text-dark" href="/Home/CategoryDetails/@Model.ProductCategoryId">
                 <small>Kategori: @Model.CategoryName</small>
@@ -48,7 +48,7 @@
                                     Bu ürün @Model.ProductCountry içerisinde üretilmiştir.
                                 </li>
                                 <li class="list-group-item px-0">
-                                    Üretim tarihi: @Model.ProductionDate
+                                    Üretim tarihi: @Model.ProductionDate.Date
                                 </li>
                                 <li class="list-group-item px-0">
                                     Firmanın sağladığı bilgiye göre @Model.ProductInStock ürün stokta mevcuttur.

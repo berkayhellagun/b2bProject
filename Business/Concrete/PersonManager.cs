@@ -135,7 +135,7 @@ namespace Business.Concrete
 
         public IDataResult<List<ProductDetails>> GetProductsBySellerId(int sellerId)
         {
-            var result = _userDal.GetProductsBySellerId(sellerId);
+            var result = _userDal.GetProductsBySellerId(sellerId).Where(x => x.SellerId == sellerId).ToList();
             return result != null
                 ? new SuccessDataResult<List<ProductDetails>>(result)
                 : new ErrorDataResult<List<ProductDetails>>();
