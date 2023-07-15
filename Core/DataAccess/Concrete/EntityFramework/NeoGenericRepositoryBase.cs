@@ -79,7 +79,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
                         .OrderBy("1")
                         .ResultsAsync.Result;
 
-            return products.ToList();
+            return products.Take(16).ToList();
         }
 
         public Task<TEntity> AsyncGetDB(Expression<Func<TEntity, bool>> filter)
