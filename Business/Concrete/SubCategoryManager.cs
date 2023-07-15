@@ -51,7 +51,11 @@ namespace Business.Concrete
 
         public async Task<IDataResult<SubCategory>> AsyncGetById(int id)
         {
-            var result = await _subCategoryDal.AsyncGetDB(p => p.Id == id);
+            Dictionary<string, object> filter = new Dictionary<string, object>
+            {
+                { "Id", id },
+            };
+            var result = await _subCategoryDal.AsyncGetDB(filter);
             return result != null
                 ? new SuccessDataResult<SubCategory>(result)
                 : new ErrorDataResult<SubCategory>(Messages.Error);

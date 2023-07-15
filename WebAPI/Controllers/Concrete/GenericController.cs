@@ -51,7 +51,7 @@ namespace WebAPI.Controllers.Concrete
                 ? Ok(result.Success)
                 : BadRequest(result.Message);
         }
-        [HttpPut("update")]
+        [HttpPost("update")]
         public async Task<IActionResult> Update(TEntity t)
         {
             var result = await _genericService.AsyncUpdate(t);

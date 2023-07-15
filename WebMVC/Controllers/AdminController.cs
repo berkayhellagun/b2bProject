@@ -9,7 +9,7 @@ using WebMVC.Models.DetailModel;
 
 namespace WebMVC.Controllers
 {
-    [MyAuthorizeAttribute(Roles ="admin")]
+    [MyAuthorizeAttribute(Roles ="Admin")]
     public class AdminController : Controller
     {
         IRequest _request;
@@ -29,7 +29,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Users()
         {
-            var apiObj = _request.GetAsync("api/Users/getall").Result;
+            var apiObj = _request.GetAsync("api/Person/getall").Result;
             var jsonObj = JsonConvert.DeserializeObject<List<UserModel>>(apiObj);
             return View(jsonObj);
         }

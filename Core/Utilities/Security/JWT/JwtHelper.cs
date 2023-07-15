@@ -65,6 +65,7 @@ namespace Core.Utilities.Security.JWT
             claims.AddName($"{user.FirstName} {user.LastName}");
             claims.AddEmail(user.eMail);
             claims.AddRoles(operationClaims.Select(o => o.OperationName).ToArray());
+            claims.IsCanSell(user.isCanSell);
             return claims;
         }
     }

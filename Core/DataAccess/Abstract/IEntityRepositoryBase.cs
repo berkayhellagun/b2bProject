@@ -15,7 +15,7 @@ namespace Core.DataAccess.Abstract
         Task<bool> AsyncUpdateDB(T entity);
         Task<bool> AsyncDeleteDB(T entity);
         Task<List<T>> AsyncGetAllDB(Expression<Func<T, bool>> filter = null);
-        Task<T> AsyncGetDB(Expression<Func<T, bool>> filter);
+        Task<T> AsyncGetDB(Dictionary<string, object> filter);
         IList<T> GetList(Expression<Func<T, bool>> filter = null);
     }
 }

@@ -43,7 +43,11 @@ namespace Business.Concrete
 
         public async Task<IDataResult<Property>> AsyncGetById(int id)
         {
-            var result = await _propertyDal.AsyncGetDB(p => p.Id == id);
+            Dictionary<string, object> filter = new Dictionary<string, object>
+            {
+                { "Id", id },
+            };
+            var result = await _propertyDal.AsyncGetDB(filter);
             return result != null
                 ? new SuccessDataResult<Property>(result)
                 : new ErrorDataResult<Property>(Messages.Error);

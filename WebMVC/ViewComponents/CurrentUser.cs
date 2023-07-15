@@ -16,7 +16,7 @@ namespace WebMVC.ViewComponents
 
         public IViewComponentResult Invoke(string email)
         {
-            var requestUrl = string.Format("api/Users/getbyemail?email=" + email);
+            var requestUrl = string.Format("api/Person/getbyemail?email=" + email);
             var apiObject = _request.GetAsync(requestUrl).Result;
             var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
             return View(jsonObject);

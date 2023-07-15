@@ -1,4 +1,4 @@
-﻿@model WebMVC.Models.UserModel
+﻿@*@model WebMVC.Models.UserModel
 
 @{
     ViewData["Title"] = "Update";
@@ -16,7 +16,7 @@
                 <div class="col-md-5">
                     <div class="form-group bmd-form-group">
                         <label class="bmd-label-floating">UserId</label>
-                        <input type="text" class="form-control" name="UserId" value=@Model.UserId readonly="readonly">
+                        <input type="text" class="form-control" name="UserId" value=@Model.Id readonly="readonly">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -59,3 +59,143 @@
         </form>
     </div>
 </div>
+*@
+
+@*@model WebMVC.Models.UserModel
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">Edit Profile</h4>
+        <p class="card-category">Complete your profile</p>
+    </div>
+    <div class="card-body">
+        <form action="/User/Update" method="post">
+            <div class="form-group row">
+                <label for="UserId" class="col-sm-2 col-form-label">UserId</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="UserId" name="Id" value="@Model.Id" readonly="readonly">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Email" class="col-sm-2 col-form-label">Email address</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="FirstName" class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="LastName" class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="SupplierId" class="col-sm-2 col-form-label">Supplier Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="SupplierId" name="SupplierId" value="@Model.SupplierId">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="SupplierName" class="col-sm-2 col-form-label">Supplier Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="SupplierName" name="SupplierName" value="@Model.SupplierName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="isCanSell" class="col-sm-2 col-form-label">Can Sell?</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" class="form-check-input" id="IsCanSell" name="IsCanSell" @(Model.IsCanSell ? "checked" : "")>
+                    <label class="form-check-label" for="isCanSell"></label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>*@
+
+@model WebMVC.Models.UserModel
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card border-0 shadow">
+    <div class="card-header bg-primary text-white">
+        <h4 class="card-category">Edit Profile</h4>
+        <p class="card-category">Complete your profile</p>
+    </div>
+    <div class="card-body">
+        <form action="/User/Update" method="post">
+            @* User ID *@
+
+            <div class="mb-3">
+                <label for="UserId" class="form-label">UserId</label>
+                <input type="text" class="form-control" id="UserId" name="Id" value="@Model.Id" readonly>
+            </div>
+
+            @* Email *@
+
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required>
+            </div>
+
+            @* First Name *@
+
+            <div class="mb-3">
+                <label for="FirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
+            </div>
+
+            @* Last Name *@
+
+            <div class="mb-3">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required>
+            </div>
+
+            @* Supplier ID *@
+
+            <div class="mb-3">
+                <label for="SupplierId" class="form-label">Supplier Id</label>
+                <input type="text" class="form-control" id="SupplierId" name="SupplierId" value="@Model.SupplierId">
+            </div>
+
+            @* Supplier Name *@
+
+            <div class="mb-3">
+                <label for="SupplierName" class="form-label">Supplier Name</label>
+                <input type="text" class="form-control" id="SupplierName" name="SupplierName" value="@Model.SupplierName">
+            </div>
+
+            @* Can Sell? *@
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="IsCanSell" name="IsCanSell" @(Model.IsCanSell ? "checked" : "")>
+                <label class="form-check-label" for="IsCanSell">Can Sell</label>
+            </div>
+
+            @* Submit Button *@
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+

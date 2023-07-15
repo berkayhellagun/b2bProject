@@ -2,7 +2,7 @@
 {
     public class UserModel
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -12,5 +12,6 @@
         public int? SupplierId { get; set; }
         public string? SupplierName { get; set; }
         public string? UserImage { get; set; }
+        public bool IsCanSell { get; set; }
     }
 }

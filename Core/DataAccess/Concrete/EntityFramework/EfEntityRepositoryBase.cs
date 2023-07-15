@@ -117,5 +117,10 @@ namespace Core.DataAccess.Concrete.EntityFramework
                    : db.Set<TEntity>().Where(filter).ToList();
             }
         }
+
+        public Task<TEntity> AsyncGetDB(Dictionary<string, object> filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

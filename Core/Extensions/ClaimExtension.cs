@@ -26,5 +26,9 @@ namespace Core.Extensions
         {
             roles.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
         }
+        public static void IsCanSell(this ICollection<Claim> claims, bool isCanSell)
+        {
+            claims.Add(new Claim("isCanSell", isCanSell.ToString()));
+        }
     }
 }

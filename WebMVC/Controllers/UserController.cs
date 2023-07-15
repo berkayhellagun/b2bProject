@@ -18,7 +18,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var ApiObject = await _request.GetAsync("api/Users/getall");
+            var ApiObject = await _request.GetAsync("api/Person/getall");
             if (ApiObject == Constants.Exception)
             {
                 //exception
@@ -31,7 +31,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> Remove()
         {
             var userId = RouteData.Values["id"];
-            var url = string.Format("api/Users/removebyid?id=" + userId);
+            var url = string.Format("api/Person/removebyid?id=" + userId);
             var result = await _request.DeleteAsync(url);
             if (result == Constants.Exception)
             {
@@ -44,7 +44,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> Update(UserModel user)
         {
             var newUser = UpdateExtension(user);
-            var result = await _request.PutAsync("api/Users/update", newUser);
+            var result = await _request.PostAsync("api/person/update", newUser);
             if (result == Constants.Exception)
             {
                 return View();
@@ -63,7 +63,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> Profile(UserModel user)
         {
             var newUser = UpdateExtension(user);
-            var result = await _request.PutAsync("api/Users/update", newUser);
+            var result = await _request.PutAsync("api/Person/update", newUser);
             if (result == Constants.Exception)
             {
                 return View();
@@ -75,7 +75,7 @@ namespace WebMVC.Controllers
         public IActionResult Profile()
         {
             var email = RouteData.Values["id"];
-            var url = string.Format("api/Users/getbyemail?email=" + email);
+            var url = string.Format("api/Person/getbyemail?email=" + email);
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
             return View(jsonObject);
@@ -84,7 +84,7 @@ namespace WebMVC.Controllers
         public UserModel? GetUser()
         {
             var userId = RouteData.Values["id"];
-            var url = string.Format("api/Users/getbyid?id=" + userId);
+            var url = string.Format("api/Person/getbyid?id=" + userId);
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
             return jsonObject;
@@ -92,7 +92,7 @@ namespace WebMVC.Controllers
 
         private UserModel UpdateExtension(UserModel user)
         {
-            var url = string.Format("api/Users/getbyemail?email=" + user.Email);
+            var url = string.Format("api/Person/getbyemail?email=" + user.Email);
             var apiObject = _request.GetAsync(url).Result;
             var jsonObject = JsonConvert.DeserializeObject<UserModel>(apiObject);
             user.PasswordHash = jsonObject.PasswordHash;

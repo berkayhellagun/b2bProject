@@ -81,7 +81,7 @@ namespace WebMVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [MyAuthorizeAttribute(Roles = "salesEngineer")]
+        //[MyAuthorizeAttribute(Roles = "")]
         [HttpGet]
         public IActionResult Panel()
         {

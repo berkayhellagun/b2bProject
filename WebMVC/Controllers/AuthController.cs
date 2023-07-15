@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using MessagePack;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserForLoginDtoModel userForLoginDto)
         {
-            var result = _request.Post("api/Auth/login", userForLoginDto);
+            var result = _request.Post("api/Person/authperson", userForLoginDto);
             if (result == Constants.Exception)
             {
                 // exception
@@ -43,11 +44,13 @@ namespace WebMVC.Controllers
                     return View();
                 }
                 JwtSecurityToken token = new JwtSecurityToken(jwtEncodedString: apiResultJson.Token);
-                var role = token.Claims.First(claims => claims.Type.Contains("role")).Value;
-                var userId = token.Claims.First(claims => claims.Type.Contains("userId")).Value;
+                var role = token.Claims.First(claims => claims.Type.Contains(ClaimTypes.Role)).Value;
+                var userId = token.Claims.First(claims => claims.Type.Contains(ClaimTypes.NameIdentifier)).Value;
+                var isCanSell = token.Claims.First(claims => claims.Type.Contains("isCanSell")).Value;
                 Response.Cookies.Append(Constants.Role, role);
                 HttpContext.Session.SetString(Constants.Email, userForLoginDto.Email);
                 HttpContext.Session.SetString(Constants.UserId, userId);
+                HttpContext.Session.SetString(Constants.IsCanSell, isCanSell);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)

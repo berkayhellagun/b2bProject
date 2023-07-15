@@ -3,11 +3,7 @@
 <li class="nav-item navbar-dropdown dropdown-user dropdown">
     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
         <div class="avatar avatar-online">
-            @if (@Model.UserImage == "" || @Model.UserImage == null)
-            {
-                <img src="~/Images/UserImage/default.png" class="w-px-40 h-auto rounded-circle" />
-            }
-            <img src="~/@Model.UserImage" class="w-px-40 h-auto rounded-circle" />
+            <img src="~/Images/UserImage/default.png" class="w-px-40 h-auto rounded-circle" />
         </div>
     </a>
     <ul class="dropdown-menu dropdown-menu-end">
@@ -15,13 +11,13 @@
             <a class="dropdown-item" href="#">
                 <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
-                        <div class="avatar avatar-online">
+                       @* <div class="avatar avatar-online">
                             @if (@Model.UserImage == "" || @Model.UserImage == null)
                             {
-                                <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/>
+                                <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
                             }
                             <img src="~/@Model.UserImage" class="w-px-40 h-auto rounded-circle" />
-                        </div>
+                        </div>*@
                     </div>
                     <div class="flex-grow-1">
                         <span class="fw-semibold d-block">@Model.FirstName @Model.LastName</span>

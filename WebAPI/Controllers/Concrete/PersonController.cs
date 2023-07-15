@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace WebAPI.Controllers.Concrete
     public class PersonController : GenericController<Person>
     {
         IPersonService _userService;
+        IAuthService _authService;
 
-        public PersonController(IPersonService userService) : base(userService)
+        public PersonController(IPersonService userService, IAuthService authService) : base(userService)
         {
             _userService = userService;
+            _authService = authService;
         }
 
         [HttpGet("getbyemail")]
@@ -25,13 +28,20 @@ namespace WebAPI.Controllers.Concrete
                 : BadRequest(result.Message);
         }
 
-        [HttpGet("authperson")]
-        public async Task<IActionResult> AuthPerson(string email, string password)
+        [HttpPost("authperson")]
+        public async Task<IActionResult> AuthPerson(UserForLoginDto userForLoginDto)
         {
+            var email = userForLoginDto.Email;
+            var password = userForLoginDto.Password;
+
             var result = _userService.AuthPerson(email, password);
-            return result.Data != null
-                ? Ok(result.Data)
-                : BadRequest(result.Message);
+            if (result == null || result.Data == null || !result.Success)
+                return BadRequest("An error ocurred!");
+
+            var token = await _authService.CreateAccessToken(result.Data);
+            return token.Success
+                ? Ok(token.Data)
+                : BadRequest(token.Message);
         }
 
         [HttpPost("connectpersontoorder")]

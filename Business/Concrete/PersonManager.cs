@@ -43,7 +43,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> AsyncAdd(Person t)
         {
-            if(t.CompanyName != null)
+            if (t.CompanyName != null)
             {
                 //var supplierName = BindSupplierName(t.SupplierId.Value);
 
@@ -55,7 +55,7 @@ namespace Business.Concrete
                 ? new SuccessResult(Messages.Added)
                 : new ErrorResult(Messages.NotAdded);
         }
-        [SecuredOperation(Roles ="admin,user.add")]
+        [SecuredOperation(Roles = "admin,user.add")]
         [CacheAspect]
         public async Task<IDataResult<List<Person>>> AsyncGetAll()
         {
@@ -67,7 +67,8 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<Person>> AsyncGetById(int id)
         {
-            var result = await _userDal.AsyncGetDB(u => u.Id == id);
+            var allData = await _userDal.AsyncGetAllDB();
+            var result = allData.Where(x => x.Id == id).First();
             return result != null
                 ? new SuccessDataResult<Person>(result)
                 : new ErrorDataResult<Person>(Messages.Error);
@@ -75,7 +76,12 @@ namespace Business.Concrete
 
         public async Task<IDataResult<Person>> AsyncGetByMail(string email)
         {
-            var result = await _userDal.AsyncGetDB(u => u.eMail == email);
+            Dictionary<string, object> filter = new Dictionary<string, object>
+            {
+                { "eMail", email },
+            };
+            var allData = await _userDal.AsyncGetAllDB();
+            var result = allData.Where(x => x.eMail == email).First();
             return result != null
                 ? new SuccessDataResult<Person>(result)
                 : new ErrorDataResult<Person>();
@@ -125,12 +131,12 @@ namespace Business.Concrete
                 : new ErrorResult();
         }
 
-        public IDataResult<bool> AuthPerson(string mail, string pwd)
+        public IDataResult<Person> AuthPerson(string mail, string pwd)
         {
             var result = _userDal.AuthPerson(mail, pwd);
             return result != null
-                ? new SuccessDataResult<bool>(result)
-                : new ErrorDataResult<bool>();
+                ? new SuccessDataResult<Person>(result)
+                : new ErrorDataResult<Person>();
         }
 
         public IDataResult<List<ProductDetails>> GetProductsBySellerId(int sellerId)

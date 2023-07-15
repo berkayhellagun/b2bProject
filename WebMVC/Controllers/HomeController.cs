@@ -25,11 +25,11 @@ namespace WebMVC.Controllers
             var userId = HttpContext.Session.GetString(Constants.UserId);
             var apiObject = "";
 
-            if (string.IsNullOrEmpty(userId))
+            //if (string.IsNullOrEmpty(userId))
                 apiObject = _request.Get("api/Products/getall");
 
-            else
-                apiObject = _request.Get($"api/Products/getrecommendedproductsfororders?personId={userId}");
+            //else
+            //    apiObject = _request.Get($"api/Products/getrecommendedproductsfororders?personId={userId}");
             
             var jsonObject = JsonConvert.DeserializeObject<List<ProductModel>>(apiObject);
             return View(jsonObject);

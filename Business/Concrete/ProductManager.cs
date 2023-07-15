@@ -52,7 +52,11 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<Product>> AsyncGetById(int id)
         {
-            var result = await _productDal.AsyncGetDB(p => p.Id == id);
+            Dictionary<string, object> filter = new Dictionary<string, object>
+            {
+                { "Id", id },
+            };
+            var result = await _productDal.AsyncGetDB(filter);
             return result != null
                 ? new SuccessDataResult<Product>(result)
                 : new ErrorDataResult<Product>(Messages.Error);

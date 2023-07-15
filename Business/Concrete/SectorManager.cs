@@ -45,7 +45,11 @@ namespace Business.Concrete
 
         public async Task<IDataResult<Sector>> AsyncGetById(int id)
         {
-            var result = await _sectorDal.AsyncGetDB(p => p.Id == id);
+            Dictionary<string, object> filter = new Dictionary<string, object>
+            {
+                { "Id", id },
+            };
+            var result = await _sectorDal.AsyncGetDB(filter);
             return result != null
                 ? new SuccessDataResult<Sector>(result)
                 : new ErrorDataResult<Sector>(Messages.Error);

@@ -82,9 +82,22 @@ namespace Core.DataAccess.Concrete.EntityFramework
             return products.ToList();
         }
 
-        public Task<TEntity> AsyncGetDB(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity> AsyncGetDB(Dictionary<string, object> filter)
         {
-            throw new NotImplementedException();
+            var type = typeof(TEntity).Name;
+            var query = _graphClient.Cypher.Match($"(p:{type})");
+
+            foreach (var condition in filter)
+            {
+                query = query.Where($"p.{condition.Key} = {{{condition.Value}}}");
+                query = query.WithParam(condition.Key, condition.Value);
+            }
+
+            var result = await query
+                .Return(p => p.As<TEntity>())
+                .ResultsAsync;
+
+            return result.FirstOrDefault();
         }
 
         public Task<bool> AsyncUpdateDB(TEntity entity)

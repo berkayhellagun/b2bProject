@@ -4,13 +4,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using Entities.Relationships;
-using Neo4j.Driver;
 using Neo4jClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.Neo4J
 {
@@ -23,7 +17,7 @@ namespace DataAccess.Concrete.Neo4J
             _graphClient = graphClient;
         }
 
-        public bool AuthPerson(string mail, string pwd)
+        public Person AuthPerson(string mail, string pwd)
         {
             var auth = _graphClient.Cypher
                 .Match("(p:Person)")
@@ -41,15 +35,15 @@ namespace DataAccess.Concrete.Neo4J
                     PersonType = p.As<Person>().PersonType,
                     Status = p.As<Person>().Status,
                     TCVKN = p.As<Person>().TCVKN
-                }).ResultsAsync.Result.ToList();
-            
-            return auth.Capacity > 0 ? true : false;
+                }).ResultsAsync.Result;
+
+            return auth.First();
         }
 
         public List<OperationClaim> GetClaims(Person user)
         {
             var claims = _graphClient.Cypher
-                .Match("(u:User)-[:USER_OPERATION_CLAIM]->(oc:OperationClaim)")
+                .Match("(u:Person)-[:USER_OPERATION_CLAIM]->(oc:OperationClaim)")
                 .Where((Person u) => u.Id == user.Id)
                 .Return((oc) => new OperationClaim
                 {

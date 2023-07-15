@@ -12,7 +12,7 @@ namespace DataAccess.Abstract
     public interface IPersonDal : IEntityRepositoryBase<Person>
     {
         List<OperationClaim> GetClaims(Person user);
-        bool AuthPerson(string mail, string pwd);
+        Person AuthPerson(string mail, string pwd);
         bool connectPersonToOrder(int orderId, int personId);
         List<ProductDetails> GetProductsBySellerId(int sellerId);
         List<Person> GetSellerByCategoryId(int categoryId);
