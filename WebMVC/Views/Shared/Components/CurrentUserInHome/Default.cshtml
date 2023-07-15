@@ -1,21 +1,46 @@
 ﻿<div class="navbar-nav ml-auto py-0">
     @if (@ViewBag.Email == "" || @ViewBag.Email == null)
     {
-        <a href="/Auth/Login" class="nav-item nav-link">Giriş Yap</a>
-        <a href="/Auth/Register" class="nav-item nav-link">Kayıt Ol</a>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="/Auth/Login">Giriş Yap</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Auth/Register">Kayıt Ol</a>
+            </li>
+        </ul>
+
+        @*a href="/Auth/Login" class="nav-item nav-link">Giriş Yap</a>
+        <a href="/Auth/Register" class="nav-item nav-link">Kayıt Ol</a>*@
     }
     else
     {
-        if (ViewBag.Role == "salesEngineer")
-        {
-            <a href="/Product/Panel" class="nav-item nav-link">Panel</a>
-        }
-        if (ViewBag.Role == "admin")
-        {
-            <a href="/Admin/Index" class="nav-item nav-link">Admin Panel</a>
-        }
-        <a href="/User/Profile/@ViewBag.Email" class="nav-item nav-link">@ViewBag.Email</a>
-        <a href="/Auth/Logout" class="nav-item nav-link">Çıkış Yap</a>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            @if (ViewBag.Role == "salesEngineer")
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Product/Panel">Panel</a>
+                </li>
+                //<a href="/Product/Panel" class="nav-item nav-link">Panel</a>
+            }
+            @if (ViewBag.Role == "admin")
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Index">Admin Panel</a>
+                </li>
+                //<a href="/Admin/Index" class="nav-item nav-link">Admin Panel</a>
+            }
+            <li class="nav-item">
+                <a class="nav-link" href="#">@ViewBag.Email</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Auth/Logout">Çıkış Yap</a>
+            </li>
+        </ul>
+
+       
+        //<a href="/User/Profile/@ViewBag.Email" class="nav-item nav-link">@ViewBag.Email</a>
+        //<a href="/Auth/Logout" class="nav-item nav-link">Çıkış Yap</a>
     }
 </div>
 

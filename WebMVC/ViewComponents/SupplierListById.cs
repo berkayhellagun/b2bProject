@@ -16,10 +16,11 @@ namespace WebMVC.ViewComponents
 
         public IViewComponentResult Invoke(string supplierId)
         {
-            var Url = string.Format("api/Suppliers/supplierdetailbyid?supplierId=" + supplierId);
-            var apiObject = _request.GetAsync(Url).Result;
-            var jsonObject = JsonConvert.DeserializeObject<SupplierDetailModel>(apiObject);
-            return View(jsonObject);
+            //var Url = string.Format("api/Suppliers/supplierdetailbyid?supplierId=" + supplierId);
+            //var apiObject = _request.GetAsync(Url).Result;
+            //var jsonObject = JsonConvert.DeserializeObject<SupplierDetailModel>(apiObject);
+            //return View(jsonObject);
+            return View();
         }
     }
 }
