@@ -116,7 +116,7 @@ namespace DataAccess.Concrete.Neo4J
                     Properties = a.CollectAs<Property>()
                 })
                 .OrderBy("1")
-                .ResultsAsync.Result.Take(16).ToList();
+                .ResultsAsync.Result.ToList();
 
             return products;
         }
@@ -304,20 +304,29 @@ namespace DataAccess.Concrete.Neo4J
 
         public async Task<List<Product>> GetRecommendedProductsForOrders(int personId)
         {
-            var orderedProducts = _graphClient.Cypher
+            try
+            {
+                var orderedProducts = _graphClient.Cypher
                 .Match("(p:Person)-[:BOUGHT]->(n:Order)")
                 .Where((Person p) => p.Id == personId)
                 .Return((n) => n.As<Order>().ProductId).ResultsAsync.Result.ToList();
 
-            List<Product> products = new List<Product>(); 
-            foreach (var item in orderedProducts)
-            {
-                var tempProducts = await this.GetRecomendedProducts(item);
+                List<Product> products = new List<Product>();
+                foreach (var item in orderedProducts)
+                {
+                    var tempProducts = await this.GetRecomendedProducts(item);
 
-                products.AddRange(tempProducts);
+                    products.AddRange(tempProducts);
+                }
+
+                return products.DistinctBy(p => p.Id).Take(16).ToList();
             }
+            catch (Exception)
+            {
 
-            return products.DistinctBy(p => p.Id).Take(16).ToList();
+                return await AsyncGetAllDB();
+            }
+            
         }
     }
 }
